@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="hero">
+        <div class="overlay">
+            <h1>{{ titulo }}</h1>
+            <p class="subtitle">Proyecto de Minería de Datos</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Introducción</h2>
+            <p>{{ introduccion }}</p>
+        </section>
+
+        <section class="integrantes">
+            <h2>Integrantes del grupo</h2>
+            <ul>
+                {% for nombre in integrantes %}
+                <li>{{ nombre }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Proyecto Deforestación Colombia · Minería de Datos</p>
+    </footer>
+
+</body>
+</html>
