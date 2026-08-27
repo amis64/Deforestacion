@@ -1,39 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
 
-    <header class="hero">
-        <div class="overlay">
-            <h1>{{ titulo }}</h1>
-            <p class="subtitle">Proyecto de Minería de Datos</p>
-        </div>
-    </header>
+<h1>{{ proyecto.nombre }}</h1>
+<p>
+  Esta aplicación funciona como la bitácora técnica del proyecto de Minería de
+  Datos. Reúne, para la Etapa 1, el planteamiento del problema, las preguntas
+  que orientan la investigación, las fuentes de información utilizadas y una
+  primera caracterización del conjunto de datos con el que se va a trabajar
+  en las siguientes etapas.
+</p>
+<p>
+  La aplicación no reemplaza a los datos ni al código: es el punto de entrada
+  para entender qué se hizo, por qué, y de dónde salió cada dato antes de
+  aplicar cualquier técnica de minería.
+</p>
 
-    <main class="container">
-        <section class="intro">
-            <h2>Introducción</h2>
-            <p>{{ introduccion }}</p>
-        </section>
+<h2>Contenido de la Etapa 1</h2>
+<div class="tarjetas-cifras">
+  {% for slug, etiqueta in submenu %}
+  <a class="cifra" href="{{ url_for(slug) }}">
+    <span class="etiqueta-cifra">{{ etiqueta }}</span>
+    <span class="ir">Ver sección &rarr;</span>
+  </a>
+  {% endfor %}
+</div>
 
-        <section class="integrantes">
-            <h2>Integrantes del grupo</h2>
-            <ul>
-                {% for nombre in integrantes %}
-                <li>{{ nombre }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Proyecto Deforestación Colombia · Minería de Datos</p>
-    </footer>
-
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,10 @@
+<div class="barra-lateral">
+  <h4>Etapa 1</h4>
+  <ul>
+    {% for slug, etiqueta in submenu %}
+    <li{% if activo == slug %} class="activo"{% endif %}>
+      <a href="{{ url_for(slug) }}">{{ etiqueta }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

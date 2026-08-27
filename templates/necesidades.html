@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block titulo %}Necesidades de información{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Necesidades de información</h1>
+    <p>
+      A partir de las preguntas anteriores, esto es lo que hace falta conocer
+      antes de construir el conjunto de datos: quién o qué se observa, qué
+      características de eso se miden, en qué periodo y con qué nivel de
+      detalle.
+    </p>
+
+    <h2>Entidades involucradas</h2>
+    <table>
+      <thead><tr><th>Entidad</th><th>Rol en el análisis</th></tr></thead>
+      <tbody>
+      {% for nombre, rol in necesidades.entidades %}
+        <tr><td>{{ nombre }}</td><td>{{ rol }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Variables relevantes y su razón de ser</h2>
+    <table>
+      <thead><tr><th>Variable necesaria</th><th>Por qué se incorpora</th></tr></thead>
+      <tbody>
+      {% for nombre, razon in necesidades.variables %}
+        <tr><td>{{ nombre }}</td><td>{{ razon }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Cobertura y alcance</h2>
+    <dl style="display:grid; grid-template-columns: 220px 1fr; row-gap:0.5rem; column-gap:1rem;">
+      <dt><strong>Periodo de análisis</strong></dt><dd>{{ necesidades.periodo }}</dd>
+      <dt><strong>Cobertura geográfica</strong></dt><dd>{{ necesidades.cobertura_geografica }}</dd>
+      <dt><strong>Población / unidad de análisis</strong></dt><dd>{{ necesidades.poblacion }}</dd>
+      <dt><strong>Granularidad</strong></dt><dd>{{ necesidades.granularidad }}</dd>
+    </dl>
+
+    <h2>Comparabilidad entre escalas</h2>
+    <p>{{ necesidades.comparacion_escalas }}</p>
+
+  </div>
+</div>
+{% endblock %}

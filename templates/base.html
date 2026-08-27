@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block titulo %}{{ proyecto.etapa }}{% endblock %} · {{ proyecto.nombre }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header class="sitio-header">
+  <div class="header-inner">
+    <div>
+      <div class="titulo">{{ proyecto.nombre }}</div>
+      <div class="subtitulo">Proyecto de Minería de Datos &middot; {{ proyecto.etapa }}</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-principal">
+  <div class="nav-inner">
+    <ul>
+      <li{% if activo is none %} class="activo"{% endif %}><a href="{{ url_for('inicio') }}">Inicio</a></li>
+      <li tabindex="0">
+        <a href="{{ url_for('problema') }}">Etapa 1 &#9662;</a>
+        <ul class="submenu">
+          {% for slug, etiqueta in submenu %}
+          <li><a href="{{ url_for(slug) }}">{{ etiqueta }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="contenedor">
+  {% block contenido %}{% endblock %}
+</div>
+
+<footer class="sitio-footer">
+  {{ proyecto.nombre }} &middot; {{ proyecto.etapa }} &middot; Bitácora técnica construida en Flask
+</footer>
+
+</body>
+</html>

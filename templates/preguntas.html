@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}Pregunta principal y secundarias{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Pregunta principal y preguntas secundarias</h1>
+
+    <h2>Pregunta principal</h2>
+    <div class="nota">{{ pregunta_principal }}</div>
+
+    <h2>Preguntas secundarias</h2>
+    <p>
+      Cada una descompone la pregunta principal en un aspecto verificable con
+      los datos disponibles; debajo de cada pregunta se indica, a modo de
+      trazabilidad, qué variables y cruces de fuentes permitirían responderla.
+    </p>
+    <ol class="preguntas-secundarias">
+      {% for item in preguntas_secundarias %}
+      <li>
+        {{ item.pregunta }}
+        <div class="orienta">Orienta hacia: {{ item.orienta }}</div>
+      </li>
+      {% endfor %}
+    </ol>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}Fuentes de datos{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Fuentes de datos</h1>
+    <p>
+      Se documentan a continuación las fuentes efectivamente integradas en el
+      dataset consolidado, clasificadas según su tipo de recolección
+      (primaria, secundaria o terciaria) y el nivel de análisis al que
+      aportan. Cada ficha incluye lo necesario para evaluar su pertinencia,
+      confiabilidad, actualidad y cobertura, y para poder rastrear cualquier
+      dato hasta su origen.
+    </p>
+
+    {% for f in fuentes %}
+    <div class="ficha-fuente">
+      <h3>{{ f.nombre }}</h3>
+      <div class="meta-fuente">
+        <span class="etiqueta {{ f.tipo|lower }}">{{ f.tipo }}</span>
+        <span class="etiqueta">{{ f.nivel }}</span>
+        &middot; {{ f.institucion }}
+      </div>
+      <a class="boton-descarga" href="{{ f.url }}" target="_blank" rel="noopener">Ir a la fuente y descargar los datos &rarr;</a>
+      <dl>
+        <dt>URL</dt><dd><a href="{{ f.url }}" target="_blank" rel="noopener">{{ f.url }}</a></dd>
+        <dt>Cobertura geográfica</dt><dd>{{ f.cobertura_geografica }}</dd>
+        <dt>Periodo disponible</dt><dd>{{ f.periodo }}</dd>
+        <dt>Formato</dt><dd>{{ f.formato }}</dd>
+        <dt>Método de adquisición</dt><dd>{{ f.metodo_adquisicion }}</dd>
+        <dt>Registros aproximados</dt><dd>{{ f.registros_aprox }}</dd>
+        <dt>Variables disponibles</dt><dd>{{ f.variables_disponibles }}</dd>
+        <dt>Fecha de consulta</dt><dd>{{ f.fecha_consulta }}</dd>
+        <dt>Restricciones de uso</dt><dd>{{ f.restricciones }}</dd>
+      </dl>
+      <p><strong>Por qué se incluye:</strong> {{ f.justificacion }}</p>
+    </div>
+    {% endfor %}
+
+    <h2>Fuentes adicionales documentadas, aún no integradas cuantitativamente</h2>
+    <p>
+      Estas fuentes se identificaron y evaluaron como pertinentes para el
+      problema, pero su incorporación al dataset numérico se pospuso por el
+      procesamiento geoespacial adicional que exige su formato (ver
+      <a href="{{ url_for('limitaciones') }}">Limitaciones y consideraciones</a>).
+    </p>
+    <table>
+      <thead><tr><th>Fuente</th><th>Tipo</th><th>Nota</th></tr></thead>
+      <tbody>
+      {% for fp in fuentes_pendientes %}
+        <tr>
+          <td><a href="{{ fp.url }}" target="_blank" rel="noopener">{{ fp.nombre }}</a></td>
+          <td>{{ fp.tipo }}</td>
+          <td>{{ fp.nota }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+{% endblock %}

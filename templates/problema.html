@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Problema y contexto{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Problema y contexto</h1>
+    <p>{{ problema.intro }}</p>
+
+    <h2>El fenómeno en cifras: de lo global a lo local</h2>
+    <h3>Contexto global</h3>
+    <p>{{ problema.global }}</p>
+
+    <h3>Contexto nacional: Colombia</h3>
+    <p>{{ problema.nacional }}</p>
+
+    <h3>Contexto regional</h3>
+    <p>{{ problema.regional }}</p>
+
+    <h2>Delimitación del problema</h2>
+    <p>{{ problema.delimitacion }}</p>
+
+    <h2>Qué se espera conocer a partir de los datos</h2>
+    <p>{{ problema.conocimiento_esperado }}</p>
+
+  </div>
+</div>
+{% endblock %}

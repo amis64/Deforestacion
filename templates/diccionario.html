@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titulo %}Diccionario de datos{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Diccionario de datos</h1>
+    <p>
+      Describe cada variable del dataset consolidado sin depender de una
+      explicación verbal adicional: qué mide, qué tipo de dato es, en qué
+      unidad o dominio de valores se expresa, de qué fuente proviene y un
+      ejemplo real de valor.
+    </p>
+
+    <div class="tabla-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Unidad / dominio</th>
+          <th>Fuente</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for v in diccionario %}
+        <tr>
+          <td><code>{{ v.nombre }}</code></td>
+          <td>{{ v.descripcion }}</td>
+          <td>{{ v.tipo }}</td>
+          <td>{{ v.dominio }}</td>
+          <td>{{ v.fuente }}</td>
+          <td>{{ v.ejemplo }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

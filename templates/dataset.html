@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}Dataset{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Dataset inicial</h1>
+    <p>{{ dataset.resumen }}</p>
+
+    <h2>Cifras generales</h2>
+    <div class="tarjetas-cifras">
+      {% for etiqueta, valor in dataset.cifras %}
+      <div class="cifra">
+        <div class="valor">{{ valor }}</div>
+        <div class="etiqueta-cifra">{{ etiqueta }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Cómo se integran las fuentes</h2>
+    <p>{{ dataset.integracion }}</p>
+
+    <h2>Granularidad</h2>
+    <p>{{ dataset.granularidad }}</p>
+
+    <div class="nota">
+      El proceso completo de construcción (lectura de cada fuente, paso de
+      formato ancho a largo, normalización de nombres geográficos, cruce
+      espacial y consolidación final) está documentado como
+      anexo técnico reproducible del proyecto y puede ejecutarse de nuevo en
+      cualquier momento sobre archivos de fuente actualizados, conservando la
+      misma estructura de columnas descrita en el
+      <a href="{{ url_for('diccionario') }}">diccionario de datos</a>.
+    </div>
+
+  </div>
+</div>
+{% endblock %}

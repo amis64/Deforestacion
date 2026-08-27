@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Calidad inicial de los datos{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Calidad inicial de los datos</h1>
+    <p>
+      En esta etapa se diagnostica el estado del dataset; la limpieza
+      profunda queda para un entregable posterior. Lo que sigue es un
+      inventario honesto de lo que se encontró al revisar el conjunto de
+      datos consolidado.
+    </p>
+
+    <h2>Completitud</h2>
+    {% for titulo, detalle in calidad.completitud %}
+    <h3>{{ titulo }}</h3>
+    <p>{{ detalle }}</p>
+    {% endfor %}
+
+    <h2>Unicidad</h2>
+    <p>{{ calidad.unicidad }}</p>
+
+    <h2>Consistencia</h2>
+    {% for titulo, detalle in calidad.consistencia %}
+    <h3>{{ titulo }}</h3>
+    <p>{{ detalle }}</p>
+    {% endfor %}
+
+    <h2>Validez</h2>
+    <p>{{ calidad.validez }}</p>
+
+    <h2>Sesgos y limitaciones metodológicas</h2>
+    <p>{{ calidad.sesgos_y_limitaciones }}</p>
+
+    <h2>Trazabilidad</h2>
+    <p>{{ calidad.trazabilidad }}</p>
+
+  </div>
+</div>
+{% endblock %}

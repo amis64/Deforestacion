@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Limitaciones y consideraciones{% endblock %}
+{% block contenido %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Limitaciones y consideraciones</h1>
+    <p>
+      Ningún dataset construido a partir de fuentes heterogéneas está exento
+      de límites; documentarlos ahora evita interpretaciones equivocadas más
+      adelante.
+    </p>
+
+    <ul class="lista-limitaciones">
+      {% for titulo, detalle in limitaciones %}
+      <li>
+        <strong>{{ titulo }}.</strong> {{ detalle }}
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>
+{% endblock %}
