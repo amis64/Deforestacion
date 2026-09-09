@@ -36,6 +36,9 @@
         <dt>Restricciones de uso</dt><dd>{{ f.restricciones }}</dd>
       </dl>
       <p><strong>Por qué se incluye:</strong> {{ f.justificacion }}</p>
+      {% if f.rol_por_nivel %}
+      <p><strong>Rol en cada nivel de análisis:</strong> {{ f.rol_por_nivel }}</p>
+      {% endif %}
     </div>
     {% endfor %}
 

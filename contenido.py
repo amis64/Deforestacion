@@ -68,7 +68,24 @@ PROBLEMA = {
         "2001 y 2024, comparando el comportamiento nacional y regional contra el "
         "panorama global, y usando como evidencia series satelitales y "
         "estadísticas oficiales ya sistematizadas, en vez de captura de datos de "
-        "campo propia."
+        "campo propia. Las tres escalas no se tratan como secciones "
+        "independientes: se definen como niveles de un mismo fenómeno que deben "
+        "poder compararse entre sí, y por eso el dataset consolidado conserva "
+        "para cada una la misma variable de pérdida de bosque (hectáreas/año) "
+        "con idéntica definición operativa."
+    ),
+    "comparacion_escalas_metodologia": (
+        "La comparación entre escalas se apoya en tres criterios explícitos: "
+        "(1) la unidad de análisis, que pasa de país (Global) a departamento "
+        "(Nacional) y a municipio (Regional) sin cambiar de variable; "
+        "(2) la métrica común, hectáreas de pérdida de bosque por año, que "
+        "permite calcular la participación de una escala dentro de la "
+        "inmediatamente superior (por ejemplo, qué porcentaje de la pérdida "
+        "nacional se concentra en un departamento del arco de la "
+        "deforestación); y (3) la fuente que respalda cada nivel, documentada "
+        "explícitamente en la ficha de cada fuente de datos (ver sección "
+        "Fuentes de datos) para que cualquier comparación entre escalas pueda "
+        "rastrearse hasta el origen de cada cifra."
     ),
     "conocimiento_esperado": (
         "Se espera poder caracterizar en qué medida la pérdida de bosque "
@@ -181,6 +198,13 @@ FUENTES = [
         "url": "https://globalnaturewatch.org/dashboards/country/COL/?map=eyJjYW5Cb3VuZCI6dHJ1ZX0%3D",
         "tipo": "Secundaria",
         "nivel": "Global, Nacional, Regional",
+        "rol_por_nivel": (
+            "Global: aporta el punto de comparación dentro del cinturón "
+            "tropical mundial; Nacional: se agrega por departamento para "
+            "contrastarse contra la cifra oficial del IDEAM; Regional: llega "
+            "hasta el municipio, la granularidad que sostiene el análisis "
+            "del arco de la deforestación."
+        ),
         "cobertura_geografica": "Mundial (nivel país); Colombia a nivel departamento y municipio",
         "periodo": "2001-2025 (pérdida de cobertura); 2001-2024 (atribución de causa/driver)",
         "formato": "Excel (.xlsx) multi-hoja descargado desde el panel de país",
@@ -201,6 +225,12 @@ FUENTES = [
         "url": "https://colombia.mapbiomas.org/en/estadisticas/",
         "tipo": "Secundaria",
         "nivel": "Nacional, Regional",
+        "rol_por_nivel": (
+            "Nacional: distribuye por departamento la clase de cobertura "
+            "resultante tras la pérdida de bosque; Regional: llega hasta el "
+            "municipio, el nivel donde se decide si la transformación fue "
+            "hacia uso agropecuario u otra categoría."
+        ),
         "cobertura_geografica": "Colombia: país, departamento, municipio, bioma y cuenca",
         "periodo": "1985-2024 (se usa el subconjunto 2001-2024 para alinear con GFW)",
         "formato": "Excel (.xlsx) multi-hoja",
@@ -224,6 +254,12 @@ FUENTES = [
         "url": "https://firms.modaps.eosdis.nasa.gov/country/",
         "tipo": "Primaria",
         "nivel": "Regional",
+        "rol_por_nivel": (
+            "Regional exclusivamente: su valor está en la ubicación puntual "
+            "del foco de calor, que solo tiene sentido analítico una vez se "
+            "cruza espacialmente con el municipio; no se reporta a nivel "
+            "nacional ni global en este proyecto."
+        ),
         "cobertura_geografica": "Colombia (recorte del feed satelital global)",
         "periodo": "2012-2022",
         "formato": "CSV, un archivo por año",
@@ -242,6 +278,12 @@ FUENTES = [
     {
         "nombre": "FAO: Indicador ODS 15.1.1 (proporción de superficie forestal)",
         "institucion": "Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO)",
+        "rol_por_nivel": (
+            "Global: incluye agregados por continente y grupo de ingreso "
+            "que dan contexto internacional; Nacional: dentro de esa misma "
+            "serie aparece la cifra oficial de Colombia, comparable "
+            "directamente contra el resto de países."
+        ),
         "url": "https://de-public-statsuite.fao.org/vis?fs[0]=Sustainable%20Development%20Goals%20%28SDGs%29,1%7CGoal%2015%20Life%20on%20Land%23SDG_G15%23%7C15.1.1%20Forest%20area%23SDG_G15_1511%23&pg=0&fc=Sustainable%20Development%20Goals%20%28SDGs%29&bp=true&snb=1&vw=ov&df[ds]=ds-release&df[id]=DF_SDG_15_1_1&df[ag]=FAO&df[vs]=1.0&dq=A...........&pd=2015,2025&to[TIME_PERIOD]=false",
         "tipo": "Terciaria",
         "nivel": "Global, Nacional",
@@ -263,6 +305,12 @@ FUENTES = [
     {
         "nombre": "Our World in Data: Deforestación anual",
         "institucion": "Our World in Data (Universidad de Oxford / Global Change Data Lab)",
+        "rol_por_nivel": (
+            "Global exclusivamente: sirve como serie país-año de contraste "
+            "frente a GFW; no está disponible con desagregación "
+            "departamental ni municipal, por lo que no aporta a los niveles "
+            "Nacional ni Regional."
+        ),
         "url": "https://ourworldindata.org/grapher/annual-deforestation",
         "tipo": "Terciaria",
         "nivel": "Global",
@@ -283,6 +331,12 @@ FUENTES = [
     {
         "nombre": "DANE: Marco Geoestadístico Nacional (capa de municipios)",
         "institucion": "Departamento Administrativo Nacional de Estadística (DANE)",
+        "rol_por_nivel": (
+            "Nacional: define los límites departamentales usados para "
+            "agregar FIRMS a esa escala; Regional: define los límites "
+            "municipales, la unidad base de todo el cruce espacial del "
+            "proyecto."
+        ),
         "url": "https://geoportal.dane.gov.co/servicios/descarga-y-metadatos/datos-geoestadisticos/",
         "tipo": "Primaria",
         "nivel": "Nacional, Regional",
