@@ -1,7 +1,7 @@
 # Anexo técnico: construcción del dataset
 
 Este script (`build_dataset.py`) no forma parte de la aplicación Flask ni es
-necesario para desplegarla — se incluye únicamente como evidencia de
+necesario para desplegarla. Se incluye únicamente como evidencia de
 trazabilidad y reproducibilidad, y para que el proceso de consolidación
 descrito en la sección "Dataset" de la aplicación pueda ejecutarse de nuevo.
 
