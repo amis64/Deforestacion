@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Problemas, causas e integración{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Inventario de problemas encontrados</h1>
+    <div class="tabla-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Variable</th>
+          <th>Descripción</th>
+          <th>Registros afectados</th>
+          <th>Dimensión</th>
+          <th>Impacto</th>
+          <th>Evidencia</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in inventario %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.variable }}</td>
+          <td>{{ p.descripcion }}</td>
+          <td>{{ p.registros_afectados }}</td>
+          <td>{{ p.dimension }}</td>
+          <td>
+            {% set nivel = p.impacto.split(' ')[0]|lower %}
+            <span class="nivel-impacto {{ nivel }}">{{ p.impacto }}</span>
+          </td>
+          <td>{{ p.evidencia }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Análisis de las causas</h2>
+    {% for titulo, causa in causas %}
+    <h3>{{ titulo }}</h3>
+    <p>{{ causa }}</p>
+    {% endfor %}
+
+    <h2>Integración y homologación de los datos</h2>
+    <p>{{ integracion }}</p>
+
+  </div>
+</div>
+{% endblock %}

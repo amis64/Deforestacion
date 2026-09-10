@@ -1,0 +1,278 @@
+{
+  "registros": 88513,
+  "variables": 20,
+  "columnas": [
+    {
+      "variable": "id_registro",
+      "tipo_dato": "int64",
+      "valores_unicos": 88513,
+      "valores_nulos": 0,
+      "porcentaje_nulos": 0.0
+    },
+    {
+      "variable": "nivel_analisis",
+      "tipo_dato": "str",
+      "valores_unicos": 3,
+      "valores_nulos": 0,
+      "porcentaje_nulos": 0.0
+    },
+    {
+      "variable": "fuente_origen",
+      "tipo_dato": "str",
+      "valores_unicos": 11,
+      "valores_nulos": 0,
+      "porcentaje_nulos": 0.0
+    },
+    {
+      "variable": "pais",
+      "tipo_dato": "str",
+      "valores_unicos": 312,
+      "valores_nulos": 0,
+      "porcentaje_nulos": 0.0
+    },
+    {
+      "variable": "departamento",
+      "tipo_dato": "str",
+      "valores_unicos": 44,
+      "valores_nulos": 3622,
+      "porcentaje_nulos": 4.09
+    },
+    {
+      "variable": "municipio",
+      "tipo_dato": "str",
+      "valores_unicos": 1119,
+      "valores_nulos": 5998,
+      "porcentaje_nulos": 6.78
+    },
+    {
+      "variable": "anio",
+      "tipo_dato": "int64",
+      "valores_unicos": 24,
+      "valores_nulos": 0,
+      "porcentaje_nulos": 0.0
+    },
+    {
+      "variable": "latitud",
+      "tipo_dato": "float64",
+      "valores_unicos": 9634,
+      "valores_nulos": 3768,
+      "porcentaje_nulos": 4.26
+    },
+    {
+      "variable": "longitud",
+      "tipo_dato": "float64",
+      "valores_unicos": 9630,
+      "valores_nulos": 3768,
+      "porcentaje_nulos": 4.26
+    },
+    {
+      "variable": "area_perdida_bosque_ha",
+      "tipo_dato": "float64",
+      "valores_unicos": 2359,
+      "valores_nulos": 5470,
+      "porcentaje_nulos": 6.18
+    },
+    {
+      "variable": "emisiones_co2_mg",
+      "tipo_dato": "float64",
+      "valores_unicos": 48293,
+      "valores_nulos": 5470,
+      "porcentaje_nulos": 6.18
+    },
+    {
+      "variable": "driver_dominante",
+      "tipo_dato": "str",
+      "valores_unicos": 7,
+      "valores_nulos": 8731,
+      "porcentaje_nulos": 9.86
+    },
+    {
+      "variable": "area_transformada_ha",
+      "tipo_dato": "float64",
+      "valores_unicos": 27504,
+      "valores_nulos": 9601,
+      "porcentaje_nulos": 10.85
+    },
+    {
+      "variable": "clase_transformacion_dominante",
+      "tipo_dato": "str",
+      "valores_unicos": 2,
+      "valores_nulos": 9601,
+      "porcentaje_nulos": 10.85
+    },
+    {
+      "variable": "num_focos_calor",
+      "tipo_dato": "float64",
+      "valores_unicos": 821,
+      "valores_nulos": 60697,
+      "porcentaje_nulos": 68.57
+    },
+    {
+      "variable": "frp_promedio",
+      "tipo_dato": "float64",
+      "valores_unicos": 8482,
+      "valores_nulos": 60697,
+      "porcentaje_nulos": 68.57
+    },
+    {
+      "variable": "confianza_promedio_focos",
+      "tipo_dato": "float64",
+      "valores_unicos": 1888,
+      "valores_nulos": 60697,
+      "porcentaje_nulos": 68.57
+    },
+    {
+      "variable": "porcentaje_area_forestal",
+      "tipo_dato": "float64",
+      "valores_unicos": 662,
+      "valores_nulos": 85201,
+      "porcentaje_nulos": 96.26
+    },
+    {
+      "variable": "area_forestal_ha",
+      "tipo_dato": "float64",
+      "valores_unicos": 701,
+      "valores_nulos": 85201,
+      "porcentaje_nulos": 96.26
+    },
+    {
+      "variable": "deforestacion_anual_ha_owid",
+      "tipo_dato": "float64",
+      "valores_unicos": 266,
+      "valores_nulos": 86977,
+      "porcentaje_nulos": 98.26
+    }
+  ],
+  "duplicados_incluyendo_id": 0,
+  "duplicados_ignorando_id_generado": 7928,
+  "estadisticos_numericos": [
+    {
+      "variable": "area_perdida_bosque_ha",
+      "minimo": 0.0,
+      "maximo": 424642.0,
+      "promedio": 678.96,
+      "n": 83043
+    },
+    {
+      "variable": "emisiones_co2_mg",
+      "minimo": 0.0,
+      "maximo": 243821901.0,
+      "promedio": 378424.63,
+      "n": 83043
+    },
+    {
+      "variable": "area_transformada_ha",
+      "minimo": 147.05,
+      "maximo": 3278380.11,
+      "promedio": 52438.62,
+      "n": 78912
+    },
+    {
+      "variable": "num_focos_calor",
+      "minimo": 1.0,
+      "maximo": 13851.0,
+      "promedio": 133.58,
+      "n": 27816
+    },
+    {
+      "variable": "frp_promedio",
+      "minimo": 0.31,
+      "maximo": 96.88,
+      "promedio": 7.63,
+      "n": 27816
+    },
+    {
+      "variable": "confianza_promedio_focos",
+      "minimo": 25.0,
+      "maximo": 75.0,
+      "promedio": 49.53,
+      "n": 27816
+    },
+    {
+      "variable": "porcentaje_area_forestal",
+      "minimo": 0.0,
+      "maximo": 97.09,
+      "promedio": 32.94,
+      "n": 3312
+    },
+    {
+      "variable": "area_forestal_ha",
+      "minimo": 0.0,
+      "maximo": 4200995.2,
+      "promedio": 79259.75,
+      "n": 3312
+    },
+    {
+      "variable": "deforestacion_anual_ha_owid",
+      "minimo": 0.0,
+      "maximo": 9880680.0,
+      "promedio": 228431.36,
+      "n": 1536
+    }
+  ],
+  "atipicos_iqr": [
+    {
+      "variable": "area_perdida_bosque_ha",
+      "limite_inferior": -191.0,
+      "limite_superior": 337.0,
+      "atipicos": 11385,
+      "porcentaje_atipicos": 13.71
+    },
+    {
+      "variable": "emisiones_co2_mg",
+      "limite_inferior": -94734.75,
+      "limite_superior": 165483.25,
+      "atipicos": 11683,
+      "porcentaje_atipicos": 14.07
+    },
+    {
+      "variable": "area_transformada_ha",
+      "limite_inferior": -28258.86,
+      "limite_superior": 66337.24,
+      "atipicos": 8745,
+      "porcentaje_atipicos": 11.08
+    },
+    {
+      "variable": "num_focos_calor",
+      "limite_inferior": -86.0,
+      "limite_superior": 154.0,
+      "atipicos": 3954,
+      "porcentaje_atipicos": 14.21
+    },
+    {
+      "variable": "frp_promedio",
+      "limite_inferior": -1.82,
+      "limite_superior": 15.9,
+      "atipicos": 1259,
+      "porcentaje_atipicos": 4.53
+    },
+    {
+      "variable": "confianza_promedio_focos",
+      "limite_inferior": 47.92,
+      "limite_superior": 51.25,
+      "atipicos": 6016,
+      "porcentaje_atipicos": 21.63
+    },
+    {
+      "variable": "porcentaje_area_forestal",
+      "limite_inferior": -47.57,
+      "limite_superior": 110.61,
+      "atipicos": 0,
+      "porcentaje_atipicos": 0.0
+    },
+    {
+      "variable": "area_forestal_ha",
+      "limite_inferior": -29138.53,
+      "limite_superior": 48731.38,
+      "atipicos": 524,
+      "porcentaje_atipicos": 15.82
+    },
+    {
+      "variable": "deforestacion_anual_ha_owid",
+      "limite_inferior": -101925.0,
+      "limite_superior": 169955.0,
+      "atipicos": 214,
+      "porcentaje_atipicos": 13.93
+    }
+  ]
+}

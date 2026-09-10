@@ -359,3 +359,50 @@ footer.sitio-footer {
   .nav-inner > ul { flex-direction: column; width: 100%; }
   .submenu { position: static; border-top: 1px solid var(--borde); }
 }
+
+/* --- Etapa 2: Calidad de datos ------------------------------------------- */
+
+.tarjeta-metrica {
+  border: 1px solid var(--borde);
+  border-top: 3px solid var(--verde-medio);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1rem;
+}
+.tarjeta-metrica h3 { margin-top: 0; margin-bottom: 0.3rem; }
+.tarjeta-metrica .formula {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  font-family: Georgia, serif;
+  margin-bottom: 0.5rem;
+}
+.tarjeta-metrica ul {
+  margin: 0.4rem 0 0.6rem 0;
+  padding-left: 1.2rem;
+}
+.tarjeta-metrica li { margin-bottom: 0.3rem; }
+
+.nivel-impacto {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.78rem;
+  border: 1px solid var(--borde);
+}
+.nivel-impacto.alto { border-color: var(--alerta-borde); color: var(--alerta-borde); }
+.nivel-impacto.medio { border-color: var(--tierra); color: var(--tierra); }
+.nivel-impacto.bajo { border-color: var(--verde-medio); color: var(--verde-medio); }
+
+.tabla-comparacion th:first-child, .tabla-comparacion td:first-child { width: 26%; }
+.tabla-comparacion .antes { color: var(--texto-suave); }
+.tabla-comparacion .despues { color: var(--verde-oscuro); font-weight: bold; }
+
+.paso-tratamiento {
+  border-left: 4px solid var(--tierra);
+  padding: 0.2rem 0 0.2rem 1rem;
+  margin-bottom: 1rem;
+}
+.paso-tratamiento h3 { margin: 0 0 0.2rem 0; }
+.paso-tratamiento .aplica-a {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  margin-bottom: 0.3rem;
+}

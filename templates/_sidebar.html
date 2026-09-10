@@ -1,7 +1,7 @@
 <div class="barra-lateral">
-  <h4>Etapa 1</h4>
+  <h4>{{ etapa_titulo|default('Etapa 1') }}</h4>
   <ul>
-    {% for slug, etiqueta in submenu %}
+    {% for slug, etiqueta in (submenu_actual|default(submenu)) %}
     <li{% if activo == slug %} class="activo"{% endif %}>
       <a href="{{ url_for(slug) }}">{{ etiqueta }}</a>
     </li>

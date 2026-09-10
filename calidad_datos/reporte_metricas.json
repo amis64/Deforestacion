@@ -1,0 +1,63 @@
+{
+  "completitud": {
+    "formula": "1 - (nulos / (filas x variables)), calculado sobre el total de celdas y sobre las variables nucleo",
+    "completitud_variables_nucleo_pct": 100.0,
+    "completitud_global_celdas_pct": 72.01,
+    "nota": "La completitud global es baja porque incluye variables que solo aplican a un nivel de analisis o a una ventana temporal por diseño (num_focos_calor, porcentaje_area_forestal, area_forestal_ha, deforestacion_anual_ha_owid); la completitud de las variables nucleo, en cambio, es del 100%."
+  },
+  "unicidad": {
+    "formula": "1 - (registros_duplicados / total_registros), ignorando el id generado",
+    "duplicados": 7928,
+    "porcentaje_duplicados": 8.96,
+    "unicidad_pct": 91.04
+  },
+  "consistencia": {
+    "formula": "1 - (valores_con_formato_no_homologado / valores_no_nulos), por variable categorica",
+    "departamento": {
+      "valores_no_nulos": 84891,
+      "con_variante_de_formato": 171,
+      "consistencia_pct": 99.8
+    },
+    "municipio": {
+      "valores_no_nulos": 82515,
+      "con_variante_de_formato": 147,
+      "consistencia_pct": 99.82
+    },
+    "clase_transformacion_dominante": {
+      "valores_no_nulos": 78912,
+      "con_prefijo_numerico_de_leyenda": 78912,
+      "consistencia_pct": 0.0
+    },
+    "driver_dominante_vs_diccionario_de_datos": {
+      "valores_no_nulos": 79782,
+      "en_ingles_no_coincide_con_diccionario": 79782,
+      "consistencia_pct": 0.0
+    }
+  },
+  "validez": {
+    "formula": "1 - (registros_fuera_del_dominio_valido / total_registros)",
+    "pais_como_agregado_regional_no_pais": {
+      "filas_afectadas": 147,
+      "porcentaje": 0.17
+    },
+    "violaciones_de_rango_numerico": 0,
+    "validez_de_rango_pct": 100.0,
+    "validez_de_pais_pct": 99.83
+  },
+  "exactitud": {
+    "formula": "diferencia relativa promedio entre dos fuentes independientes que miden el mismo fenomeno para la misma unidad geografica-año (GFW vs. Our World in Data, a nivel pais-año)",
+    "casos_comparables": 36,
+    "diferencia_relativa_promedio_pct": 85.76,
+    "diferencia_relativa_minima_pct": 23.36,
+    "diferencia_relativa_maxima_pct": 142.99,
+    "interpretacion": "La magnitud de la diferencia confirma, con un caso verificable, la limitacion metodologica ya documentada en la Etapa 1: GFW y OWID no son intercambiables porque usan definiciones y algoritmos distintos de perdida de bosque."
+  },
+  "actualidad": {
+    "formula": "anio_de_referencia - anio_maximo_observado; y proporcion de filas en los ultimos 5 anios de la serie",
+    "anio_maximo_observado": 2024,
+    "anio_de_referencia_consulta": 2026,
+    "antiguedad_del_dato_mas_reciente_anios": 2,
+    "filas_en_ultimos_5_anios_de_la_serie": 18888,
+    "porcentaje_filas_ultimos_5_anios": 21.34
+  }
+}
