@@ -1,0 +1,64 @@
+{
+  "antes": {
+    "filas": 88513,
+    "columnas": 20,
+    "duplicados_exactos_sin_id": 7928,
+    "variantes_departamento": 44,
+    "variantes_municipio_mayus": 147,
+    "filas_pais_agregado_regional": 147,
+    "categorias_driver_dominante": [
+      "Hard commodities",
+      "Logging",
+      "Other natural disturbances",
+      "Permanent agriculture",
+      "Settlements & Infrastructure",
+      "Shifting cultivation",
+      "Wildfire"
+    ],
+    "categorias_clase_transformacion": [
+      "3. Área  agropecuaria",
+      "4. Área sin vegetación"
+    ]
+  },
+  "despues": {
+    "filas": 80585,
+    "columnas": 25,
+    "duplicados_exactos_sin_id": 0,
+    "variantes_departamento": 33,
+    "variantes_municipio_mayus": 0,
+    "filas_pais_agregado_regional": 48,
+    "categorias_driver_dominante": [
+      "Agricultura migratoria",
+      "Agricultura permanente",
+      "Incendios forestales",
+      "Mineria y otras materias primas",
+      "Otras alteraciones naturales",
+      "Silvicultura",
+      "Urbanizacion e infraestructura"
+    ],
+    "categorias_clase_transformacion": [
+      "Área agropecuaria",
+      "Área sin vegetación"
+    ]
+  },
+  "violaciones_rango_encontradas": 0,
+  "atipicos_marcados_no_eliminados": {
+    "area_perdida_bosque_ha": {
+      "limite_superior": 366.5,
+      "marcados": 10705
+    },
+    "emisiones_co2_mg": {
+      "limite_superior": 181152.25,
+      "marcados": 10920
+    },
+    "area_transformada_ha": {
+      "limite_superior": 70311.91,
+      "marcados": 8230
+    },
+    "num_focos_calor": {
+      "limite_superior": 164.0,
+      "marcados": 3778
+    }
+  },
+  "filas_eliminadas_por_duplicado": 7928
+}
