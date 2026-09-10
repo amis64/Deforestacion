@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 contenido.py
-=============
+============
 Contenido de texto y datos estructurados de la Etapa 1 del proyecto de
 Minería de Datos: "Deforestación y Transformación del Territorio".
 
@@ -1066,3 +1066,108 @@ INTEGRACION2 = (
     "agregados sin perder esas filas, que sí sirven como contexto "
     "internacional en otro tipo de comparación."
 )
+
+PLAN_TRATAMIENTO2 = [
+    dict(
+        accion="Eliminación de duplicados exactos",
+        aplica_a="Todas las columnas salvo id_registro (P1)",
+        justificacion=(
+            "Se conserva la primera aparición de cada combinación de valores "
+            "y se descartan las repeticiones; el identificador se "
+            "regenera de forma secuencial sobre el dataset ya sin duplicados "
+            "para que siga siendo único y consecutivo."
+        ),
+    ),
+    dict(
+        accion="Homologación de categorías (driver_dominante)",
+        aplica_a="driver_dominante (P2)",
+        justificacion=(
+            "Se aplica un diccionario de traducción fijo (7 categorías) en "
+            "vez de una traducción automática, para garantizar que el "
+            "resultado coincida exactamente con el dominio que ya documenta "
+            "el diccionario de datos."
+        ),
+    ),
+    dict(
+        accion="Estandarización de texto (departamento y municipio)",
+        aplica_a="departamento, municipio (P5, P6)",
+        justificacion=(
+            "Se normaliza a capitalización estándar y se resuelven "
+            "explícitamente los dos casos de nombre distinto para el mismo "
+            "lugar (Bogotá D.C. y San Andrés y Providencia), en vez de "
+            "dejarlos como una variante más de mayúscula."
+        ),
+    ),
+    dict(
+        accion="Corrección de formato de categorías",
+        aplica_a="clase_transformacion_dominante (P4)",
+        justificacion=(
+            "Se retira el prefijo numérico de la leyenda de MapBiomas y se "
+            "corrige el espaciado, conservando el nombre de la categoría "
+            "sin alterar su significado."
+        ),
+    ),
+    dict(
+        accion="Marcado (no eliminación) de agregados regionales",
+        aplica_a="pais (P3)",
+        justificacion=(
+            "Se agrega la columna booleana es_agregado_regional en vez de "
+            "borrar las filas, porque esa información puede seguir siendo "
+            "útil para comparar Colombia contra bloques de países; lo que no "
+            "puede pasar es que se sumen o comparen como si fueran un país "
+            "más sin que quede explícito."
+        ),
+    ),
+    dict(
+        accion="Validación de rangos numéricos",
+        aplica_a="porcentaje_area_forestal, confianza_promedio_focos, anio, variables de área/emisión (P9, verificación de validez)",
+        justificacion=(
+            "Se ejecuta como verificación automática que no encontró "
+            "violaciones (0 casos); se documenta igual porque demuestra que "
+            "la validez de rango no es un problema pendiente, no porque "
+            "haya algo que corregir."
+        ),
+    ),
+    dict(
+        accion="Tratamiento justificado de valores atípicos",
+        aplica_a="area_perdida_bosque_ha, emisiones_co2_mg, area_transformada_ha, num_focos_calor (P9)",
+        justificacion=(
+            "No se eliminan ni se recortan: se agrega una bandera booleana "
+            "por variable (por ejemplo area_perdida_bosque_ha_atipico) "
+            "calculada con el límite superior del rango intercuartílico, "
+            "para que un análisis posterior pueda decidir si los incluye o "
+            "no sin perder el valor original ni la fila completa."
+        ),
+    ),
+    dict(
+        accion="Ambigüedad cero/sin dato en area_transformada_ha",
+        aplica_a="area_transformada_ha (P10)",
+        justificacion=(
+            "Se deja pendiente de forma explícita: no hay evidencia "
+            "suficiente en los metadatos disponibles de MapBiomas para "
+            "decidir, celda por celda, si un vacío es 'cero' o 'sin dato', y "
+            "resolverlo con una regla arbitraria sería peor que dejarlo "
+            "documentado como limitación abierta."
+        ),
+    ),
+]
+
+COMPARACION_ANTES_DESPUES2 = [
+    ("Filas", "88.513", "80.585", "-7.928 (-8,96%)"),
+    ("Columnas", "20", "25", "+5 (bandera de agregado regional y 4 banderas de valores atípicos)"),
+    ("Duplicados exactos (sin id_registro)", "7.928 (8,96%)", "0 (0%)", "-7.928"),
+    ("Variantes de 'departamento'", "44", "33", "-11"),
+    ("Filas de 'municipio' en mayúscula sostenida", "147", "0", "-147"),
+    ("Categorías de 'driver_dominante'", "7, en inglés", "7, homologadas al español del diccionario de datos", "sin pérdida de categorías"),
+    ("Categorías de 'clase_transformacion_dominante'", "2, con prefijo numérico de leyenda", "2, sin prefijo ('Área agropecuaria', 'Área sin vegetación')", "sin pérdida de categorías"),
+    ("Filas con 'pais' = agregado regional", "147, sin marcar", "48 filas únicas, marcadas con es_agregado_regional", "identificadas explícitamente, no eliminadas"),
+    ("Valores atípicos (4 variables numéricas)", "detectados pero no señalados en el dataset", "entre 3.778 y 10.920 filas según variable, marcadas con una bandera por variable", "señalados, no eliminados"),
+    ("Violaciones de rango numérico", "0", "0", "sin cambio (verificación, no corrección)"),
+]
+
+SCRIPT_TRATAMIENTO2 = (
+    "calidad_datos/tratamiento.py -> dataset_tratado.csv y "
+    "calidad_datos/reporte_tratamiento.json"
+)
+
+
