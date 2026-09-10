@@ -813,3 +813,101 @@ PERFILAMIENTO2 = {
     ),
     "script": "calidad_datos/perfilamiento.py -> calidad_datos/reporte_perfilamiento.json",
 }
+
+DIMENSIONES2 = [
+    dict(
+        nombre="Completitud",
+        formula="1 - (valores nulos / total de celdas), calculado sobre el total de celdas y también solo sobre las variables núcleo.",
+        resultados=[
+            "Variables núcleo (nivel_analisis, pais, anio, id_registro, fuente_origen): 100% completas.",
+            "Completitud global sobre las 20 variables: 72,01%.",
+        ],
+        interpretacion=(
+            "La completitud global no es un problema por sí sola: baja "
+            "sobre todo porque num_focos_calor (68,57% nulo), "
+            "porcentaje_area_forestal y area_forestal_ha (96,26% nulo cada "
+            "una) y deforestacion_anual_ha_owid (98,26% nulo) solo aplican a "
+            "un nivel de análisis o a una ventana temporal específica; es "
+            "'missingness' por diseño, ya documentada en la Etapa 1, y se "
+            "confirma aquí con el porcentaje exacto."
+        ),
+    ),
+    dict(
+        nombre="Unicidad",
+        formula="1 - (registros duplicados / total de registros), ignorando el identificador generado.",
+        resultados=[
+            "Duplicados exactos ignorando id_registro: 7.928 filas (8,96%).",
+            "Unicidad del dataset: 91,04%.",
+        ],
+        interpretacion=(
+            "Corrige la lectura de la Etapa 1, que solo comparó filas "
+            "incluyendo el id generado (que nunca se repite) y por eso no "
+            "detectó los duplicados. Se trata con eliminación en esta etapa."
+        ),
+    ),
+    dict(
+        nombre="Consistencia",
+        formula="1 - (valores con formato no homologado / valores no nulos de esa variable).",
+        resultados=[
+            "departamento: 171 de 84.891 valores (0,20%) con variante de mayúscula o puntuación; consistencia 99,80%.",
+            "municipio: 147 de 82.515 valores (0,18%) en mayúscula sostenida; consistencia 99,82%.",
+            "clase_transformacion_dominante: 78.912 de 78.912 valores no nulos (100%) con el prefijo numérico de la leyenda de MapBiomas; consistencia 0%.",
+            "driver_dominante frente al diccionario de datos: 79.782 de 79.782 valores no nulos (100%) en inglés, sin coincidir con el dominio en español documentado en la Etapa 1; consistencia 0%.",
+        ],
+        interpretacion=(
+            "Las variantes de mayúsculas en nombres de lugar afectan pocas "
+            "filas, pero las dos últimas son sistemáticas: toda la columna "
+            "necesitaba homologación de formato o de idioma, no una "
+            "excepción puntual. Ambas se corrigen en el plan de tratamiento."
+        ),
+    ),
+    dict(
+        nombre="Validez",
+        formula="1 - (registros fuera del dominio válido de la variable / total de registros).",
+        resultados=[
+            "Filas donde 'pais' es en realidad un agregado regional o de grupo de ingreso (Africa, World, Low-income countries, etc.): 147 (0,17%).",
+            "Violaciones de rango numérico (porcentajes fuera de 0-100, año fuera de 2001-2024, valores negativos): 0.",
+            "Validez de rango numérico: 100%. Validez de la columna pais: 99,83%.",
+        ],
+        interpretacion=(
+            "Las magnitudes numéricas son físicamente coherentes en su "
+            "totalidad. El único problema de validez encontrado es "
+            "estructural: la fuente FAO/OWID mezcla países reales con "
+            "agregados de Naciones Unidas bajo la misma columna, sin un "
+            "indicador de tipo de entidad."
+        ),
+    ),
+    dict(
+        nombre="Exactitud",
+        formula="Diferencia relativa entre dos fuentes independientes que miden el mismo fenómeno para la misma unidad geográfica-año.",
+        resultados=[
+            "Casos comparables entre GFW y OWID (Colombia, mismo año): 36.",
+            "Diferencia relativa: mínima 23,36%, máxima 142,99%, promedio 85,76%.",
+        ],
+        interpretacion=(
+            "Confirma con un número verificable la limitante metodológica "
+            "que la Etapa 1 solo describía de forma cualitativa: GFW y OWID "
+            "no son intercambiables. El dataset no debe presentar una sola "
+            "cifra de pérdida de bosque a nivel país como si fuera única."
+        ),
+    ),
+    dict(
+        nombre="Actualidad",
+        formula="Año de referencia de la consulta menos el año máximo observado; proporción de filas en los últimos 5 años de la serie.",
+        resultados=[
+            "Año máximo observado: 2024. Año de referencia (consulta de las fuentes): 2026.",
+            "Antigüedad del dato más reciente: 2 años.",
+            "Filas en los últimos 5 años de la serie (2020-2024): 18.888 (21,34%).",
+        ],
+        interpretacion=(
+            "El dato más reciente tiene un rezago razonable para fuentes "
+            "satelitales globales, pero la mayoría de las filas del dataset "
+            "integrado (78,66%) corresponde a años anteriores a 2020, "
+            "porque varias fuentes (FIRMS, FAO, OWID) aportan series "
+            "históricas largas. Cualquier análisis centrado en 'la "
+            "situación actual' debe filtrar explícitamente por año."
+        ),
+    ),
+]
+
+SCRIPT_METRICAS2 = "calidad_datos/metricas_calidad.py -> calidad_datos/reporte_metricas.json"
