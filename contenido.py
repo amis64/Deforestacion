@@ -630,3 +630,186 @@ LIMITACIONES = [
         "fuentes se abordarán en las etapas siguientes del proyecto.",
     ),
 ]
+
+# ---------------------------------------------------------------------------
+# ETAPA 2 · Calidad de datos
+# ---------------------------------------------------------------------------
+# El contenido de esta sección se calcula a partir de dataset_consolidado.csv
+# mediante los scripts en calidad_datos/ (perfilamiento.py, metricas_calidad.py
+# y tratamiento.py); las cifras que aparecen aquí son la salida de esos
+# scripts al momento de redactar el informe, no estimaciones.
+
+SUBMENU2 = [
+    ("descripcion2", "1. Descripción y propósito"),
+    ("requisitos2", "2. Requisitos de calidad"),
+    ("perfilamiento2", "3. Perfilamiento"),
+    ("dimensiones2", "4. Dimensiones y métricas"),
+    ("problemas2", "5. Problemas, causas e integración"),
+    ("tratamiento2", "6. Tratamiento y comparación"),
+]
+
+DESCRIPCION2 = {
+    "proposito": (
+        "El dataset consolidado (dataset_consolidado.csv, 88.513 filas, 20 "
+        "variables) se construyó en la Etapa 1 para comparar la pérdida de "
+        "cobertura boscosa y su transformación en uso del suelo entre tres "
+        "escalas (Global, Nacional, Regional). Esta etapa evalúa si ese "
+        "conjunto de datos, tal como quedó consolidado, es apto para ese "
+        "propósito: si permite agregar y comparar correctamente entre "
+        "escalas, si sus categorías coinciden con lo documentado en el "
+        "diccionario de datos, y si los valores que contiene son creíbles."
+    ),
+    "fuente": (
+        "El archivo es la salida de anexo_construccion_dataset/build_dataset.py, "
+        "que integra Global Forest Watch, MapBiomas Colombia, NASA FIRMS, FAO "
+        "(ODS 15.1.1) y Our World in Data (ver sección Fuentes de datos de la "
+        "Etapa 1 para el detalle de cada una)."
+    ),
+    "variables_principales": [
+        "nivel_analisis, pais, departamento, municipio, anio (identifican la unidad geográfica-año)",
+        "area_perdida_bosque_ha y emisiones_co2_mg (magnitud del fenómeno, Global Forest Watch)",
+        "driver_dominante (causa reportada de la pérdida, Global Forest Watch)",
+        "area_transformada_ha y clase_transformacion_dominante (uso resultante, MapBiomas)",
+        "num_focos_calor, frp_promedio, confianza_promedio_focos (actividad de quema, NASA FIRMS)",
+        "porcentaje_area_forestal, area_forestal_ha, deforestacion_anual_ha_owid (comparación internacional, FAO/OWID)",
+    ],
+    "cantidad_registros": "88.513 registros, 20 variables (antes del tratamiento aplicado en esta etapa).",
+    "uso_esperado": (
+        "Servir como insumo de etapas posteriores de minería de datos "
+        "(asociación, clustering geográfico, modelos predictivos); por eso "
+        "cualquier problema de calidad que afecte la comparación entre "
+        "escalas o la homologación de categorías debe corregirse o quedar "
+        "explícitamente controlado antes de avanzar."
+    ),
+}
+
+REQUISITOS2 = {
+    "intro": (
+        "Los requisitos se derivan directamente del uso esperado del dataset: "
+        "comparar el fenómeno entre las escalas Global, Nacional y Regional, "
+        "y sostener análisis de tendencia y de causas. No son requisitos "
+        "genéricos de \"buenos datos\": cada uno responde a una forma "
+        "concreta en que un problema de calidad rompería ese uso."
+    ),
+    "requisitos": [
+        (
+            "Completitud",
+            "Las variables núcleo (nivel_analisis, pais, departamento, "
+            "municipio, anio) deben estar completas al 100%, porque son la "
+            "llave que permite ubicar y comparar cualquier registro entre "
+            "escalas.",
+        ),
+        (
+            "Unicidad",
+            "Cada combinación real de lugar, año y fuente debe aparecer una "
+            "sola vez; de lo contrario, cualquier suma o promedio agregado "
+            "(por ejemplo, hectáreas perdidas por departamento) queda "
+            "sobreestimado sin que se note a simple vista.",
+        ),
+        (
+            "Consistencia",
+            "Los nombres de lugar y las categorías (departamento, municipio, "
+            "driver_dominante, clase_transformacion_dominante) deben escribirse "
+            "siempre igual y coincidir con el dominio documentado en el "
+            "diccionario de datos, porque una variante de formato no "
+            "reconocida separa artificialmente lo que debería agregarse "
+            "junto.",
+        ),
+        (
+            "Validez",
+            "La columna pais debe contener países, no agregados regionales o "
+            "de grupo de ingreso, para que el nivel Global compare entidades "
+            "del mismo tipo; y las variables numéricas deben respetar sus "
+            "rangos físicos (porcentajes entre 0 y 100, hectáreas no "
+            "negativas, año dentro de la ventana 2001-2024).",
+        ),
+        (
+            "Exactitud",
+            "Cuando dos fuentes miden el mismo fenómeno para la misma "
+            "unidad geográfica-año, la diferencia entre ambas debe quedar "
+            "documentada y no oculta, para no presentar una cifra como más "
+            "precisa de lo que realmente es.",
+        ),
+        (
+            "Actualidad",
+            "El dataset debe dejar explícito qué tan reciente es su dato más "
+            "nuevo y qué proporción de filas corresponde a los últimos años "
+            "de la serie, porque el proyecto compara una tendencia y no solo "
+            "una fotografía histórica.",
+        ),
+    ],
+}
+
+PERFILAMIENTO2 = {
+    "registros": 88513,
+    "variables": 20,
+    "tipos_resumen": [
+        ("Numérica entera", 2, "id_registro, anio"),
+        ("Numérica continua", 11, "latitud, longitud, area_perdida_bosque_ha, emisiones_co2_mg, area_transformada_ha, num_focos_calor, frp_promedio, confianza_promedio_focos, porcentaje_area_forestal, area_forestal_ha, deforestacion_anual_ha_owid"),
+        ("Categórica nominal", 7, "nivel_analisis, fuente_origen, pais, departamento, municipio, driver_dominante, clase_transformacion_dominante"),
+    ],
+    "columnas": [
+        dict(variable="id_registro", tipo="int64", unicos=88513, nulos=0, pct_nulos=0.0),
+        dict(variable="nivel_analisis", tipo="texto", unicos=3, nulos=0, pct_nulos=0.0),
+        dict(variable="fuente_origen", tipo="texto", unicos=11, nulos=0, pct_nulos=0.0),
+        dict(variable="pais", tipo="texto", unicos=312, nulos=0, pct_nulos=0.0),
+        dict(variable="departamento", tipo="texto", unicos=44, nulos=3622, pct_nulos=4.09),
+        dict(variable="municipio", tipo="texto", unicos=1119, nulos=5998, pct_nulos=6.78),
+        dict(variable="anio", tipo="int64", unicos=24, nulos=0, pct_nulos=0.0),
+        dict(variable="latitud", tipo="float64", unicos=9634, nulos=3768, pct_nulos=4.26),
+        dict(variable="longitud", tipo="float64", unicos=9630, nulos=3768, pct_nulos=4.26),
+        dict(variable="area_perdida_bosque_ha", tipo="float64", unicos=2359, nulos=5470, pct_nulos=6.18),
+        dict(variable="emisiones_co2_mg", tipo="float64", unicos=48293, nulos=5470, pct_nulos=6.18),
+        dict(variable="driver_dominante", tipo="texto", unicos=7, nulos=8731, pct_nulos=9.86),
+        dict(variable="area_transformada_ha", tipo="float64", unicos=27504, nulos=9601, pct_nulos=10.85),
+        dict(variable="clase_transformacion_dominante", tipo="texto", unicos=2, nulos=9601, pct_nulos=10.85),
+        dict(variable="num_focos_calor", tipo="float64", unicos=821, nulos=60697, pct_nulos=68.57),
+        dict(variable="frp_promedio", tipo="float64", unicos=8482, nulos=60697, pct_nulos=68.57),
+        dict(variable="confianza_promedio_focos", tipo="float64", unicos=1888, nulos=60697, pct_nulos=68.57),
+        dict(variable="porcentaje_area_forestal", tipo="float64", unicos=662, nulos=85201, pct_nulos=96.26),
+        dict(variable="area_forestal_ha", tipo="float64", unicos=701, nulos=85201, pct_nulos=96.26),
+        dict(variable="deforestacion_anual_ha_owid", tipo="float64", unicos=266, nulos=86977, pct_nulos=98.26),
+    ],
+    "duplicados": {
+        "incluyendo_id": 0,
+        "ignorando_id_generado": 7928,
+        "pct_ignorando_id_generado": 8.96,
+        "nota": (
+            "id_registro se genera de forma secuencial durante la "
+            "construcción del dataset, así que nunca se repite; comparar "
+            "incluyéndolo esconde los duplicados reales. Al excluirlo, "
+            "7.928 filas (8,96%) tienen exactamente el mismo contenido que "
+            "otra fila."
+        ),
+    },
+    "estadisticos": [
+        dict(variable="area_perdida_bosque_ha", minimo=0.0, maximo=424642.0, promedio=678.96, unidad="ha"),
+        dict(variable="emisiones_co2_mg", minimo=0.0, maximo=243821901.0, promedio=378424.63, unidad="Mg CO2eq"),
+        dict(variable="area_transformada_ha", minimo=147.05, maximo=3278380.11, promedio=52438.62, unidad="ha"),
+        dict(variable="num_focos_calor", minimo=1.0, maximo=13851.0, promedio=133.58, unidad="focos"),
+        dict(variable="frp_promedio", minimo=0.31, maximo=96.88, promedio=7.63, unidad="MW"),
+        dict(variable="confianza_promedio_focos", minimo=25.0, maximo=75.0, promedio=49.53, unidad="%"),
+        dict(variable="porcentaje_area_forestal", minimo=0.0, maximo=97.09, promedio=32.94, unidad="%"),
+        dict(variable="area_forestal_ha", minimo=0.0, maximo=4200995.2, promedio=79259.75, unidad="ha"),
+        dict(variable="deforestacion_anual_ha_owid", minimo=0.0, maximo=9880680.0, promedio=228431.36, unidad="ha"),
+    ],
+    "atipicos": [
+        dict(variable="area_perdida_bosque_ha", limite_superior=337.0, atipicos=11385, pct=13.71),
+        dict(variable="emisiones_co2_mg", limite_superior=165483.25, atipicos=11683, pct=14.07),
+        dict(variable="area_transformada_ha", limite_superior=66337.24, atipicos=8745, pct=11.08),
+        dict(variable="num_focos_calor", limite_superior=154.0, atipicos=3954, pct=14.21),
+        dict(variable="frp_promedio", limite_superior=15.9, atipicos=1259, pct=4.53),
+        dict(variable="confianza_promedio_focos", limite_superior=51.25, atipicos=6016, pct=21.63),
+        dict(variable="area_forestal_ha", limite_superior=48731.38, atipicos=524, pct=15.82),
+        dict(variable="deforestacion_anual_ha_owid", limite_superior=169955.0, atipicos=214, pct=13.93),
+    ],
+    "nota_atipicos": (
+        "El método usado (rango intercuartílico, límite superior = Q3 + "
+        "1,5·RIC) es deliberadamente sensible porque el fenómeno estudiado "
+        "es de cola larga por naturaleza: unos pocos municipios y años "
+        "concentran eventos extremos de pérdida de bosque o de quema, que "
+        "son reales y no errores de captura. La decisión sobre qué hacer "
+        "con estos valores se documenta en el plan de tratamiento, no aquí."
+    ),
+    "script": "calidad_datos/perfilamiento.py -> calidad_datos/reporte_perfilamiento.json",
+}
