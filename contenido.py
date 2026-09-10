@@ -12,7 +12,7 @@ etapa no implique tocar la lógica de la aplicación.
 
 PROYECTO = {
     "nombre": "Deforestación y Transformación del Territorio",
-    "etapa": "Etapa 1 · Del problema a los datos",
+    "etapa": "Etapa 2 · Calidad de los datos",
 }
 
 # ---------------------------------------------------------------------------

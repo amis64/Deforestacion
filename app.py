@@ -4,11 +4,12 @@ app.py
 ======
 Aplicación Flask que sirve como bitácora técnica del proyecto de Minería de
 Datos "Deforestación y Transformación del Territorio". Etapa 1: del problema
-a los datos.
+a los datos. Etapa 2: calidad de datos (perfilamiento, dimensiones, plan de
+tratamiento).
 
-Cada ruta corresponde a un elemento del submenú "Etapa 1" pedido en la guía
-de la actividad. El contenido vive en contenido.py; aquí solo se arma la
-navegación y se renderizan las plantillas.
+Cada ruta corresponde a un elemento del submenú de su etapa. El contenido
+vive en contenido.py; aquí solo se arma la navegación y se renderizan las
+plantillas.
 """
 
 import os
@@ -35,7 +36,7 @@ SUBMENU = [
 @app.context_processor
 def inject_globals():
     """Disponible en todas las plantillas sin tener que pasarlo en cada return."""
-    return {"submenu": SUBMENU, "proyecto": c.PROYECTO}
+    return {"submenu": SUBMENU, "submenu2": c.SUBMENU2, "proyecto": c.PROYECTO}
 
 
 @app.route("/")
@@ -91,6 +92,57 @@ def calidad():
 @app.route("/etapa-1/limitaciones")
 def limitaciones():
     return render_template("limitaciones.html", activo="limitaciones", limitaciones=c.LIMITACIONES)
+
+
+# ---------------------------------------------------------------------------
+# Etapa 2 · Calidad de datos
+# ---------------------------------------------------------------------------
+
+@app.route("/etapa-2/descripcion")
+def descripcion2():
+    return render_template("etapa2/descripcion.html", activo="descripcion2", descripcion=c.DESCRIPCION2)
+
+
+@app.route("/etapa-2/requisitos")
+def requisitos2():
+    return render_template("etapa2/requisitos.html", activo="requisitos2", requisitos=c.REQUISITOS2)
+
+
+@app.route("/etapa-2/perfilamiento")
+def perfilamiento2():
+    return render_template("etapa2/perfilamiento.html", activo="perfilamiento2", perfilamiento=c.PERFILAMIENTO2)
+
+
+@app.route("/etapa-2/dimensiones")
+def dimensiones2():
+    return render_template(
+        "etapa2/dimensiones.html",
+        activo="dimensiones2",
+        dimensiones=c.DIMENSIONES2,
+        script_metricas=c.SCRIPT_METRICAS2,
+    )
+
+
+@app.route("/etapa-2/problemas")
+def problemas2():
+    return render_template(
+        "etapa2/problemas.html",
+        activo="problemas2",
+        inventario=c.INVENTARIO_PROBLEMAS2,
+        causas=c.CAUSAS2,
+        integracion=c.INTEGRACION2,
+    )
+
+
+@app.route("/etapa-2/tratamiento")
+def tratamiento2():
+    return render_template(
+        "etapa2/tratamiento.html",
+        activo="tratamiento2",
+        plan=c.PLAN_TRATAMIENTO2,
+        comparacion=c.COMPARACION_ANTES_DESPUES2,
+        script_tratamiento=c.SCRIPT_TRATAMIENTO2,
+    )
 
 
 if __name__ == "__main__":

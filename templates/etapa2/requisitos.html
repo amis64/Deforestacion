@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titulo %}Requisitos de calidad{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Requisitos de calidad</h1>
+    <p>{{ requisitos.intro }}</p>
+
+    {% for dimension, texto in requisitos.requisitos %}
+    <h3>{{ dimension }}</h3>
+    <p>{{ texto }}</p>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

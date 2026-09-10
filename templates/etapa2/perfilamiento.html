@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block titulo %}Perfilamiento de los datos{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Perfilamiento de los datos</h1>
+    <p>
+      Calculado sobre dataset_consolidado.csv mediante
+      <code>{{ perfilamiento.script }}</code>, antes de aplicar el plan de
+      tratamiento.
+    </p>
+
+    <div class="tarjetas-cifras">
+      <div class="cifra">
+        <span class="valor">{{ perfilamiento.registros }}</span>
+        <span class="etiqueta-cifra">Registros</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ perfilamiento.variables }}</span>
+        <span class="etiqueta-cifra">Variables</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ perfilamiento.duplicados.ignorando_id_generado }} ({{ perfilamiento.duplicados.pct_ignorando_id_generado }}%)</span>
+        <span class="etiqueta-cifra">Duplicados exactos (sin id_registro)</span>
+      </div>
+    </div>
+
+    <h2>Tipo de dato por variable</h2>
+    <table>
+      <thead><tr><th>Tipo</th><th>Cantidad</th><th>Variables</th></tr></thead>
+      <tbody>
+      {% for tipo, cantidad, variables in perfilamiento.tipos_resumen %}
+        <tr><td>{{ tipo }}</td><td>{{ cantidad }}</td><td>{{ variables }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Valores únicos y nulos por variable</h2>
+    <div class="tabla-scroll">
+    <table>
+      <thead><tr><th>Variable</th><th>Tipo</th><th>Valores únicos</th><th>Nulos</th><th>% nulos</th></tr></thead>
+      <tbody>
+      {% for col in perfilamiento.columnas %}
+        <tr>
+          <td>{{ col.variable }}</td>
+          <td>{{ col.tipo }}</td>
+          <td>{{ col.unicos }}</td>
+          <td>{{ col.nulos }}</td>
+          <td>{{ col.pct_nulos }}%</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Registros duplicados</h2>
+    <p>{{ perfilamiento.duplicados.nota }}</p>
+
+    <h2>Mínimo, máximo y promedio de las variables numéricas</h2>
+    <div class="tabla-scroll">
+    <table>
+      <thead><tr><th>Variable</th><th>Mínimo</th><th>Máximo</th><th>Promedio</th><th>Unidad</th></tr></thead>
+      <tbody>
+      {% for e in perfilamiento.estadisticos %}
+        <tr>
+          <td>{{ e.variable }}</td>
+          <td>{{ e.minimo }}</td>
+          <td>{{ e.maximo }}</td>
+          <td>{{ e.promedio }}</td>
+          <td>{{ e.unidad }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Valores atípicos (método del rango intercuartílico)</h2>
+    <div class="tabla-scroll">
+    <table>
+      <thead><tr><th>Variable</th><th>Límite superior</th><th>Atípicos</th><th>% atípicos</th></tr></thead>
+      <tbody>
+      {% for a in perfilamiento.atipicos %}
+        <tr>
+          <td>{{ a.variable }}</td>
+          <td>{{ a.limite_superior }}</td>
+          <td>{{ a.atipicos }}</td>
+          <td>{{ a.pct }}%</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="nota">{{ perfilamiento.nota_atipicos }}</p>
+
+  </div>
+</div>
+{% endblock %}

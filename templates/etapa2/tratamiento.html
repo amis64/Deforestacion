@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block titulo %}Plan de tratamiento y comparación{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Plan de tratamiento</h1>
+    <p>
+      Cada acción responde a un problema concreto del inventario (ver
+      <a href="{{ url_for('problemas2') }}">Problemas, causas e integración</a>)
+      y se aplica mediante <code>{{ script_tratamiento }}</code>.
+    </p>
+
+    {% for paso in plan %}
+    <div class="paso-tratamiento">
+      <h3>{{ paso.accion }}</h3>
+      <p class="aplica-a">Aplica a: {{ paso.aplica_a }}</p>
+      <p>{{ paso.justificacion }}</p>
+    </div>
+    {% endfor %}
+
+    <h2>Comparación antes y después</h2>
+    <div class="tabla-scroll">
+    <table class="tabla-comparacion">
+      <thead><tr><th>Indicador</th><th>Antes</th><th>Después</th><th>Diferencia</th></tr></thead>
+      <tbody>
+      {% for indicador, antes, despues, diferencia in comparacion %}
+        <tr>
+          <td>{{ indicador }}</td>
+          <td class="antes">{{ antes }}</td>
+          <td class="despues">{{ despues }}</td>
+          <td>{{ diferencia }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <p class="nota">
+      El dataset tratado (dataset_tratado.csv) y el reporte antes/después
+      completo quedan en calidad_datos/ como evidencia, junto con los
+      scripts que los generan.
+    </p>
+
+  </div>
+</div>
+{% endblock %}

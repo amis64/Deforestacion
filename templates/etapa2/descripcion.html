@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Descripción y propósito{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Descripción y propósito del conjunto de datos</h1>
+    <p>{{ descripcion.proposito }}</p>
+
+    <h2>Fuente</h2>
+    <p>{{ descripcion.fuente }}</p>
+
+    <h2>Variables principales</h2>
+    <ul>
+      {% for v in descripcion.variables_principales %}
+      <li>{{ v }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Cantidad de registros</h2>
+    <p>{{ descripcion.cantidad_registros }}</p>
+
+    <h2>Uso esperado de la información</h2>
+    <p>{{ descripcion.uso_esperado }}</p>
+
+  </div>
+</div>
+{% endblock %}

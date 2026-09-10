@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Dimensiones y métricas de calidad{% endblock %}
+{% block contenido %}
+{% set etapa_titulo = "Etapa 2" %}
+{% set submenu_actual = submenu2 %}
+<div class="layout-etapa">
+  {% include "_sidebar.html" %}
+  <div class="panel">
+
+    <h1>Dimensiones y métricas de calidad</h1>
+    <p>
+      Cada dimensión se evalúa con una métrica verificable, calculada por
+      <code>{{ script_metricas }}</code>. Los resultados corresponden al
+      dataset antes de aplicar el plan de tratamiento.
+    </p>
+
+    {% for d in dimensiones %}
+    <div class="tarjeta-metrica">
+      <h3>{{ d.nombre }}</h3>
+      <p class="formula">{{ d.formula }}</p>
+      <ul>
+        {% for r in d.resultados %}
+        <li>{{ r }}</li>
+        {% endfor %}
+      </ul>
+      <p>{{ d.interpretacion }}</p>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

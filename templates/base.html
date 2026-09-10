@@ -29,6 +29,14 @@
           {% endfor %}
         </ul>
       </li>
+      <li tabindex="0">
+        <a href="{{ url_for('descripcion2') }}">Etapa 2 &#9662;</a>
+        <ul class="submenu">
+          {% for slug, etiqueta in submenu2 %}
+          <li><a href="{{ url_for(slug) }}">{{ etiqueta }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>
