@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 contenido.py
-============
+=============
 Contenido de texto y datos estructurados de la Etapa 1 del proyecto de
 Minería de Datos: "Deforestación y Transformación del Territorio".
 
@@ -469,9 +469,9 @@ DICCIONARIO = [
     dict(nombre="emisiones_co2_mg", descripcion="Emisiones brutas de carbono asociadas a la pérdida de bosque de ese lugar y año.",
          tipo="Numérica continua", dominio="≥ 0 (megagramos de CO2 equivalente)",
          fuente="Global Forest Watch", ejemplo="9,842"),
-    dict(nombre="driver_dominante", descripcion="Causa principal de la pérdida de bosque, entre las categorías con mayor pérdida ese lugar-año.",
-         tipo="Categórica nominal", dominio="Agricultura, Incendios, Silvicultura, Urbanización, Minería, entre otras",
-         fuente="Global Forest Watch (drivers)", ejemplo="Agricultura"),
+    dict(nombre="driver_dominante", descripcion="Causa principal de la pérdida de bosque, entre las categorías con mayor pérdida ese lugar-año. La fuente original (GFW) la entrega en inglés; la Etapa 2 homologa estos siete valores al español.",
+         tipo="Categórica nominal", dominio="Agricultura permanente, Agricultura migratoria, Silvicultura, Otras alteraciones naturales, Urbanización e infraestructura, Minería y otras materias primas, Incendios forestales",
+         fuente="Global Forest Watch (drivers)", ejemplo="Agricultura permanente"),
     dict(nombre="area_transformada_ha", descripcion="Hectáreas clasificadas ese año bajo alguna categoría de uso antrópico (no natural).",
          tipo="Numérica continua", dominio="≥ 0 (hectáreas)",
          fuente="MapBiomas", ejemplo="342.1"),
@@ -1004,3 +1004,60 @@ INVENTARIO_PROBLEMAS2 = [
         evidencia="Diagnóstico cualitativo de la Etapa 1 (sección Calidad inicial de los datos), confirmado por el conteo de nulos en calidad_datos/perfilamiento.py.",
     ),
 ]
+
+CAUSAS2 = [
+    (
+        "P1 · Duplicados exactos",
+        "El script de construcción concatena las hojas de las fuentes antes de generar el identificador; si una hoja se procesó más de una vez durante los reintentos de descarga o integración, la fila completa quedó repetida con un id distinto cada vez, sin que ninguna validación de unicidad lo detectara.",
+    ),
+    (
+        "P2 · driver_dominante en inglés",
+        "Global Forest Watch entrega la atribución de causa en inglés por defecto; al integrarla, nadie tradujo ni homologó esa columna contra el dominio en español que ya se había documentado en el diccionario de datos de la Etapa 1, así que la documentación y el dato real quedaron desalineados sin que se verificaran entre sí.",
+    ),
+    (
+        "P3 · Agregados regionales en pais",
+        "La hoja de FAO/OWID de la que se toma esta columna incluye, además de los países, las filas de agregados que Naciones Unidas publica en la misma tabla (continentes, grupos de ingreso, 'World'), bajo la misma columna 'Country' y sin un indicador de tipo de entidad; el script de integración las conservó todas por no filtrar contra una lista cerrada de países.",
+    ),
+    (
+        "P4 · Prefijo numérico en clase_transformacion_dominante",
+        "MapBiomas identifica cada clase de cobertura con un código de leyenda seguido del nombre (por ejemplo '3. Área agropecuaria'); el script de construcción conservó el texto completo de la leyenda en vez de separar el código del nombre antes de guardarlo.",
+    ),
+    (
+        "P5 y P6 · Variantes de mayúsculas en departamento y municipio",
+        "Las capas administrativas oficiales y las hojas de GFW y MapBiomas no comparten una misma convención de escritura (algunas usan mayúscula sostenida institucional, otras capitalización estándar); el script normalizaba el texto solo para el cruce entre fuentes, no para la columna final que se guarda en el dataset.",
+    ),
+    (
+        "P7 · Divergencia GFW vs. OWID",
+        "No es un error de integración: ambas fuentes usan metodologías, algoritmos satelitales y definiciones distintas de 'pérdida de bosque', como ya advertía la Etapa 1 en su sección de sesgos y limitaciones metodológicas; esta etapa solo cuantifica esa diferencia con casos reales.",
+    ),
+    (
+        "P8 · Baja proporción de filas recientes",
+        "Las fuentes que sí llegan hasta 2024 (GFW, MapBiomas) se integran junto con fuentes de ventana más corta o más antigua (FIRMS 2012-2022, series históricas de FAO y OWID); al apilarse todas en la misma tabla larga, los años antiguos terminan siendo mayoría aunque cada fuente individual esté actualizada dentro de su propio alcance.",
+    ),
+    (
+        "P9 · Valores atípicos",
+        "Corresponden a eventos reales de pérdida de bosque, emisión o actividad de quema concentrados en municipios y años específicos (fenómeno de cola larga), no a errores de captura; se confirma porque los valores atípicos se concentran en los mismos departamentos que la Etapa 1 ya identificó como parte del arco de la deforestación.",
+    ),
+    (
+        "P10 · Ambigüedad cero/sin dato",
+        "MapBiomas exporta sus estadísticas agregadas sin distinguir, en la celda vacía, entre 'no hay observación' y 'el valor observado es cero'; resolverlo requeriría consultar los metadatos originales de la plataforma, fuera del alcance de esta etapa.",
+    ),
+]
+
+INTEGRACION2 = (
+    "La integración y homologación se concentra en las variables categóricas "
+    "que participan en la comparación entre escalas: driver_dominante se "
+    "traduce y homologa a las siete categorías en español que ya documentaba "
+    "el diccionario de datos (Agricultura permanente, Agricultura migratoria, "
+    "Silvicultura, Otras alteraciones naturales, Urbanización e "
+    "infraestructura, Minería y otras materias primas, Incendios forestales); "
+    "departamento y municipio se llevan a una sola convención de "
+    "capitalización, resolviendo además las dos variantes de nombre para "
+    "Bogotá D.C. y para San Andrés y Providencia; y clase_transformacion_dominante "
+    "pierde el prefijo numérico de la leyenda de MapBiomas para quedar como "
+    "texto homologable ('Área agropecuaria', 'Área sin vegetación'). La "
+    "columna pais no se modifica ni se filtra: se añade una bandera "
+    "es_agregado_regional para que un análisis a nivel país pueda excluir los "
+    "agregados sin perder esas filas, que sí sirven como contexto "
+    "internacional en otro tipo de comparación."
+)
