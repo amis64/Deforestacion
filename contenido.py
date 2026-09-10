@@ -528,8 +528,13 @@ CALIDAD = {
         ),
     ],
     "unicidad": (
-        "No se encontraron registros duplicados en el dataset consolidado, se "
-        "verifica automáticamente en cada ejecución del script de construcción."
+        "En esta primera revisión no se encontraron filas idénticas si se "
+        "compara el identificador generado junto con el resto de columnas. "
+        "Sin embargo, el perfilamiento más profundo de la Etapa 2 (ver "
+        "sección Calidad de Datos) muestra que, si se ignora ese "
+        "identificador (que se genera de forma secuencial y por lo tanto "
+        "nunca se repite), sí existen filas cuyo contenido es exactamente "
+        "igual; esta primera lectura quedó corregida en la etapa siguiente."
     ),
     "consistencia": [
         (
