@@ -8,7 +8,10 @@
   Datos. Reúne, para la Etapa 1, el planteamiento del problema, las preguntas
   que orientan la investigación, las fuentes de información utilizadas y una
   primera caracterización del conjunto de datos con el que se va a trabajar
-  en las siguientes etapas.
+  en las siguientes etapas. La Etapa 2 evalúa la calidad de ese mismo
+  conjunto de datos: lo perfila, mide seis dimensiones de calidad con
+  métricas verificables, documenta los problemas encontrados y aplica un
+  plan de tratamiento sobre él.
 </p>
 <p>
   La aplicación no reemplaza a los datos ni al código: es el punto de entrada
@@ -19,6 +22,16 @@
 <h2>Contenido de la Etapa 1</h2>
 <div class="tarjetas-cifras">
   {% for slug, etiqueta in submenu %}
+  <a class="cifra" href="{{ url_for(slug) }}">
+    <span class="etiqueta-cifra">{{ etiqueta }}</span>
+    <span class="ir">Ver sección &rarr;</span>
+  </a>
+  {% endfor %}
+</div>
+
+<h2>Contenido de la Etapa 2 · Calidad de datos</h2>
+<div class="tarjetas-cifras">
+  {% for slug, etiqueta in submenu2 %}
   <a class="cifra" href="{{ url_for(slug) }}">
     <span class="etiqueta-cifra">{{ etiqueta }}</span>
     <span class="ir">Ver sección &rarr;</span>
