@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/25/2026 11:15:32 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NACHO"
+  DTS:CreatorName="NACHO\monos"
+  DTS:DTSID="{BA192671-3357-408F-B942-1107A1094924}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.2"
+  DTS:LocaleID="9226"
+  DTS:ObjectName="Etapa3_Calidad dtsx"
+  DTS:PackageType="5"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{992EDE6F-4554-46C7-A6E9-5A7E8C550652}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CN_Origen_Deforestacion]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{5EF3BF54-0877-4531-8863-949FD6C5B05A}"
+      DTS:ObjectName="CN_Origen_Deforestacion">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="9226"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\monos\Documents\GitHub\Deforestacion\dataset_consolidado.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="id_registro"
+              DTS:DTSID="{42457061-BD63-484D-8962-C1FAEBF7A067}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="nivel_analisis"
+              DTS:DTSID="{24A9D8B7-F43C-4F1A-9A85-83B386F3F7D1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="fuente_origen"
+              DTS:DTSID="{22FA856C-76EB-4C14-9037-A3B61D7217AE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="pais"
+              DTS:DTSID="{40B090BB-66B7-41C1-B007-31ECEE516A9E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="departamento"
+              DTS:DTSID="{5872E2E4-605E-4A8E-8415-42E2CA342A93}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="municipio"
+              DTS:DTSID="{0BA61C98-19DE-47EA-B1A4-DADFC8FD7CB4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="anio"
+              DTS:DTSID="{BF97282E-3215-4C56-B06A-550F2F653498}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="latitud"
+              DTS:DTSID="{7AECBBE9-E6C8-4868-9F88-44D5C6F07A38}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="longitud"
+              DTS:DTSID="{1E83A88E-F2F7-4AB5-8685-7C147D13146B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="area_perdida_bosque_ha"
+              DTS:DTSID="{41C27470-474F-4508-B5AF-985EEFEE59A1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="emisiones_co2_mg"
+              DTS:DTSID="{C4420F13-F4D3-4B9D-9DF9-B3122AE6A2A2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="driver_dominante"
+              DTS:DTSID="{C56CF49F-EBC7-4C02-9129-57D06973B1FB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="area_transformada_ha"
+              DTS:DTSID="{C0E88767-8EE7-423B-99C9-5466BE51D05C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="clase_transformacion_dominante"
+              DTS:DTSID="{9E671422-6A6F-4A99-B024-87F3D63C22EE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="num_focos_calor"
+              DTS:DTSID="{BA01D62E-1F26-44DB-A455-0490757A4F31}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="frp_promedio"
+              DTS:DTSID="{A4C85E77-1A71-461A-B66A-3F442E94EAA8}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="confianza_promedio_focos"
+              DTS:DTSID="{D1518990-0189-4D03-B72F-D2BB752A8916}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="porcentaje_area_forestal"
+              DTS:DTSID="{3D4F3CAE-B1DF-49CC-9553-A615B6ED5B88}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="area_forestal_ha"
+              DTS:DTSID="{E95A3004-42BA-47A3-8B8F-33BF48600BC5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="deforestacion_anual_ha_owid"
+              DTS:DTSID="{1D4671CA-88A8-416E-90FB-F17367447E7F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CN_SQL_DeforestacionDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{412DFF34-4849-43BE-B69B-4C0667726DDF}"
+      DTS:ObjectName="CN_SQL_DeforestacionDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=DeforestacionDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Etapa3_Calidad dtsx-{412DFF34-4849-43BE-B69B-4C0667726DDF}localhost\SQLEXPRESS;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5DB86C8F-B160-40B8-822F-20884CDDB680}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DuplicadosCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{53C092F5-9C70-41D0-91F9-C38755FA50D2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Iteracion">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B7E4DED9-9509-46D6-A070-9EF9F11CC64B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LoteId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0979F6CF-8F4F-4009-8210-40D9D15DAC45}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecibidosCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C117EF46-0A66-4AC6-9015-A0A4AD5CF793}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RevisionCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Actualizar_Contadores"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{40ED47F8-0505-4E50-BC22-6151D399A4F7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Actualizar_Contadores"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:SqlStatementSource="  UPDATE staging.control_iteraciones" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Iniciar_Lote"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9C33F65D-B8DF-4591-9200-05F8758A59C0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Iniciar_Lote"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{412DFF34-4849-43BE-B69B-4C0667726DDF}"
+          SQLTask:SqlStatementSource="  INSERT INTO staging.control_iteraciones (iteracion, registros_recibidos, registros_aceptados, registros_duplicados, registros_revision)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Registrar_Error"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D5FB7AE9-1393-4A9A-9710-23EB2387D637}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Registrar_Error"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:SqlStatementSource="  INSERT INTO staging.log_errores (mensaje) VALUES (?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Tratamiento_Calidad"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A8CDB09B-2565-4F90-9487-655A43F0BAE0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tratamiento_Calidad"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Tratamiento_Calidad\Origen_Staging"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Origen_Staging"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[staging].[deforestacion_raw]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Tratamiento_Calidad\Origen_Staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CN_SQL_DeforestacionDW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CN_SQL_DeforestacionDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[id_registro]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[id_registro]"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[id_registro]"
+                      name="id_registro"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[departamento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[departamento]"
+                      length="200"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[departamento]"
+                      name="departamento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fecha_reporte]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fecha_reporte]"
+                      length="50"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fecha_reporte]"
+                      name="fecha_reporte"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[area_deforestada]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[area_deforestada]"
+                      length="50"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[area_deforestada]"
+                      name="area_deforestada"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[tipo_bosque]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[tipo_bosque]"
+                      length="100"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[tipo_bosque]"
+                      name="tipo_bosque"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fuente]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fuente]"
+                      length="200"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fuente]"
+                      name="fuente"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fecha_carga]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fecha_carga]"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[fecha_carga]"
+                      name="fecha_carga"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[lote_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[lote_id]"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].Columns[lote_id]"
+                      name="lote_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[id_registro]"
+                      dataType="i4"
+                      name="id_registro" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[departamento]"
+                      dataType="wstr"
+                      length="200"
+                      name="departamento" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fecha_reporte]"
+                      dataType="wstr"
+                      length="50"
+                      name="fecha_reporte" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[area_deforestada]"
+                      dataType="wstr"
+                      length="50"
+                      name="area_deforestada" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[tipo_bosque]"
+                      dataType="wstr"
+                      length="100"
+                      name="tipo_bosque" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fuente]"
+                      dataType="wstr"
+                      length="200"
+                      name="fuente" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[fecha_carga]"
+                      dataType="dbTimeStamp"
+                      name="fecha_carga" />
+                    <externalMetadataColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Output].ExternalColumns[lote_id]"
+                      dataType="i4"
+                      name="lote_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[id_registro]"
+                      dataType="i4"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[id_registro]"
+                      name="id_registro" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[departamento]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[departamento]"
+                      name="departamento" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fecha_reporte]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fecha_reporte]"
+                      name="fecha_reporte" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[area_deforestada]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[area_deforestada]"
+                      name="area_deforestada" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[tipo_bosque]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[tipo_bosque]"
+                      name="tipo_bosque" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fuente]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fuente]"
+                      name="fuente" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fecha_carga]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[fecha_carga]"
+                      name="fecha_carga" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[lote_id]"
+                      dataType="i4"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[lote_id]"
+                      name="lote_id" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Tratamiento_Calidad\Origen_Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Tratamiento_Calidad\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName"></property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Tratamiento_Calidad\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Tratamiento_Calidad\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Tratamiento_Calidad\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Vaciar_Staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9697BDFA-25BF-4D58-93A8-2690761BFA68}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Vaciar_Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{412DFF34-4849-43BE-B69B-4C0667726DDF}"
+          SQLTask:SqlStatementSource="  TRUNCATE TABLE staging.deforestacion_raw;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1AF1608B-4AC7-44DF-AD34-82B0785C8790}"
+      DTS:From="Package\Iniciar_Lote"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Vaciar_Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{82FB0169-18FF-4A27-BF5B-21B87CE865ED}"
+      DTS:From="Package\Vaciar_Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Tratamiento_Calidad" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{9038A2E9-5CF9-4D9D-97E5-AE63ABDA9501}"
+      DTS:From="Package\Tratamiento_Calidad"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Actualizar_Contadores" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{FB788783-10B6-47AC-81AA-04A89D7DC30A}"
+      DTS:From="Package\Iniciar_Lote"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Registrar_Error"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{1F482B45-BCFE-4BD0-A554-7AE8F2F05259}"
+      DTS:From="Package\Vaciar_Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Registrar_Error"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{053A5984-2E68-47A2-B230-9BF529B4814A}"
+      DTS:From="Package\Tratamiento_Calidad"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Registrar_Error"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{1F9656C2-432A-4312-B369-FEABD3B79CB6}"
+      DTS:From="Package\Actualizar_Contadores"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Registrar_Error"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="132,41.6"
+          Id="Package\Iniciar_Lote"
+          TopLeft="113.333327141073,12.9999999095996" />
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package\Vaciar_Staging"
+          TopLeft="101.666661111845,80.5999994395176" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="158.666660474407,54.5999999095996">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.4000006374386,25.999999529918"
+              Start="0,0"
+              End="17.4000006374386,18.499999529918">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,6.58682615589476" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,6.58682615589476"
+                    Point2="0,10.5868261558948"
+                    Point3="4,10.5868261558948" />
+                  <mssgle:LineSegment
+                    End="13.4000006374386,10.5868261558948" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.4000006374386,10.5868261558948"
+                    Point2="17.4000006374386,10.5868261558948"
+                    Point3="17.4000006374386,14.5868261558948" />
+                  <mssgle:LineSegment
+                    End="17.4000006374386,18.499999529918" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="175.2,41.6"
+          Id="Package\Tratamiento_Calidad"
+          TopLeft="60.8333300095467,192.399998662074" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="150.516662227363,122.199999439518">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70.1999992225568"
+              Start="0,0"
+              End="0,62.6999992225568">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.6999992225568" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Actualizar_Contadores"
+          TopLeft="67.4999963119628,277.333331404792" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="120.56666334288,233.999998662074">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38.9333329690828,43.3333327427175"
+              Start="0,0"
+              End="38.9333329690828,35.8333327427175">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.5686272115271" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.5686272115271"
+                    Point2="0,17.5686272115271"
+                    Point3="4,17.5686272115271" />
+                  <mssgle:LineSegment
+                    End="34.9333329690828,17.5686272115271" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34.9333329690828,17.5686272115271"
+                    Point2="38.9333329690828,17.5686272115271"
+                    Point3="38.9333329690828,21.5686272115271" />
+                  <mssgle:LineSegment
+                    End="38.9333329690828,35.8333327427175" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\Registrar_Error"
+          TopLeft="368.033314711022,318.933331115511" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="199.99999380774,54.5999999095996">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="289.633320903282,264.333331205911"
+              Start="0,0"
+              End="289.633320903282,256.833331205911">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.3101751541651" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.3101751541651"
+                    Point2="0,17.3101751541651"
+                    Point3="4,17.3101751541651" />
+                  <mssgle:LineSegment
+                    End="285.633320903282,17.3101751541651" />
+                  <mssgle:CubicBezierSegment
+                    Point1="285.633320903282,17.3101751541651"
+                    Point2="289.633320903282,17.3101751541651"
+                    Point3="289.633320903282,21.3101751541651" />
+                  <mssgle:LineSegment
+                    End="289.633320903282,256.833331205911" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="129.575312795391,22.3101751541651,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="199.533327778512,122.199999439518">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="250.89998693251,196.733331675993"
+              Start="0,0"
+              End="250.89998693251,189.233331675993">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.3490777203512" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.3490777203512"
+                    Point2="0,25.3490777203512"
+                    Point3="4,25.3490777203512" />
+                  <mssgle:LineSegment
+                    End="246.89998693251,25.3490777203512" />
+                  <mssgle:CubicBezierSegment
+                    Point1="246.89998693251,25.3490777203512"
+                    Point2="250.89998693251,25.3490777203512"
+                    Point3="250.89998693251,29.3490777203512" />
+                  <mssgle:LineSegment
+                    End="250.89998693251,189.233331675993" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="110.208645810005,30.3490777203512,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="176.299996676213,233.999998662074">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="234.933318034809,84.9333324534365"
+              Start="0,0"
+              End="234.933318034809,77.4333324534365">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2826881862633" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.2826881862633"
+                    Point2="0,20.2826881862633"
+                    Point3="4,20.2826881862633" />
+                  <mssgle:LineSegment
+                    End="230.933318034809,20.2826881862633" />
+                  <mssgle:CubicBezierSegment
+                    Point1="230.933318034809,20.2826881862633"
+                    Point2="234.933318034809,20.2826881862633"
+                    Point3="234.933318034809,24.2826881862633" />
+                  <mssgle:LineSegment
+                    End="234.933318034809,77.4333324534365" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="102.225311361154,25.2826881862633,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="251.499996311963,298.133331404792">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="116.533318399059,41.599999710719"
+              Start="0,0"
+              End="109.033318399059,41.599999710719">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="54.2666591995296,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="54.2666591995296,0"
+                    Point2="58.2666591995296,0"
+                    Point3="58.2666591995296,4" />
+                  <mssgle:LineSegment
+                    End="58.2666591995296,37.599999710719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="58.2666591995296,37.599999710719"
+                    Point2="58.2666591995296,41.599999710719"
+                    Point3="62.2666591995296,41.599999710719" />
+                  <mssgle:LineSegment
+                    End="109.033318399059,41.599999710719" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="43.0253115432796,-15.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Tratamiento_Calidad">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Tratamiento_Calidad\Origen_Staging"
+          TopLeft="105.833327550855,51.9999996383985" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Tratamiento_Calidad\Row Count"
+          TopLeft="138.333325775134,165.533332182235" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tratamiento_Calidad\Origen_Staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
