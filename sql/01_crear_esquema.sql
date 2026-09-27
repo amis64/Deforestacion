@@ -158,10 +158,10 @@ BEGIN
         ELSE
             SET @resultado = @resultado + (LOWER(@c COLLATE Latin1_General_CI_AS) COLLATE Latin1_General_CS_AS);
 
-        -- "Es letra" = un caracter que cambia entre mayuscula y minuscula
-        -- (espacios, guiones, numeros y puntuacion no lo son, y por lo tanto
-        -- "cortan" la palabra, igual que en Python .title()).
-        IF UPPER(@c COLLATE Latin1_General_CI_AS) <> LOWER(@c COLLATE Latin1_General_CI_AS)
+        -- FIX: la comparacion tambien debe forzarse a CS_AS, si no,
+        -- 'B' y 'b' se ven "iguales" y nunca detecta que hubo una letra.
+        IF (UPPER(@c COLLATE Latin1_General_CI_AS) COLLATE Latin1_General_CS_AS)
+           <> (LOWER(@c COLLATE Latin1_General_CI_AS) COLLATE Latin1_General_CS_AS)
             SET @anterior_es_letra = 1;
         ELSE
             SET @anterior_es_letra = 0;
