@@ -2,13 +2,13 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>Deforestacion_ETL</Name>
-    <LastWriteTime>2026-09-27T03:13:26.006249Z</LastWriteTime>
+    <LastWriteTime>2026-09-27T18:59:32.2585025Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>Etapa3_Calidad.dtsx</Name>
-      <LastWriteTime>2026-09-27T03:13:25.9935022Z</LastWriteTime>
+      <LastWriteTime>2026-09-27T19:00:10.9156923Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
