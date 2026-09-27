@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36518.9 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "Deforestacion_ETL", "Deforestacion_ETL.dtproj", "{59563E75-A2F0-EA5A-C8FF-A0DA93B833E7}"
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "Deforestacion_ETL", "Deforestacion_ETL\Deforestacion_ETL.dtproj", "{2F51908F-29F7-FF2B-4162-5C1AD7CD6F68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Default = Development|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59563E75-A2F0-EA5A-C8FF-A0DA93B833E7}.Development|Default.ActiveCfg = Development
-		{59563E75-A2F0-EA5A-C8FF-A0DA93B833E7}.Development|Default.Build.0 = Development
+		{2F51908F-29F7-FF2B-4162-5C1AD7CD6F68}.Development|Default.ActiveCfg = Development
+		{2F51908F-29F7-FF2B-4162-5C1AD7CD6F68}.Development|Default.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E7F87D15-4863-4230-8052-B5FF5AFFF128}
+		SolutionGuid = {7B15CAF2-9F30-4D4E-911D-390DB59FCB59}
 	EndGlobalSection
 EndGlobal
