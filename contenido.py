@@ -1189,8 +1189,8 @@ RECURSOS3 = {
         "que requieren revisión manual (con su valor original y su motivo)."
     ),
     # Se completan cuando el informe y el video queden publicados.
-    "informe_pdf_url": None,
-    "video_url": None,
+    "informe_pdf_url": "/static/docs/Informe_Tecnico_Etapa3.pdf",
+    "video_url": "https://youtu.be/D1awrq_rLic",
     "repo_url": "https://github.com/amis64/Deforestacion",
 }
 
@@ -1286,5 +1286,4 @@ EVIDENCIAS3 = [
         ),
     ),
 ]
-
 
