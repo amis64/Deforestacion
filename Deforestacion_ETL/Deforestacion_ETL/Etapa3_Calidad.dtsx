@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Etapa3_Calidad"
   DTS:PackageType="5"
-  DTS:VersionBuild="96"
-  DTS:VersionGUID="{AED1F0CF-B57F-4D06-A7F9-4407A9A51A58}">
+  DTS:VersionBuild="99"
+  DTS:VersionGUID="{804B92EA-26AB-416D-B8E0-9D1FBA6921B3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -38,7 +38,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="id_registro"
-              DTS:DTSID="{8077315D-BF2F-4410-B56A-61834A557C34}"
+              DTS:DTSID="{E7449257-65E2-4C34-9B18-0A7B2AD4CF96}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -47,7 +47,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="nivel_analisis"
-              DTS:DTSID="{3E197462-9BA4-4C14-BBEF-35C91A61989C}"
+              DTS:DTSID="{30EAB901-E6CE-4B65-BB5E-E0F569A10D58}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -56,7 +56,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="fuente_origen"
-              DTS:DTSID="{7D09BC01-ADFD-4F46-816A-50A551A5C017}"
+              DTS:DTSID="{3C7BCC74-B79D-4BAD-B4A1-FEA9F72B04BE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -65,7 +65,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="pais"
-              DTS:DTSID="{B6C258C9-C416-421B-B9C6-0889CD7180A7}"
+              DTS:DTSID="{D57511C2-5996-4AAE-958C-2E03D1A86B47}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -74,7 +74,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="departamento"
-              DTS:DTSID="{FC8C36DC-8279-420A-A103-DE90AFB0B09E}"
+              DTS:DTSID="{49850BDA-7E84-4CD7-BADE-FA6F6ED41F59}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -83,7 +83,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="municipio"
-              DTS:DTSID="{7123D0C3-E4EB-420D-9885-86624CC581A7}"
+              DTS:DTSID="{B0EB8E5C-A61E-45FA-99D9-764006DF2DEB}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -92,7 +92,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="anio"
-              DTS:DTSID="{DAC8AB55-AE66-479B-91F2-CD8B4A00EDC2}"
+              DTS:DTSID="{D2D8FE8D-D633-4381-BA90-53CC9D8B2A66}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -101,7 +101,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="latitud"
-              DTS:DTSID="{0FB37AC5-00E5-47DD-92BD-BFAF7CC2B8EC}"
+              DTS:DTSID="{D6365857-AC1D-494F-A3BE-53958F46778B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -110,7 +110,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="longitud"
-              DTS:DTSID="{875062CD-34EB-4BA7-991D-B7C42BA41D22}"
+              DTS:DTSID="{771C5EAF-1276-447D-BD04-F7CF62C8F688}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -119,7 +119,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="area_perdida_bosque_ha"
-              DTS:DTSID="{84FFFD52-6FA0-4630-BD94-07FD525B423D}"
+              DTS:DTSID="{A1378BBB-E9B6-49A7-9076-7CCEA8E6273F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -128,7 +128,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="emisiones_co2_mg"
-              DTS:DTSID="{831F69FB-C2E7-4C30-8084-6BD48C3A71ED}"
+              DTS:DTSID="{D1C302BA-00B2-4885-BB27-9EEA275B0422}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -137,7 +137,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="driver_dominante"
-              DTS:DTSID="{699DC93F-1AEF-497A-96A7-6CC35F93F6F9}"
+              DTS:DTSID="{8F962B0F-126B-4FBB-9398-277BF4DC8A9B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -146,7 +146,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="area_transformada_ha"
-              DTS:DTSID="{DD1CA367-7D8F-4D91-9523-B2330A60E951}"
+              DTS:DTSID="{6C8BE1D2-8E41-4A9C-AE49-04171D4C51F7}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -155,7 +155,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="clase_transformacion_dominante"
-              DTS:DTSID="{458D1A72-759A-484C-BA06-4DEB78296262}"
+              DTS:DTSID="{ADEB4C8E-56A5-44F5-BEFE-3C1DE3F98BEA}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -164,7 +164,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="num_focos_calor"
-              DTS:DTSID="{43428ADD-AA2A-4B4E-9EC4-20B3343B8A5B}"
+              DTS:DTSID="{01FB3980-8AD2-4E4B-88B1-FBCCA32EF0E7}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -173,7 +173,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="frp_promedio"
-              DTS:DTSID="{AAC24728-FDB3-472D-99D7-79592AF05222}"
+              DTS:DTSID="{E903DD05-3BB4-4AE8-A963-EE258DABA4E3}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -182,7 +182,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="confianza_promedio_focos"
-              DTS:DTSID="{30784DA6-5860-4264-8F17-BBC9992D3B3A}"
+              DTS:DTSID="{21248D0E-8E66-419C-99EF-5A807272BB8C}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -191,7 +191,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="porcentaje_area_forestal"
-              DTS:DTSID="{3608D104-04EA-44B5-84AF-12E9B74CB43F}"
+              DTS:DTSID="{2DADCF84-21D8-477D-BCD7-08E48E66637D}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -200,7 +200,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="area_forestal_ha"
-              DTS:DTSID="{8626A09C-4375-4DE8-98D4-3CB0C0AE75E0}"
+              DTS:DTSID="{61CE0F07-EA55-4DD2-911D-FB9420354C5E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -209,7 +209,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="deforestacion_anual_ha_owid"
-              DTS:DTSID="{2A0EDC63-8BF2-45E3-B1CB-82357060E767}"
+              DTS:DTSID="{C826BC89-4599-4302-8A2B-74970BB3D8E6}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -16286,7 +16286,7 @@ ORDER BY id_registro;</property>
         <NodeLayout
           Size="208,42"
           Id="Package\Data Flow Task Cargar_Staging_Desde_Archivo\CN_Origen_Deforestacion"
-          TopLeft="123,60" />
+          TopLeft="123,59" />
         <NodeLayout
           Size="280,42"
           Id="Package\Data Flow Task Cargar_Staging_Desde_Archivo\Derived Column Agregar_LoteId_Staging"
@@ -16315,18 +16315,18 @@ ORDER BY id_registro;</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task Cargar_Staging_Desde_Archivo.Paths[Flat File Source Output]"
-          TopLeft="227,102">
+          TopLeft="227,101">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,85"
+              EndConnector="0,86"
               Start="0,0"
-              End="0,77.5">
+              End="0,78.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,77.5" />
+                    End="0,78.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16752,7 +16752,7 @@ ORDER BY id_registro;</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="491.414088541667,16.2830578512397,118.50515625,11.6630859375"
+              BoundingBox="491.414088541665,16.2830578512397,118.50515625,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -16860,7 +16860,7 @@ ORDER BY id_registro;</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="118.984635416667,19.5442404006678,107.8640625,11.609375"
+              BoundingBox="118.984635416666,19.5442404006678,107.8640625,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
