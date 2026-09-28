@@ -406,3 +406,32 @@ footer.sitio-footer {
   color: var(--texto-suave);
   margin-bottom: 0.3rem;
 }
+
+/* Evidencia (capturas de pantalla reales, Etapa 3) */
+.evidencia {
+  margin: 0 0 2rem 0;
+  padding: 0;
+}
+.evidencia img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--borde);
+}
+.evidencia figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+.evidencia figcaption .titulo-evidencia {
+  display: block;
+  font-weight: bold;
+  color: var(--verde-oscuro);
+  margin-bottom: 0.2rem;
+}
+
+.resumen-iteracion {
+  border-left: 4px solid var(--verde-medio);
+  padding: 0.2rem 0 0.2rem 1rem;
+  margin-bottom: 1rem;
+}
+.resumen-iteracion h3 { margin: 0 0 0.2rem 0; }

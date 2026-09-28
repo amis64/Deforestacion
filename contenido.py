@@ -12,7 +12,7 @@ etapa no implique tocar la lógica de la aplicación.
 
 PROYECTO = {
     "nombre": "Deforestación y Transformación del Territorio",
-    "etapa": "Etapa 2 · Calidad de los datos",
+    "etapa": "Etapa 3 · Tratamiento de calidad con SSIS",
 }
 
 # ---------------------------------------------------------------------------
@@ -1169,5 +1169,122 @@ SCRIPT_TRATAMIENTO2 = (
     "calidad_datos/tratamiento.py -> dataset_tratado.csv y "
     "calidad_datos/reporte_tratamiento.json"
 )
+
+# ---------------------------------------------------------------------------
+# ETAPA 3 · Tratamiento de calidad con SSIS
+# ---------------------------------------------------------------------------
+# Página única (sin submenú): enlaces al informe y al video, y la evidencia
+# de las tres iteraciones tal como quedó capturada en SSMS (capturas reales
+# en static/img/etapa3/, no una retranscripción en tablas). El detalle
+# paso a paso (reglas de tratamiento, diseño del Data Flow, manejo de
+# errores) vive en el informe técnico, no en la aplicación.
+
+RECURSOS3 = {
+    "objetivo": (
+        "Implementar el plan de tratamiento definido en la Etapa 2 como un "
+        "paquete SSIS (Etapa3_Calidad.dtsx) que carga dataset_consolidado.csv "
+        "hacia SQL Server (DeforestacionDW), conservando una zona de staging "
+        "sin transformar para trazabilidad, y separando en tres destinos los "
+        "registros aceptados, los ya cargados en una ejecución anterior y los "
+        "que requieren revisión manual (con su valor original y su motivo)."
+    ),
+    # Se completan cuando el informe y el video queden publicados.
+    "informe_pdf_url": None,
+    "video_url": None,
+    "repo_url": "https://github.com/amis64/Deforestacion",
+}
+
+# Resumen breve de cada iteración (una frase, no una tabla completa): el
+# detalle real está en las capturas de EVIDENCIAS3.
+RESUMEN_ITERACIONES3 = [
+    dict(
+        numero=1,
+        titulo="Carga inicial del dataset real",
+        resumen=(
+            "88.513 filas recibidas, 80.592 aceptadas, 7.921 duplicados "
+            "exactos dentro del propio archivo, 0 enviadas a revisión "
+            "(lote 4) — consistente con que la Etapa 2 no encontró "
+            "violaciones de rango en el dataset real."
+        ),
+    ),
+    dict(
+        numero=2,
+        titulo="Verificación de idempotencia (repetir el mismo lote)",
+        resumen=(
+            "El primer intento (lote 5) no fue idempotente: debía aceptar "
+            "0 filas y aceptó 2.663. Se corrigió el Lookup de verificación "
+            "(comparar por contenido en vez de por id_registro) y se "
+            "confirmó en el lote 7: 0 aceptadas, 80.592 reconocidas como "
+            "ya existentes, 0 duplicados de hash_clave."
+        ),
+    ),
+    dict(
+        numero=3,
+        titulo="Dataset de prueba dirigido",
+        resumen=(
+            "8 filas sintéticas construidas para forzar cada regla que el "
+            "dataset real no activa (lote 9): 3 aceptadas, 4 enviadas a "
+            "revisión (una por cada motivo distinto) y 1 reconocida como "
+            "duplicado por contenido pese a tener un id_registro nuevo."
+        ),
+    ),
+]
+
+# Capturas reales de SSMS usadas como evidencia (en vez de retranscribir los
+# resultados en tablas de texto). Los archivos viven en static/img/etapa3/.
+EVIDENCIAS3 = [
+    dict(
+        archivo="01_iteracion2_antes_control.png",
+        titulo="Iteración 2 — antes del fix: la re-ejecución no fue idempotente",
+        descripcion=(
+            "staging.control_iteraciones: el lote 4 (carga original) aceptó "
+            "80.592 filas; al repetir el mismo archivo, el lote 5 debía "
+            "aceptar 0 y aceptó 2.663 — el Lookup de verificación comparaba "
+            "por id_registro, no por el contenido de la fila."
+        ),
+    ),
+    dict(
+        archivo="02_iteracion2_antes_hash_duplicados.png",
+        titulo="Iteración 2 — antes del fix: contenido duplicado detectado por hash",
+        descripcion=(
+            "La verificación por hash_clave confirma el problema: varios "
+            "grupos de filas con el mismo contenido de negocio, repetidas "
+            "por la reejecución del lote."
+        ),
+    ),
+    dict(
+        archivo="03_iteracion2_despues_confirmada.png",
+        titulo="Iteración 2 — después del fix: idempotencia confirmada",
+        descripcion=(
+            "Con el Lookup reconfigurado para comparar por las columnas de "
+            "negocio: el lote 7 aceptó 0 filas y reconoció las 80.592 como "
+            "ya existentes. La verificación de hash_clave no devuelve "
+            "ninguna fila duplicada."
+        ),
+    ),
+    dict(
+        archivo="04_iteracion3_resultado.png",
+        titulo="Iteración 3 — dataset de prueba dirigido",
+        descripcion=(
+            "El lote 9 (8 filas sintéticas) activa cada regla de revisión "
+            "por separado: año fuera de rango, valor negativo, porcentaje "
+            "fuera de rango y campo núcleo vacío (una fila cada una), más "
+            "una fila reconocida como ya existente pese a tener un "
+            "id_registro nunca antes visto."
+        ),
+    ),
+    dict(
+        archivo="05_ejemplos_concretos.png",
+        titulo="Ejemplos concretos: antes / después",
+        descripcion=(
+            "De izquierda a derecha: total de filas en limpio.deforestacion "
+            "(80.588), homologación de departamento y driver_dominante "
+            "(id_registro 900001), valor atípico marcado (id_registro "
+            "900002), motivo de cada fila enviada a revisión, y "
+            "confirmación de que el duplicado por contenido (id_registro "
+            "900007) no se insertó."
+        ),
+    ),
+]
 
 
