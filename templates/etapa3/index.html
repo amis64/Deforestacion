@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block titulo %}Etapa 3 · Tratamiento de calidad con SSIS{% endblock %}
+{% block contenido %}
+<div class="panel">
+
+  <h1>Etapa 3 · Tratamiento de calidad con SSIS</h1>
+  <p>{{ recursos.objetivo }}</p>
+
+  <h2>Informe, video y repositorio</h2>
+  <div class="tarjetas-cifras">
+
+    <a class="tarjeta-enlace" href="{{ recursos.informe_pdf_url or '#' }}" {% if recursos.informe_pdf_url %}target="_blank" rel="noopener"{% endif %}>
+      <span class="etiqueta-cifra">Informe técnico (PDF)</span>
+      <span class="ir">
+        {% if recursos.informe_pdf_url %}Abrir el informe &rarr;{% else %}En preparación — se publica junto con el video{% endif %}
+      </span>
+    </a>
+
+    <a class="tarjeta-enlace" href="{{ recursos.video_url or '#' }}" {% if recursos.video_url %}target="_blank" rel="noopener"{% endif %}>
+      <span class="etiqueta-cifra">Video de demostración (máx. 4 min)</span>
+      <span class="ir">
+        {% if recursos.video_url %}Ver video &rarr;{% else %}En preparación{% endif %}
+      </span>
+    </a>
+
+    <a class="tarjeta-enlace" href="{{ recursos.repo_url }}" target="_blank" rel="noopener">
+      <span class="etiqueta-cifra">Repositorio (GitHub)</span>
+      <span class="ir">Ver código, paquete .dtsx y scripts SQL &rarr;</span>
+    </a>
+
+  </div>
+
+  <h2>Resultados de las 3 iteraciones</h2>
+  <p>
+    Cada iteración se apoya en el hallazgo de la anterior: la Iteración 1
+    confirma la carga base sobre el dataset real, la Iteración 2 pone a
+    prueba repetir el mismo lote (expuso un error real de idempotencia,
+    corregido antes de seguir) y la Iteración 3 fuerza con datos sintéticos
+    cada regla de revisión que el dataset real no llega a activar.
+  </p>
+
+  {% for it in resumen_iteraciones %}
+  <div class="resumen-iteracion">
+    <h3>Iteración {{ it.numero }} &middot; {{ it.titulo }}</h3>
+    <p>{{ it.resumen }}</p>
+  </div>
+  {% endfor %}
+
+  <h2>Evidencia</h2>
+  <p>
+    Capturas directas de SSMS de las ejecuciones reales (sin
+    retranscribir a tablas), en el orden en que ocurrieron.
+  </p>
+
+  {% for e in evidencias %}
+  <figure class="evidencia">
+    <img src="{{ url_for('static', filename='img/etapa3/' + e.archivo) }}" alt="{{ e.titulo }}">
+    <figcaption>
+      <span class="titulo-evidencia">{{ e.titulo }}</span>
+      {{ e.descripcion }}
+    </figcaption>
+  </figure>
+  {% endfor %}
+
+  <p class="nota">
+    Las filas 900001-900008 (Iteración 3) pertenecen a un dataset sintético
+    de prueba (<code>fuente_origen = 'PRUEBA_QA'</code>,
+    <code>pruebas_iteracion3/</code> en el repositorio) y se filtran antes
+    de dejar la base como reflejo final del dataset real.
+  </p>
+
+</div>
+{% endblock %}

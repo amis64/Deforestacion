@@ -145,6 +145,21 @@ def tratamiento2():
     )
 
 
+# ---------------------------------------------------------------------------
+# Etapa 3 · Tratamiento de calidad con SSIS (página única)
+# ---------------------------------------------------------------------------
+
+@app.route("/etapa-3")
+def etapa3():
+    return render_template(
+        "etapa3/index.html",
+        activo="etapa3",
+        recursos=c.RECURSOS3,
+        resumen_iteraciones=c.RESUMEN_ITERACIONES3,
+        evidencias=c.EVIDENCIAS3,
+    )
+
+
 if __name__ == "__main__":
     # Puerto configurable por variable de entorno para funcionar igual en
     # local y en Render (que inyecta su propio PORT).

@@ -1,0 +1,9 @@
+id_registro,nivel_analisis,fuente_origen,pais,departamento,municipio,anio,latitud,longitud,area_perdida_bosque_ha,emisiones_co2_mg,driver_dominante,area_transformada_ha,clase_transformacion_dominante,num_focos_calor,frp_promedio,confianza_promedio_focos,porcentaje_area_forestal,area_forestal_ha,deforestacion_anual_ha_owid
+900001,Regional,PRUEBA_QA,Colombia,"Bogotá, D.C.",,2022,,,12.5,340.2,Logging,5.0,Deforestación,10,3.2,85,45.5,1000,
+900002,Regional,PRUEBA_QA,Colombia,CUNDINAMARCA,CHÍA,2021,4.86,-74.03,500,1000,Shifting cultivation,20,Agricultura,5,2.1,70,30,500,
+900003,Regional,PRUEBA_QA,Colombia,Cundinamarca,Chía,1995,4.86,-74.03,15,300,Logging,5,Deforestación,8,2.5,80,40,600,
+900004,Regional,PRUEBA_QA,Colombia,Cundinamarca,Chía,2020,4.86,-74.03,-50,300,Logging,5,Deforestación,8,2.5,80,40,600,
+900005,Regional,PRUEBA_QA,Colombia,Cundinamarca,Chía,2020,4.86,-74.03,15,300,Logging,5,Deforestación,8,2.5,80,120,600,
+900006,Regional,PRUEBA_QA,,Cundinamarca,Chía,2020,4.86,-74.03,15,300,Logging,5,Deforestación,8,2.5,80,40,600,
+900007,Global,FAO_SDG,Afghanistan,,,2010,,,,,,,,,,,1.85,1209.44,
+900008,Regional,PRUEBA_QA,Brazil,Amazonas,Manaus,2023,-3.10,-60.02,45.0,900.0,Wildfire,10.0,Deforestación,15,4.0,90,55.0,800.0,150.0
