@@ -160,6 +160,19 @@ def etapa3():
     )
 
 
+# ---------------------------------------------------------------------------
+# Etapa 4 · Conocimiento evidente (Power BI)
+# ---------------------------------------------------------------------------
+
+@app.route("/etapa-4")
+def etapa4():
+    return render_template(
+        "etapa4/conocimiento_evidente.html",
+        activo="etapa4",
+        datos=c.CONOCIMIENTO_EVIDENTE,
+    )
+
+
 if __name__ == "__main__":
     # Puerto configurable por variable de entorno para funcionar igual en
     # local y en Render (que inyecta su propio PORT).

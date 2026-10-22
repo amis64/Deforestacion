@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block titulo %}Etapa 4 · Conocimiento evidente{% endblock %}
+{% block contenido %}
+<div class="panel">
+
+  <h1>Etapa 4 · Conocimiento evidente</h1>
+  <p>{{ datos.proposito }}</p>
+  <p class="nota">
+    Páginas del informe:
+    {% for p in datos.paginas %}<strong>{{ p }}</strong>{% if not loop.last %} &middot; {% endif %}{% endfor %}.
+    Usa las pestañas inferiores del tablero para cambiar de página.
+  </p>
+
+  {% if datos.powerbi_embed_html %}
+  <div class="powerbi-embed">
+    {{ datos.powerbi_embed_html | safe }}
+  </div>
+  {% if datos.powerbi_url %}
+  <p class="nota">
+    <a href="{{ datos.powerbi_url }}" target="_blank" rel="noopener">Abrir el informe en una pestaña nueva &rarr;</a>
+  </p>
+  {% endif %}
+  {% elif datos.powerbi_url and '/view?r=' in datos.powerbi_url %}
+  <div class="powerbi-embed">
+    <iframe title="Informe de Power BI · Deforestación y transformación del territorio"
+            src="{{ datos.powerbi_url }}" allowfullscreen="true"></iframe>
+  </div>
+  <p class="nota">
+    <a href="{{ datos.powerbi_url }}" target="_blank" rel="noopener">Abrir el informe en una pestaña nueva &rarr;</a>
+  </p>
+  {% elif datos.powerbi_url %}
+  <div class="tarjetas-cifras">
+    <a class="tarjeta-enlace" href="{{ datos.powerbi_url }}" target="_blank" rel="noopener">
+      <span class="etiqueta-cifra">Informe de Power BI</span>
+      <span class="ir">Abrir los tableros interactivos &rarr;</span>
+    </a>
+  </div>
+  {% else %}
+  <p class="nota alerta">
+    El informe de Power BI todavía no se ha publicado. Una vez publicado
+    (Archivo &rarr; Publicar &rarr; Publicar en la web), agrega aquí su
+    enlace o su código de inserción
+    (<code>CONOCIMIENTO_EVIDENTE["powerbi_url"]</code> o
+    <code>["powerbi_embed_html"]</code> en <code>contenido.py</code>).
+  </p>
+  {% endif %}
+
+  <p class="nota">
+    Repositorio del proyecto:
+    {% if datos.repositorio_url %}
+    <a href="{{ datos.repositorio_url }}" target="_blank" rel="noopener">{{ datos.repositorio_url }}</a>
+    {% else %}
+    (agregar URL pública una vez publicado)
+    {% endif %}
+    &middot; Aplicación publicada:
+    {% if datos.app_publicada_url %}
+    <a href="{{ datos.app_publicada_url }}" target="_blank" rel="noopener">{{ datos.app_publicada_url }}</a>
+    {% else %}
+    (agregar URL una vez desplegada)
+    {% endif %}
+    &middot; Medidas DAX documentadas en <code>{{ datos.documentacion_dax }}</code>.
+  </p>
+
+</div>
+{% endblock %}

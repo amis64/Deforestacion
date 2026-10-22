@@ -12,7 +12,7 @@ etapa no implique tocar la lógica de la aplicación.
 
 PROYECTO = {
     "nombre": "Deforestación y Transformación del Territorio",
-    "etapa": "Etapa 3 · Tratamiento de calidad con SSIS",
+    "etapa": "Etapa 4 · Conocimiento evidente (Power BI)",
 }
 
 # ---------------------------------------------------------------------------
@@ -1287,3 +1287,41 @@ EVIDENCIAS3 = [
     ),
 ]
 
+
+# ===========================================================================
+# Etapa 4 · Conocimiento evidente (Power BI)
+# ===========================================================================
+# El docente actualizó la entrega: ya no se pide un análisis calculado
+# dentro de la misma app Flask, sino un informe de Power BI (4 páginas,
+# una por pregunta) que esta sección integra mediante una inserción
+# (iframe) o un enlace. El texto de cada página vive en el informe; la app
+# solo muestra los tableros. El análisis usa deforestacion_limpio.csv
+# (salida del nuevo método de limpieza indicado por el docente; el
+# dataset_tratado.csv anterior ya no se usa).
+
+SUBMENU4 = [
+    ("etapa4", "Conocimiento evidente"),
+]
+
+CONOCIMIENTO_EVIDENTE = {
+    "proposito": (
+        "Informe de Power BI sobre deforestacion_limpio.csv con los "
+        "tableros de las cuatro preguntas de análisis. Los conocimientos "
+        "evidentes, la limitación y la posible decisión de cada página "
+        "están escritos dentro del propio informe."
+    ),
+    # Páginas del informe, en el orden en que aparecen en Power BI.
+    "paginas": [
+        "Poblacional",
+        "Territorial",
+        "Temporal",
+        "Multivariada",
+    ],
+    # Se completa al publicar el informe (Archivo -> Publicar -> Publicar en
+    # la web). Usa UNO de los dos: el código de inserción (iframe) o el enlace.
+    "powerbi_embed_html": '<iframe title="Deforestacion_etapa4" width="100%" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMzI5YmIyOTgtYmRhYy00YTNkLThkNzQtNGNiNTY5YTdlM2MwIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>',
+    "powerbi_url": None,
+    "repositorio_url": "https://github.com/amis64/Deforestacion",
+    "app_publicada_url": "https://deforestacion-sco2.onrender.com/",
+    "documentacion_dax": "powerbi/README.md",
+}
