@@ -1319,9 +1319,9 @@ CONOCIMIENTO_EVIDENTE = {
     ],
     # Se completa al publicar el informe (Archivo -> Publicar -> Publicar en
     # la web). Usa UNO de los dos: el código de inserción (iframe) o el enlace.
-    "powerbi_embed_html": None,
+    "powerbi_embed_html": '<iframe title="Deforestacion_etapa4" width="100%" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMzI5YmIyOTgtYmRhYy00YTNkLThkNzQtNGNiNTY5YTdlM2MwIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>',
     "powerbi_url": None,
-    "repositorio_url": None,
-    "app_publicada_url": None,
+    "repositorio_url": "https://github.com/amis64/Deforestacion",
+    "app_publicada_url": "https://deforestacion-sco2.onrender.com/",
     "documentacion_dax": "powerbi/README.md",
 }
