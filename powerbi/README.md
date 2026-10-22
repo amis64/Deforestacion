@@ -146,6 +146,101 @@ Priorizar las acciones de control de la deforestación sobre la expansión agrop
 
 ---
 
+### Página 2 — Dimensión territorial — departamentos, municipios y el mundo (Amy)
+
+**Pregunta**: ¿Cómo se distribuye la pérdida de bosque entre los territorios disponibles — departamentos y municipios de Colombia, y Colombia frente al resto del mundo?
+
+**Segmentadores (2)**: `departamento`; `periodo`.
+
+**Indicadores (4 tarjetas)**:
+- `[Área perdida Colombia]`
+- `[Departamento top]`
+- `[% departamento top]`
+- `[Concentración top 5 departamentos]`
+
+**Visualizaciones (3)**:
+- Barras agrupadas: `departamento` / `municipio` → `[Área perdida Colombia]`
+- Barras agrupadas: `pais` → `[Pérdida mundial (OWID, sin agregados)]` · filtro Top 8 del visual
+- Dona: `departamento` → `[Área perdida Colombia]` · filtro Top 8 del visual
+
+#### Medidas de la página 2
+
+```DAX
+Área perdida (ha) = SUM(deforestacion_limpio[area_perdida_bosque_ha])
+
+Área perdida Colombia = CALCULATE([Área perdida (ha)], deforestacion_limpio[pais] = "Colombia")
+
+Departamento top =
+VAR TablaRank =
+    ADDCOLUMNS(FILTER(VALUES(deforestacion_limpio[departamento]), deforestacion_limpio[departamento] <> ""), "Area", CALCULATE([Área perdida Colombia]))
+VAR Top1 = TOPN(1, TablaRank, [Area], DESC)
+RETURN CONCATENATEX(Top1, deforestacion_limpio[departamento])
+
+% departamento top =
+VAR TablaRank =
+    ADDCOLUMNS(FILTER(VALUES(deforestacion_limpio[departamento]), deforestacion_limpio[departamento] <> ""), "Area", CALCULATE([Área perdida Colombia]))
+VAR Top1Area = MAXX(TOPN(1, TablaRank, [Area], DESC), [Area])
+VAR TotalDeptos = SUMX(TablaRank, [Area])
+RETURN DIVIDE(Top1Area, TotalDeptos)
+
+Concentración top 5 departamentos =
+VAR TablaRank =
+    ADDCOLUMNS(FILTER(VALUES(deforestacion_limpio[departamento]), deforestacion_limpio[departamento] <> ""), "Area", CALCULATE([Área perdida Colombia]))
+VAR Top5 = TOPN(5, TablaRank, [Area], DESC)
+VAR SumaTop5 = SUMX(Top5, [Area])
+VAR TotalDeptos = SUMX(TablaRank, [Area])
+RETURN DIVIDE(SumaTop5, TotalDeptos)
+
+Pérdida mundial (OWID, sin agregados) =
+CALCULATE(
+    SUM(deforestacion_limpio[deforestacion_anual_ha_owid]),
+    deforestacion_limpio[es_agregado_regional] = FALSE
+)
+```
+
+#### Conocimiento evidente 1 — Cinco departamentos concentran más de la mitad de la pérdida
+
+- **Pregunta**: ¿La pérdida de bosque se reparte entre todos los departamentos o se concentra en pocos?
+- **Variables**: departamento y area_perdida_bosque_ha.
+- **Procedimiento**: Suma de área por departamento sobre las filas con departamento informado (escalas Nacional y Regional, 33 departamentos, 2001–2024) y participación sobre ese total; se comprobó por separado en cada escala.
+- **Evidencia**: Tarjetas "Departamento top" (Caquetá), "% departamento top" (14,5 %) y "Concentración top 5 departamentos" (52,6 %); barras por departamento.
+- **Hallazgo**: Caquetá (14,5 %), Meta (12,5 %), Antioquia (11,1 %), Guaviare (8,1 %) y Putumayo (6,5 %) suman el 52,6 %; los 28 departamentos restantes reparten el 47,4 %. El resultado es igual en la escala nacional (Caquetá 14,48 %) y en la municipal (14,54 %). Amazonía y Meta (siete departamentos) reúnen el 44,6 %.
+- **Interpretación**: La pérdida tiene un núcleo en el arco amazónico y el piedemonte (Caquetá, Meta, Guaviare y Putumayo), más Antioquia.
+- **Utilidad**: Permite concentrar el presupuesto de control y monitoreo en cinco departamentos que cubren más de la mitad de la pérdida.
+- **Limitación**: El porcentaje mide el aporte al total, no la intensidad.
+
+#### Conocimiento evidente 2 — 35 municipios explican la mitad de la pérdida municipal
+
+- **Pregunta**: ¿Dentro de los departamentos, la pérdida se concentra en pocos municipios?
+- **Variables**: departamento, municipio, anio y area_perdida_bosque_ha (escala Regional).
+- **Procedimiento**: Una fila por municipio-año (28.800 combinaciones, sin repeticiones), suma 2001–2024 por municipio, orden descendente y participación acumulada sobre 5.602.623 ha.
+- **Evidencia**: Barras "Área perdida Colombia por departamento", con desglose a municipio.
+- **Hallazgo**: De 1.209 municipios, 35 reúnen el 50 % de la pérdida y los 10 primeros el 30,3 %. Encabezan San Vicente del Caguán (5,21 %), La Macarena (4,79 %), Cartagena del Chairá (4,63 %) y San José del Guaviare (3,42 %).
+- **Interpretación**: A escala municipal la concentración es mayor: un grupo pequeño de municipios de Caquetá, Meta y Guaviare forma el foco de la deforestación.
+- **Utilidad**: Permite priorizar municipios concretos para el control territorial, en lugar de departamentos completos.
+- **Limitación**: Los municipios grandes tienen más bosque disponible: el ranking mide aporte al total, no pérdida por hectárea de bosque.
+
+#### Conocimiento evidente 3 — Colombia frente al mundo: el puesto depende de no repetir filas
+
+- **Pregunta**: ¿Qué lugar ocupa Colombia en la deforestación mundial?
+- **Variables**: pais, anio, deforestacion_anual_ha_owid y es_agregado_regional.
+- **Procedimiento**: Escala Global sin los 48 agregados regionales; suma de la deforestación anual OWID de los años disponibles (2010, 2015 y 2020) por país; comparación con y sin filas repetidas de Colombia.
+- **Evidencia**: Gráfico "Pérdida mundial (OWID, sin agregados) por país".
+- **Hallazgo**: Sin repeticiones, Brasil concentra el 27,6 % de la suma de 140 países (7,80 millones de ha). Colombia aparece 6.ª en el gráfico (4,33 %) porque sus filas de 2010, 2015 y 2020 están tres veces; con una fila por año suma 420.460 ha (1,49 %) y queda en el puesto 15.
+- **Interpretación**: Colombia tiene una deforestación relevante, pero no está en el grupo líder; el gráfico actual la sobrestima por la duplicación, no por un dato real.
+- **Utilidad**: Evita presentar a Colombia como el 6.º país con más deforestación y obliga a corregir la medida antes de hacer comparaciones internacionales.
+- **Limitación**: OWID solo trae tres años y mide deforestación (FAO).
+
+#### Limitación del análisis (página 2)
+
+Las hectáreas que suman las tarjetas y barras repiten filas de las tres escalas, así que no equivalen a hectáreas reales. Los porcentajes sí son comparables porque cada escala repite el mismo total; la pérdida única 2001–2024 es de 5,60 millones de ha.
+
+#### Posible decisión sustentada en los datos (página 2)
+
+Focalizar el control y el monitoreo en Caquetá, Meta, Antioquia, Guaviare y Putumayo (52,6 % de la pérdida) y, dentro de ellos, en los 35 municipios que suman la mitad de la pérdida municipal, empezando por San Vicente del Caguán, La Macarena y Cartagena del Chairá.
+
+---
+
 ### Página 3 — Dimensión temporal — evolución 2001-2024 (Nicolás)
 
 **Pregunta**: ¿Cómo ha cambiado año a año la pérdida de bosque en Colombia entre 2001 y 2024, y cómo varía esa evolución según el departamento o la causa de pérdida?
