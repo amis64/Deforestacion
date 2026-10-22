@@ -4,3 +4,8 @@ venv/
 .env
 .DS_Store
 .vs/
+
+# Archivos temporales de Power BI Desktop
+~$*.pbix
+*.pbix.lock
+.pbi/
