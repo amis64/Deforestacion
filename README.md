@@ -44,6 +44,67 @@ reproducibles: se ejecutan sobre `dataset_consolidado.csv` y generan tanto
 el dataset tratado (`dataset_tratado.csv`) como los reportes en formato
 JSON que alimentan las cifras mostradas en la aplicación.
 
+### Etapa 5: análisis multidimensional
+
+Organiza el dataset tratado (`deforestacion_limpio.csv`, 80.585 registros) en un
+**modelo estrella** y lo explora desde varias perspectivas. La aplicación tiene un
+nuevo elemento de menú, **Análisis multidimensional**, con:
+
+* Resumen: propósito, relación con la Etapa 4, datos y cobertura, acceso a las vistas.
+* Modelo estrella: diagrama, granularidad, dimensiones, medidas, jerarquías, carga y validaciones.
+* Operaciones: drill-down, roll-up, slice, dice y pivot, cada una con una consulta ejecutada.
+* Cuatro vistas interactivas (cada una con 3 indicadores, 2 visualizaciones, 1 matriz, 2 filtros,
+  controles de operaciones, 2 conocimientos, 1 limitación y 1 decisión).
+* Conocimientos (8), limitaciones y conclusiones.
+
+**Modelo.** Tabla de hechos `hechos_perdida_forestal` (una fila por territorio y año) y cinco
+dimensiones: `dim_territorio`, `dim_tiempo`, `dim_causa`, `dim_transformacion`, `dim_fuente`.
+Se almacena en SQLite (`multidimensional/modelo_estrella.db`) y Flask lo consulta con `sqlite3`.
+
+**Reproducir la solución** (solo biblioteca estándar de Python; Flask ya está en `requirements.txt`):
+
+```bash
+pip install -r requirements.txt
+python multidimensional/cargar_modelo.py      # ETL: CSV tratado -> modelo estrella (idempotente)
+python multidimensional/validar_modelo.py     # 30 verificaciones de integridad + 12 comparaciones
+python multidimensional/generar_docs.py       # regenera docs/modelo_estrella/*.md
+python app.py                                 # http://localhost:5000/analisis-multidimensional/
+# opcional (requiere pandas): recalcula las cifras de los conocimientos de forma independiente
+python multidimensional/verificar_cifras.py
+```
+
+Si `modelo_estrella.db` no existe, la aplicación lo reconstruye sola al arrancar a partir del CSV.
+
+**Archivos de la Etapa 5**
+
+```
+├── deforestacion_limpio.csv               # dataset tratado (entrada del ETL)
+├── sql/
+│   ├── 05_modelo_estrella_ddl.sql         # creación de tablas, claves, relaciones y vista vw_cubo
+│   ├── 06_consultas_olap.sql              # consultas de los análisis (drill-down, roll-up, slice, dice, pivot)
+│   └── 07_validaciones_modelo.sql         # validaciones del modelo en SQL
+├── multidimensional/
+│   ├── __init__.py                        # Blueprint de Flask (rutas /analisis-multidimensional/...)
+│   ├── cargar_modelo.py                   # ETL reproducible
+│   ├── validar_modelo.py                  # validaciones + reporte_validacion.json
+│   ├── olap.py                            # motor de consultas multidimensionales (SQL parametrizado)
+│   ├── graficos.py                        # gráficas SVG generadas en el servidor
+│   ├── vistas/                            # las cuatro vistas (v1..v4) y utilidades comunes
+│   ├── conocimientos.py, cifras.py        # los 8 conocimientos; las cifras se consultan al modelo
+│   ├── operaciones.py                     # ejemplo ejecutado de cada operación
+│   ├── documentacion.py, generar_docs.py, diagrama.py
+│   ├── verificar_cifras.py                # comprobación independiente (pandas)
+│   └── modelo_estrella.db                 # base SQLite del modelo (generada por el ETL)
+├── docs/modelo_estrella/                  # diagrama (.svg/.png), diccionario, mapeo de variables, jerarquías
+├── templates/multidimensional/            # plantillas de la sección
+└── static/css/multidimensional.css, static/img/etapa5/
+```
+
+**Cambios en la aplicación existente** (solo dos líneas en `app.py` y una opción de menú, junto a «Etapa 4», en `templates/base.html`):
+ver `docs/modelo_estrella/INTEGRACION_FLASK.md`.
+
+**Repositorio:** https://github.com/amis64/Deforestacion · **Aplicación publicada:** (URL del despliegue en Render, ver informe técnico de la Etapa 5).
+
 ## Estructura del repositorio
 
 ```

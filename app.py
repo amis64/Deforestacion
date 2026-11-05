@@ -16,8 +16,10 @@ import os
 from flask import Flask, render_template
 
 import contenido as c
+from multidimensional import bp as multidimensional_bp  # Etapa 5 · Análisis multidimensional
 
 app = Flask(__name__)
+app.register_blueprint(multidimensional_bp)
 
 # Estructura del submenú, reutilizada en la plantilla base para construir
 # la barra de navegación y resaltar la sección activa.
