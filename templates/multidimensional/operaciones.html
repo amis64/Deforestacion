@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Operaciones multidimensionales{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">{% endblock %}
+{% block contenido %}
+{% include "multidimensional/_cabecera.html" %}
+<div class="panel">
+  <h1>Operaciones multidimensionales</h1>
+  <p>Las cinco operaciones están implementadas en las vistas interactivas. Cada ejemplo de esta página <strong>se ejecuta al abrirla</strong> contra el modelo estrella; el enlace «Reproducir» abre la misma selección en la vista. Cambiar de nivel o de filtro vuelve a ejecutar la consulta: los totales, porcentajes, razones y promedios se <strong>recalculan</strong> con las filas del nuevo nivel, nunca se suman ni se promedian celdas ya calculadas. Cambiar solo el tipo de gráfica no se considera una operación.</p>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Operación</th><th>Cómo se hace en las vistas</th></tr></thead>
+    <tbody>
+      <tr><td>Drill-down</td><td>Control «Bajar a …» de cada dimensión, o clic sobre una fila de la matriz (la fija como filtro y baja un nivel).</td></tr>
+      <tr><td>Roll-up</td><td>Control «Subir a …» (quita el filtro del nivel y vuelve al nivel superior).</td></tr>
+      <tr><td>Slice</td><td>Filtro con valores de <em>una</em> dimensión.</td></tr>
+      <tr><td>Dice</td><td>Filtros sobre <em>dos o más</em> dimensiones a la vez.</td></tr>
+      <tr><td>Pivot</td><td>Botón «Pivotar ejes» (y selector de dimensiones de filas y columnas).</td></tr>
+    </tbody>
+  </table></div>
+
+  {% for e in ejemplos %}
+  <section class="md-operacion" id="{{ e.clave }}">
+    <h2>{{ loop.index }}. {{ e.nombre }}</h2>
+    <p><em>{{ e.definicion }}</em></p>
+    <dl class="md-ficha">
+      <dt>Dimensiones y medidas</dt><dd>{{ e.dimensiones }}</dd>
+      <dt>Nivel de detalle / filtros</dt><dd>{{ e.nivel }}</dd>
+      <dt>Procedimiento de consulta</dt><dd>{{ e.procedimiento }}</dd>
+    </dl>
+    {% for titulo, tb in e.tablas %}
+    <h3>{{ titulo }}</h3>
+    <div class="tabla-scroll"><table class="md-tabla">
+      <thead><tr>{% for h in tb.cabecera %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for f in tb.filas %}<tr>{% for x in f %}<td{% if not loop.first %} class="num"{% endif %}>{{ x }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table></div>
+    {% endfor %}
+    <p><strong>Interpretación.</strong> {{ e.interpretacion }}</p>
+    <details><summary>Ver la consulta SQL ejecutada</summary><pre class="md-sql">{{ e.sql }}</pre></details>
+    <p><a class="md-boton" href="{{ url_for('multidim.vista', vid=e.vista) }}{{ e.enlace[1] }}">Reproducir en la vista interactiva &rarr;</a></p>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

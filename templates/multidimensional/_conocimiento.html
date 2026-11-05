@@ -1,0 +1,18 @@
+{# Un conocimiento multidimensional con los ocho elementos de la rúbrica #}
+<article class="md-conocimiento" id="{{ k.id }}">
+  <header>
+    <span class="md-chip">{{ k.id }}</span>
+    <h3>{{ k.titulo }}</h3>
+    <p class="md-ops">{% for o in k.operaciones %}<span class="md-chip md-chip-op">{{ o }}</span>{% endfor %}</p>
+  </header>
+  <dl>
+    <dt>Pregunta</dt><dd>{{ k.pregunta }}</dd>
+    <dt>Dimensiones y medidas</dt><dd>{{ k.dimensiones }}</dd>
+    <dt>Procedimiento</dt><dd>{{ k.procedimiento }}<br><span class="md-selecciona"><strong>Selección:</strong> {{ k.selecciona }}</span></dd>
+    <dt>Evidencia</dt><dd>{{ k.evidencia }} <a class="md-reproducir" href="{{ url_for('multidim.vista', vid=k.enlace[0]) }}{{ k.enlace[1] }}">Reproducir esta selección &rarr;</a></dd>
+    <dt>Hallazgo</dt><dd>{{ k.hallazgo }}</dd>
+    <dt>Interpretación</dt><dd>{{ k.interpretacion }}</dd>
+    <dt>Utilidad</dt><dd>{{ k.utilidad }}</dd>
+    <dt>Limitación</dt><dd>{{ k.limitacion }}</dd>
+  </dl>
+</article>

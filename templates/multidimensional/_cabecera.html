@@ -1,0 +1,6 @@
+{# Navegación interna de la sección #}
+<nav class="md-subnav" aria-label="Secciones de Análisis multidimensional">
+  {% for ep, etq in secciones %}<a href="{{ url_for(ep) }}"{% if seccion == ep %} class="activa"{% endif %}>{{ etq }}</a>{% endfor %}
+  <span class="md-subnav-sep">Vistas:</span>
+  {% for v in vistas %}<a href="{{ url_for('multidim.vista', vid=v.ID) }}"{% if m is defined and m.ID == v.ID %} class="activa"{% endif %}>{{ loop.index }}. {{ v.TITULO.split(' según')[0].split(' por ')[0] }}</a>{% endfor %}
+</nav>
