@@ -1,0 +1,329 @@
+{
+  "integridad": [
+    {
+      "verificacion": "Unicidad de la clave primaria de dim_territorio (territorio_key)",
+      "esperado": 1555,
+      "obtenido": 1555,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave natural de dim_territorio (nivel_analisis, pais, departamento, municipio)",
+      "esperado": 1555,
+      "obtenido": 1555,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave primaria de dim_tiempo (id_dim_tiempo)",
+      "esperado": 8766,
+      "obtenido": 8766,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave natural de dim_tiempo (fecha)",
+      "esperado": 8766,
+      "obtenido": 8766,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave primaria de dim_causa (causa_key)",
+      "esperado": 9,
+      "obtenido": 9,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave natural de dim_causa (driver_dominante)",
+      "esperado": 9,
+      "obtenido": 9,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave primaria de dim_transformacion (transformacion_key)",
+      "esperado": 4,
+      "obtenido": 4,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave natural de dim_transformacion (clase_transformacion)",
+      "esperado": 4,
+      "obtenido": 4,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave primaria de dim_fuente (fuente_key)",
+      "esperado": 11,
+      "obtenido": 11,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Unicidad de la clave natural de dim_fuente (fuente_origen)",
+      "esperado": 11,
+      "obtenido": 11,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Claves foráneas huérfanas según PRAGMA foreign_key_check",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos sin miembro en dim_territorio (LEFT JOIN)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos sin miembro en dim_tiempo (LEFT JOIN)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos sin miembro en dim_causa (LEFT JOIN)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos sin miembro en dim_transformacion (LEFT JOIN)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos sin miembro en dim_fuente (LEFT JOIN)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Duplicados de (territorio, año) en la tabla de hechos",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Filas de hechos = combinaciones distintas territorio-año del CSV",
+      "esperado": 30556,
+      "obtenido": 30556,
+      "resultado": "OK",
+      "detalle": "Se cuenta en el CSV con la clave (nivel, país, departamento, municipio, año) sin pasar por el ETL."
+    },
+    {
+      "verificacion": "Dimensiones sin uso (miembros que ningún hecho referencia)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "dim_tiempo cubre todos los días de 2001-01-01 a 2024-12-31 (sin huecos)",
+      "esperado": 8766,
+      "obtenido": 8766,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Años de dim_tiempo con número de días distinto de 365/366",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "id_dim_tiempo (AAAAMMDD) inconsistente con fecha",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos que no referencian el 1 de enero de su año (tiempo_key = AAAA0101)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Años distintos referenciados por los hechos = años del CSV",
+      "esperado": 24,
+      "obtenido": 24,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Años del calendario sin ningún hecho asociado",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Días marcados como periodo de pandemia (11-mar-2020 a 5-may-2023, OMS)",
+      "esperado": 1151,
+      "obtenido": 1151,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Filas de dim_tiempo con hora informada (el grano es el día; hora = NULL)",
+      "esperado": 0,
+      "obtenido": 0,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos con 'Sin causa informada' (faltante de la fuente, no 'No aplica')",
+      "esperado": 3042,
+      "obtenido": 3042,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos con área perdida NULL (no se rellena con 0)",
+      "esperado": 2884,
+      "obtenido": 2884,
+      "resultado": "OK",
+      "detalle": ""
+    },
+    {
+      "verificacion": "Hechos con área perdida = 0 (valor real, distinto de faltante)",
+      "esperado": 1820,
+      "obtenido": 1820,
+      "resultado": "OK",
+      "detalle": ""
+    }
+  ],
+  "coherencia": [
+    {
+      "comprobacion": "B1. Registros de origen, nivel Regional",
+      "dataset_tratado": 77256,
+      "modelo": 77256,
+      "diferencia": 0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "SUM(n_registros_origen) reconstruye el conteo del CSV: ninguna fila se pierde ni se duplica al cargar."
+    },
+    {
+      "comprobacion": "B1. Registros de origen, nivel Nacional",
+      "dataset_tratado": 2328,
+      "modelo": 2328,
+      "diferencia": 0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "SUM(n_registros_origen) reconstruye el conteo del CSV: ninguna fila se pierde ni se duplica al cargar."
+    },
+    {
+      "comprobacion": "B1. Registros de origen, nivel Global",
+      "dataset_tratado": 1001,
+      "modelo": 1001,
+      "diferencia": 0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "SUM(n_registros_origen) reconstruye el conteo del CSV: ninguna fila se pierde ni se duplica al cargar."
+    },
+    {
+      "comprobacion": "B2. Área perdida municipal (ha), una fila por municipio-año",
+      "dataset_tratado": 5602626.0,
+      "modelo": 5602626.0,
+      "diferencia": 0.0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "El CSV se calcula tomando el máximo entre las copias y el modelo el primer valor no nulo: las copias comparten el área, así que ambos métodos coinciden."
+    },
+    {
+      "comprobacion": "B3. Área perdida municipal: SUMA CRUDA del CSV vs modelo",
+      "dataset_tratado": 16733634.0,
+      "modelo": 5602626.0,
+      "diferencia": -11131008.0,
+      "diferencia_pct": -66.51877290969792,
+      "resultado": "Difiere (explicada)",
+      "explicacion": "Diferencia esperada: en el CSV cada municipio-año aparece hasta 3 veces con la misma área, así que sumar filas multiplica las hectáreas (~3×). El modelo guarda UNA fila por municipio-año y evita la multiplicación."
+    },
+    {
+      "comprobacion": "B4. Roll-up municipal vs nivel departamental de la fuente (ha)",
+      "dataset_tratado": 5602694.0,
+      "modelo": 5602626.0,
+      "diferencia": -68.0,
+      "diferencia_pct": -0.0012137018370091245,
+      "resultado": "Coincide",
+      "explicacion": "Los municipios sumados reproducen el total departamental de la fuente; la diferencia (<0,002 %) proviene de redondeos y de la asignación de unos pocos municipios en la fuente original."
+    },
+    {
+      "comprobacion": "B5. Roll-up municipal vs total Colombia (nivel país) (ha)",
+      "dataset_tratado": 5602698.0,
+      "modelo": 5602626.0,
+      "diferencia": -72.0,
+      "diferencia_pct": -0.001285095145231815,
+      "resultado": "Coincide",
+      "explicacion": "Mismo total en la tercera escala; por eso NUNCA se suman escalas distintas (se contaría tres veces)."
+    },
+    {
+      "comprobacion": "B6. Emisiones municipales (Mg CO2e), promedio de copias",
+      "dataset_tratado": 3114437275.000011,
+      "modelo": 3114437275.0,
+      "diferencia": -1.0967254638671875e-05,
+      "diferencia_pct": -3.521424151549765e-13,
+      "resultado": "Coincide",
+      "explicacion": "Las copias de un municipio-año difieren levemente en emisiones; el modelo las promedia."
+    },
+    {
+      "comprobacion": "B7. Focos de calor municipales (conteo)",
+      "dataset_tratado": 1268517.0,
+      "modelo": 1268517.0,
+      "diferencia": 0.0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "Los focos son iguales entre copias; el modelo conserva una vez cada municipio-año."
+    },
+    {
+      "comprobacion": "B8. Municipios distintos con pérdida > 0 (conteo de entidades únicas)",
+      "dataset_tratado": 1116,
+      "modelo": 1116,
+      "diferencia": 0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "Conteo distinto de entidades; no es lo mismo que contar filas."
+    },
+    {
+      "comprobacion": "B9. Combinaciones municipio-año de la escala Regional (Etapa 4: 28.800)",
+      "dataset_tratado": 28800,
+      "modelo": 28811,
+      "diferencia": 11,
+      "diferencia_pct": 0.03819444444444445,
+      "resultado": "Difiere (explicada)",
+      "explicacion": "Diferencia de 11 filas: son focos de calor FIRMS (2012–2022) sin departamento ni municipio informados y sin área perdida. El modelo los conserva en el miembro «Sin municipio informado» (para no perder esos focos); la Etapa 4 cuenta solo combinaciones con municipio informado."
+    },
+    {
+      "comprobacion": "B10. Municipios distintos con departamento y municipio informados (Etapa 4: 1.209)",
+      "dataset_tratado": 1209,
+      "modelo": 1209,
+      "diferencia": 0,
+      "diferencia_pct": 0.0,
+      "resultado": "Coincide",
+      "explicacion": "Conteo de entidades únicas (no de filas); coincide con el de la Etapa 4 una vez excluido el miembro «Sin municipio informado»."
+    }
+  ],
+  "resumen": {
+    "verificaciones_integridad": 30,
+    "fallas": 0,
+    "comparaciones": 12
+  }
+}

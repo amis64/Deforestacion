@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Conocimientos multidimensionales{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">{% endblock %}
+{% block contenido %}
+{% include "multidimensional/_cabecera.html" %}
+<div class="panel">
+  <h1>Conocimientos, limitaciones y conclusiones</h1>
+  <p>Ocho conocimientos multidimensionales, dos por vista. Cada uno indica la selección (filtros y niveles) con la que se obtiene y trae un enlace para reproducirla en la vista interactiva. Las asociaciones observadas no son causas; lo que no se puede comprobar con los datos se presenta como hipótesis.</p>
+  {% for v in vistas %}
+  <section class="md-bloque-vista">
+    <h2>Vista {{ loop.index }} · {{ v.TITULO }}</h2>
+    <p class="md-pregunta"><strong>Pregunta:</strong> {{ v.PREGUNTA }}</p>
+    {% for k in conocimientos[v.ID] %}{% include "multidimensional/_conocimiento.html" %}{% endfor %}
+    <div class="md-decision"><p><strong>Limitación de la vista.</strong> {{ por_vista[v.ID].limitacion }}</p><p><strong>Decisión sustentada en los datos.</strong> {{ por_vista[v.ID].decision }}</p></div>
+  </section>
+  {% endfor %}
+  <h2>Limitaciones generales del análisis</h2>
+  <ul class="lista-limitaciones">{% for t in limitaciones %}<li>{{ t }}</li>{% endfor %}</ul>
+  <h2>Conclusiones</h2>
+  <ul class="lista-limitaciones">{% for t in conclusiones %}<li>{{ t }}</li>{% endfor %}</ul>
+</div>
+{% endblock %}

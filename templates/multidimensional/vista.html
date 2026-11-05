@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block titulo %}{{ m.TITULO }}{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">{% endblock %}
+{% block contenido %}
+{% include "multidimensional/_cabecera.html" %}
+{% set mx = r.matriz %}
+<div class="panel">
+  <p class="md-etiqueta-vista">Vista {{ vistas.index(m) + 1 }} de {{ vistas|length }} · Análisis multidimensional</p>
+  <h1>{{ m.TITULO }}</h1>
+  <p class="md-pregunta-grande"><strong>Pregunta.</strong> {{ m.PREGUNTA }}</p>
+
+  <div class="md-meta">
+    <div><h4>Dimensiones</h4><ul>{% for d in m.META.dimensiones %}<li>{{ d }}</li>{% endfor %}</ul></div>
+    <div><h4>Medidas</h4><ul>{% for d in m.META.medidas %}<li>{{ d }}</li>{% endfor %}</ul></div>
+    <div><h4>Jerarquías</h4><ul>{% for d in m.META.jerarquias %}<li>{{ d }}</li>{% endfor %}</ul></div>
+  </div>
+  <p class="nota"><strong>Cómo profundiza la Etapa 4.</strong> {{ m.META.profundiza }}</p>
+
+  {# ---------------- Selección activa ---------------- #}
+  <section class="md-seleccion" aria-label="Selección activa">
+    <h2>Selección activa</h2>
+    <p>
+      <strong>Escala:</strong> municipal ·
+      {% for dim, n in est.niveles.items() %}{% if dim in m.CFG.ejes_permitidos %}<strong>{{ dim|capitalize }}:</strong> {{ controles|selectattr('dimension', 'equalto', {'territorio':'Territorio','tiempo':'Tiempo','causa':'Causa','transformacion':'Transformación del suelo','fuente':'Fuente'}[dim])|map(attribute='actual')|first }} · {% endif %}{% endfor %}
+      <strong>Filas:</strong> {{ mx.nivel_filas }} · <strong>Columnas:</strong> {{ mx.nivel_columnas or '—' }} · <strong>Medida:</strong> {{ mx.medida }} ({{ mx.unidad }})
+    </p>
+    <p>
+      {% if quitar %}<strong>Filtros:</strong>
+        {% for etq, vals, url in quitar %}<a class="md-ficha-filtro" href="{{ url }}" title="Quitar este filtro">{{ etq }}: {{ vals }} &times;</a> {% endfor %}
+      {% else %}<strong>Filtros:</strong> ninguno (todo el país, 2001–2024).{% endif %}
+    </p>
+    <p>{% if ops %}<strong>Operaciones activas:</strong> {% for o in ops %}<span class="md-chip md-chip-op" title="{{ o[1] }}">{{ o[0] }}: {{ o[1] }}</span> {% endfor %}{% else %}<strong>Operaciones activas:</strong> ninguna (nivel inicial).{% endif %}
+      {% if quitar or ops %}<a class="md-limpiar" href="{{ limpiar }}">Restablecer vista</a>{% endif %}</p>
+  </section>
+
+  {# ---------------- Filtros y ejes ---------------- #}
+  <form class="md-form" method="get" action="{{ limpiar }}">
+    <h2>Filtros</h2>
+    <div class="md-filtros">
+      {% for w in filtros %}
+      <label>{{ w.etiqueta }}
+        <select name="{{ w.param }}" multiple size="{{ [w.opciones|length, 5]|min }}">
+          {% for o in w.opciones %}<option value="{{ o }}"{% if o in w.seleccion %} selected{% endif %}>{{ o }}</option>{% endfor %}
+        </select>
+        <small>Ctrl/Cmd para elegir varios. Sin selección = todos.</small>
+      </label>
+      {% endfor %}
+      <div class="md-ejes">
+        <label>Filas
+          <select name="eje_f">{% for k, n in ejes %}<option value="{{ k }}"{% if k == est.eje_f %} selected{% endif %}>{{ n }}</option>{% endfor %}</select></label>
+        <label>Columnas
+          <select name="eje_c">{% for k, n in ejes %}<option value="{{ k }}"{% if k == est.eje_c %} selected{% endif %}>{{ n }}</option>{% endfor %}</select></label>
+        {% if medidas|length > 1 %}
+        <label>Medida de la matriz
+          <select name="medida">{% for k, n in medidas %}<option value="{{ k }}"{% if k == est.medida %} selected{% endif %}>{{ n }}</option>{% endfor %}</select></label>
+        {% endif %}
+        <label>Filas máximas
+          <select name="top">{% for t in (10, 15, 20, 30, 50) %}<option value="{{ t }}"{% if t == est.top %} selected{% endif %}>{{ t }}</option>{% endfor %}</select></label>
+      </div>
+    </div>
+    {% for k, v in ocultos %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <button type="submit" class="md-boton">Aplicar filtros y ejes</button>
+  </form>
+
+  {# ---------------- Operaciones ---------------- #}
+  <section class="md-operaciones" aria-label="Operaciones multidimensionales">
+    <h2>Operaciones</h2>
+    <div class="md-ops-grid">
+      {% for c in controles %}
+      <div class="md-op-dim">
+        <h4>{{ c.dimension }} <small>nivel actual: <strong>{{ c.actual }}</strong></small></h4>
+        <p class="md-niveles">{% for n in c.niveles %}{% if n.activo %}<span class="md-nivel activo">{{ n.etiqueta }}</span>{% else %}<a class="md-nivel" href="{{ n.url }}">{{ n.etiqueta }}</a>{% endif %}{% if not loop.last %}<span class="md-flecha">&rsaquo;</span>{% endif %}{% endfor %}</p>
+        <p>
+          {% if c.abajo %}<a class="md-boton md-boton-peq" href="{{ c.abajo.url }}">Drill-down &darr; {{ c.abajo.etiqueta }}</a>{% endif %}
+          {% if c.arriba %}<a class="md-boton md-boton-peq" href="{{ c.arriba.url }}">Roll-up &uarr; {{ c.arriba.etiqueta }}</a>{% endif %}
+          {% if not c.abajo and not c.arriba %}<small>Un solo nivel: no hay drill-down ni roll-up.</small>{% endif %}
+        </p>
+      </div>
+      {% endfor %}
+      <div class="md-op-dim">
+        <h4>Pivot</h4>
+        <p><a class="md-boton md-boton-peq" href="{{ pivot_url }}">Pivotar ejes{% if est.pivot %} (activo){% endif %}</a></p>
+        <small>Intercambia filas y columnas.</small>
+        <h4>Slice / Dice</h4>
+        <small>Un filtro = slice; filtros en dos o más dimensiones = dice. También: clic en el nombre de una fila de la matriz.</small>
+      </div>
+    </div>
+  </section>
+
+  {# ---------------- Indicadores ---------------- #}
+  <h2>Indicadores de la selección</h2>
+  <div class="tarjetas-cifras md-indicadores">
+    {% for i in r.indicadores %}
+    <div class="cifra">
+      <span class="etiqueta-cifra">{{ i.etiqueta }}</span>
+      <span class="valor">{{ i.valor }}</span>
+      <span class="md-unidad">{{ i.unidad }}</span>
+      <span class="md-nota">{{ i.nota }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {# ---------------- Visualizaciones ---------------- #}
+  <h2>Visualizaciones</h2>
+  <div class="md-graficas">
+    {% for g in r.graficas %}
+    <figure class="md-grafica">
+      <figcaption><strong>Gráfica {{ loop.index }}.</strong> {{ g.titulo }}</figcaption>
+      {{ g.svg|safe }}
+      <small>{{ g.nota }}</small>
+    </figure>
+    {% endfor %}
+  </div>
+
+  {# ---------------- Matriz ---------------- #}
+  <h2>Matriz de resultados</h2>
+  <p class="md-matriz-titulo">{{ mx.titulo }}. Filas: {{ mx.nivel_filas }}{% if mx.nivel_columnas %} · Columnas: {{ mx.nivel_columnas }}{% endif %}.</p>
+  <div class="tabla-scroll">
+  <table class="md-matriz">
+    <thead><tr><th>{{ mx.nivel_filas }}</th>{% for h in mx.cabecera %}<th>{{ h }}</th>{% endfor %}<th>Total</th>{% for h in mx.extras %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+    <tbody>
+      {% for f in mx.filas %}
+      <tr>
+        <th scope="row">{% if f.url %}<a href="{{ f.url }}" title="Drill-down: filtrar «{{ f.etiqueta }}» y bajar a {{ f.destino }}">{{ f.etiqueta }}</a>{% else %}{{ f.etiqueta }}{% endif %}</th>
+        {% for c in f.celdas %}<td class="num {{ c.clase }}">{{ c.txt }}{% if c.sub %}<span class="md-sub">{{ c.sub }}</span>{% endif %}</td>{% endfor %}
+        <td class="num md-total">{{ f.total }}</td>
+        {% for x in f.extras %}<td class="num">{{ x }}</td>{% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot><tr><th>Total</th>{% for x in mx.pie %}<td class="num">{{ x }}</td>{% endfor %}<td class="num md-total">{{ mx.pie_total }}</td>{% for h in mx.extras %}<td></td>{% endfor %}</tr></tfoot>
+  </table>
+  </div>
+  <p class="md-pie-matriz"><small>Unidad: {{ mx.unidad }}. Los totales se recalculan con la misma medida en cada nivel (no se suman porcentajes ni promedios).{% if mx.omitidas %} Se muestran las {{ mx.filas|length }} filas con mayor total; {{ mx.omitidas }} más quedan fuera (aumente «Filas máximas» o filtre).{% endif %} Celdas vacías (—): sin datos para esa combinación; no equivalen a cero.</small></p>
+  <details class="md-definicion"><summary>¿Cómo se calcula «{{ medida_def.nombre }}»?</summary>
+    <p><code>{{ medida_def.formula }}</code> · Agregación: {{ medida_def.agregacion }}. {{ medida_def.suma }}</p></details>
+
+  <h2>Interpretación de los resultados</h2>
+  <p>{{ r.interpretacion }}</p>
+
+  {# ---------------- Conocimientos ---------------- #}
+  <h2>Conocimientos multidimensionales de esta vista</h2>
+  {% for k in conoc %}{% include "multidimensional/_conocimiento.html" %}{% endfor %}
+
+  <div class="md-decision">
+    <p><strong>Limitación del análisis.</strong> {{ extra.limitacion }}</p>
+    <p><strong>Decisión sustentada en los datos.</strong> {{ extra.decision }}</p>
+  </div>
+
+  <details class="md-sql-bloque"><summary>Consultas SQL de la selección actual ({{ r.sqls|length }})</summary>
+    {% for s in r.sqls %}<pre class="md-sql">{{ s }}</pre>{% endfor %}
+  </details>
+
+  <p class="md-paginacion">
+    {% if anterior %}<a href="{{ url_for('multidim.vista', vid=anterior.ID) }}">&larr; Vista anterior</a>{% endif %}
+    {% if siguiente %}<a href="{{ url_for('multidim.vista', vid=siguiente.ID) }}">Vista siguiente &rarr;</a>{% endif %}
+  </p>
+</div>
+{% endblock %}

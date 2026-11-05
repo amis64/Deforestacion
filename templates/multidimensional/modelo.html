@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block titulo %}Modelo estrella{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">{% endblock %}
+{% block contenido %}
+{% include "multidimensional/_cabecera.html" %}
+<div class="panel">
+  <h1>Modelo estrella</h1>
+  <p>{{ doc.HECHOS.proposito }}</p>
+
+  <figure class="md-diagrama">
+    <img src="{{ url_for('static', filename='img/etapa5/modelo_estrella.svg') }}" alt="Diagrama del modelo estrella: la tabla de hechos hechos_perdida_forestal rodeada por las dimensiones territorio, tiempo, causa, transformación del suelo y fuente">
+    <figcaption>Figura 1. Modelo estrella: una tabla de hechos y cinco dimensiones; todas las relaciones son de muchos a uno desde los hechos, por eso unir las tablas no multiplica filas.</figcaption>
+  </figure>
+
+  <h2>Unidad de análisis y granularidad</h2>
+  <p><strong>Unidad de análisis.</strong> {{ doc.HECHOS.unidad_analisis }}</p>
+  <p><strong>Granularidad de la tabla de hechos.</strong> {{ doc.HECHOS.granularidad }}</p>
+  <p>El dataset tratado tiene {{ cf.n_registros }} registros; la tabla de hechos tiene {{ cf.n_hechos }} filas. La diferencia es la consolidación de copias del mismo territorio-año (varios registros, una fila de hechos); el conteo original se recupera con la medida «Registros de origen».</p>
+
+  <h2>Dimensiones</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Dimensión</th><th>Pregunta que responde</th><th>Jerarquía</th><th>Por qué es pertinente</th></tr></thead>
+    <tbody>{% for d in doc.DIMENSIONES %}<tr><td><strong>{{ d[0] }}</strong></td><td>{{ d[1] }}</td><td>{{ d[2] }}</td><td>{{ d[3] }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+
+  <h2>Jerarquías</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Jerarquía</th><th>Niveles</th><th>Relación de agrupación válida</th></tr></thead>
+    <tbody>{% for j in doc.JERARQUIAS %}<tr><td><strong>{{ j[0] }}</strong></td><td>{{ j[1] }}</td><td>{{ j[2] }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+
+  <h2>Medidas</h2>
+  <p>La columna «Cuándo se suma» explica si la medida es aditiva o requiere otro cálculo (promedio, conteo distinto o razón).</p>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Medida</th><th>Unidad</th><th>Fórmula</th><th>Agregación</th><th>Cuándo se suma</th></tr></thead>
+    <tbody>{% for m in medidas %}<tr><td><strong>{{ m.nombre }}</strong></td><td>{{ m.unidad }}</td><td><code>{{ m.formula }}</code></td><td>{{ m.agregacion }}</td><td>{{ m.suma }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+
+  <h2>Tablas, claves y atributos</h2>
+  {% for t in doc.TABLAS %}
+  <h3>{{ t.nombre }} <span class="md-chip">{{ t.rol }}</span></h3>
+  <p>Clave primaria: <code>{{ t.pk }}</code>{% if t.jerarquia != '—' %} · Jerarquía: {{ t.jerarquia }}{% endif %}</p>
+  <div class="tabla-scroll"><table class="md-tabla">
+    <thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Descripción</th><th>Origen</th><th>Transformación</th></tr></thead>
+    <tbody>{% for c in t.campos %}<tr>{% for x in c %}<td>{{ x }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+  {% endfor %}
+  <h3>Relaciones</h3>
+  <div class="tabla-scroll"><table><thead><tr><th>Clave foránea</th><th>Referencia</th><th>Cardinalidad</th></tr></thead>
+    <tbody>{% for r in doc.RELACIONES %}<tr><td><code>{{ r[0] }}</code></td><td><code>{{ r[1] }}</code></td><td>{{ r[2] }}</td></tr>{% endfor %}</tbody></table></div>
+
+  <h2>Herramientas y justificación</h2>
+  <ul class="lista-limitaciones">{% for h in doc.HERRAMIENTAS %}<li><strong>{{ h[0] }}.</strong> {{ h[1] }}</li>{% endfor %}</ul>
+
+  <h2>Procedimiento de transformación y carga</h2>
+  <ol class="preguntas-secundarias">{% for p in doc.ETL_PASOS %}<li>{{ p }}</li>{% endfor %}</ol>
+  <p>Reconstruir el modelo: <code>python multidimensional/cargar_modelo.py</code> y verificarlo con <code>python multidimensional/validar_modelo.py</code>.</p>
+
+  {% if validacion %}
+  <h2>Validaciones del modelo</h2>
+  <p>{{ validacion.resumen.verificaciones_integridad }} verificaciones de integridad ({{ validacion.resumen.fallas }} fallas) y {{ validacion.resumen.comparaciones }} comparaciones con el dataset tratado.</p>
+  <h3>Integridad</h3>
+  <div class="tabla-scroll"><table class="md-tabla"><thead><tr><th>Verificación</th><th>Esperado</th><th>Obtenido</th><th>Resultado</th></tr></thead>
+    <tbody>{% for v in validacion.integridad %}<tr><td>{{ v.verificacion }}</td><td class="num">{{ v.esperado }}</td><td class="num">{{ v.obtenido }}</td><td>{{ v.resultado }}</td></tr>{% endfor %}</tbody></table></div>
+  <h3>Comparación con los datos tratados</h3>
+  <div class="tabla-scroll"><table class="md-tabla"><thead><tr><th>Comprobación</th><th>Dataset tratado</th><th>Modelo</th><th>Diferencia</th><th>Resultado</th><th>Explicación</th></tr></thead>
+    <tbody>{% for v in validacion.coherencia %}<tr><td>{{ v.comprobacion }}</td><td class="num">{{ '{:,.0f}'.format(v.dataset_tratado).replace(',', '.') }}</td><td class="num">{{ '{:,.0f}'.format(v.modelo).replace(',', '.') }}</td><td class="num">{{ '{:,.0f}'.format(v.diferencia).replace(',', '.') }}</td><td>{{ v.resultado }}</td><td>{{ v.explicacion }}</td></tr>{% endfor %}</tbody></table></div>
+  {% endif %}
+</div>
+{% endblock %}

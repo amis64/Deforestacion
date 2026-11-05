@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block titulo %}Análisis multidimensional{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">{% endblock %}
+{% block contenido %}
+{% include "multidimensional/_cabecera.html" %}
+<div class="panel">
+  <h1>Análisis multidimensional</h1>
+  <p class="md-lead">Etapa 5 · Un modelo estrella para mirar la pérdida de bosque en Colombia desde varias perspectivas a la vez (territorio, tiempo, causa, transformación del suelo y fuente) y a distintos niveles de detalle.</p>
+
+  <h2>Propósito de la etapa</h2>
+  <p>La Etapa 4 mostró <em>qué</em> pasa con la pérdida de bosque (promedios, distribuciones, correlaciones). Esta etapa pregunta <em>dónde, cuándo, con qué causa y con qué cobertura de datos</em>: organiza los datos tratados en un modelo estrella, permite subir y bajar por jerarquías y cruzar dimensiones, y documenta ocho conocimientos que el análisis anterior no podía ver. Todo lo que se muestra se calcula en el momento con consultas SQL al modelo.</p>
+
+  <h2>Datos utilizados y cobertura</h2>
+  <div class="tarjetas-cifras">
+    <div class="cifra"><span class="valor">{{ cf.n_registros }}</span><span class="etiqueta-cifra">registros del dataset tratado (<code>deforestacion_limpio.csv</code>)</span></div>
+    <div class="cifra"><span class="valor">{{ cf.n_hechos }}</span><span class="etiqueta-cifra">filas de hechos (territorio-año)</span></div>
+    <div class="cifra"><span class="valor">{{ cf.n_municipios }}</span><span class="etiqueta-cifra">municipios con pérdida de bosque</span></div>
+    <div class="cifra"><span class="valor">2001–2024</span><span class="etiqueta-cifra">cobertura temporal (dos periodos de 12 años)</span></div>
+    <div class="cifra"><span class="valor">{{ cf.area_total }} ha</span><span class="etiqueta-cifra">pérdida de bosque municipal acumulada</span></div>
+  </div>
+  <p><strong>Fuentes.</strong> Global Forest Watch (pérdida de bosque y emisiones), MapBiomas Colombia (transformación del suelo), NASA FIRMS (focos de calor, 2012–2022), FAO (indicador 15.1.1) y Our World in Data; las divisiones político-administrativas siguen el DANE. Las fuentes originales y sus URL están en la Etapa 1.</p>
+  <p><strong>Escala de análisis.</strong> El dataset trae la misma pérdida en tres escalas (municipal, departamental y país). Las vistas usan la escala <strong>municipal</strong>, que permite agregar hacia arriba sin mezclar escalas; las otras dos se usan solo para verificar los totales.</p>
+  <p class="nota alerta"><strong>Limitaciones de calidad que afectan los resultados:</strong> el área está redondeada a hectárea entera; los focos de calor existen solo en 2012–2022; {{ cf.sc_pct }} % de la pérdida no tiene clase de transformación (MapBiomas no cubre esos registros); la causa es la dominante de cada municipio-año y no la suma de causas. Cada vista indica cómo afecta cada una.</p>
+
+  <h2>Relación con los conocimientos evidentes de la Etapa 4</h2>
+  <p>{{ relacion_nota }} Los tableros están en la sección <a href="{{ url_for('etapa4') }}">Etapa 4</a>.</p>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Conocimiento evidente (Etapa 4)</th><th>Qué se necesita profundizar</th><th>Perspectiva nueva en esta etapa</th></tr></thead>
+    <tbody>{% for r in relacion %}
+      <tr><td>{{ r.evidente }}</td><td>{{ r.pregunta }}</td><td>{{ r.nuevo }} <a href="{{ url_for('multidim.vista', vid=r.vista) }}">Ver vista &rarr;</a></td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+
+  <h2>Las cuatro vistas interactivas</h2>
+  <div class="md-tarjetas">
+  {% for v in vistas %}
+    <a class="md-tarjeta" href="{{ url_for('multidim.vista', vid=v.ID) }}">
+      <span class="md-chip">Vista {{ loop.index }}</span>
+      <strong>{{ v.TITULO }}</strong>
+      <span class="md-pregunta">{{ v.PREGUNTA }}</span>
+      <span class="md-dims">{{ v.META.dimensiones | join(' · ') }}</span>
+      <span class="ir">Abrir la vista &rarr;</span>
+    </a>
+  {% endfor %}
+  </div>
+
+  {% if app_url %}<p><strong>Aplicación publicada:</strong> <a href="{{ app_url }}" target="_blank" rel="noopener">{{ app_url }}</a></p>{% endif %}
+  {% if repo_url %}<p><strong>Repositorio del proyecto:</strong> <a href="{{ repo_url }}" target="_blank" rel="noopener">{{ repo_url }}</a> (diagrama y diccionario en <code>docs/modelo_estrella/</code>, scripts en <code>sql/</code> y <code>multidimensional/</code>).</p>{% endif %}
+
+  <h2>Modelo, operaciones y conocimientos</h2>
+  <ul class="md-lista-enlaces">
+    <li><a href="{{ url_for('multidim.modelo') }}"><strong>Modelo estrella</strong></a>: diagrama, granularidad, dimensiones, medidas, jerarquías, carga y validaciones.</li>
+    <li><a href="{{ url_for('multidim.operaciones') }}"><strong>Operaciones multidimensionales</strong></a>: drill-down, roll-up, slice, dice y pivot, cada una con una consulta ejecutada.</li>
+    <li><a href="{{ url_for('multidim.conocimientos') }}"><strong>Conocimientos, limitaciones y conclusiones</strong></a>: los ocho hallazgos con sus ocho elementos.</li>
+  </ul>
+
+  <h2>Conocimientos descubiertos (resumen)</h2>
+  <ol class="md-resumen">
+  {% for vid, lista in conocimientos.items() %}{% for k in lista %}
+    <li><a href="{{ url_for('multidim.conocimientos') }}#{{ k.id }}"><strong>{{ k.id }}</strong> {{ k.titulo }}</a></li>
+  {% endfor %}{% endfor %}
+  </ol>
+
+  <h2>Conclusiones</h2>
+  <ul class="lista-limitaciones">{% for t in conclusiones %}<li>{{ t }}</li>{% endfor %}</ul>
+</div>
+{% endblock %}

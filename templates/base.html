@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block titulo %}{{ proyecto.etapa }}{% endblock %} · {{ proyecto.nombre }}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
 </head>
 <body>
 
@@ -39,6 +40,7 @@
       </li>
       <li{% if activo == 'etapa3' %} class="activo"{% endif %}><a href="{{ url_for('etapa3') }}">Etapa 3</a></li>
       <li{% if activo == 'etapa4' %} class="activo"{% endif %}><a href="{{ url_for('etapa4') }}">Etapa 4</a></li>
+      <li{% if activo == 'multidimensional' %} class="activo"{% endif %}><a href="{{ url_for('multidim.indice') }}">Análisis multidimensional</a></li>
     </ul>
   </div>
 </nav>
