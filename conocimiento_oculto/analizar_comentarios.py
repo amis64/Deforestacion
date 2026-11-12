@@ -17,6 +17,7 @@ import json
 import os
 import re
 import unicodedata
+import scikit-learn as sklearn
 from collections import Counter
 
 import numpy as np
