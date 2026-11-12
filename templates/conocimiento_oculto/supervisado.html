@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block titulo %}Modelos supervisados{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/oculto.css') }}">{% endblock %}
+{% block contenido %}
+{% include "conocimiento_oculto/_cabecera.html" %}
+{% set s = d.sup %}
+<div class="panel">
+  <h1>Tres modelos supervisados: ¿será alta la pérdida de bosque de un municipio este año?</h1>
+  {% if not s %}<p class="nota alerta">Aún no se han generado los resultados (ejecute <code>python conocimiento_oculto/referencia.py</code>).</p>{% else %}
+  {% set e = s.modelos[s.elegido] %}{% set p = s.baseline_persistencia %}
+  <h2>Pregunta de predicción</h2>
+  <p class="md-pregunta-grande">Con lo que se sabe de un municipio hasta el año anterior (cuánto perdió, cómo viene cambiando, cuánto suelo se transformó y dónde está), ¿su pérdida de bosque de este año será <strong>alta</strong>?</p>
+  <p><strong>Tipo de problema: clasificación binaria.</strong> La variable objetivo <code>clase_perdida</code> vale «Alta» cuando la pérdida del año es de <strong>{{ s.umbral_alta_ha|n }} ha o más</strong> (el percentil 75 de la pérdida entre 2004 y 2018) y «No alta» en los demás casos. Se clasifica y no se estima la cantidad exacta porque lo que importa para priorizar es saber si el municipio entrará en el grupo de mayor pérdida.</p>
+
+  <h2>Datos y preparación</h2>
+  <ul>
+    <li><strong>Una fila por municipio-año</strong> ({{ s.n_total|n }} filas, {{ s.municipios|n }} municipios, 2004–2024). El dataset trae hasta tres filas casi idénticas por municipio-año; se agrupan en una sola para que no queden «gemelas» en entrenamiento y prueba (eso inflaría las métricas).</li>
+    <li><strong>Solo información del pasado.</strong> Las variables predictoras son rezagos (pérdida de los años anteriores, tendencia, cambio del área transformada) más características fijas del municipio; no se usa nada del año que se quiere predecir.</li>
+    <li><strong>Partición temporal.</strong> Entrenamiento: 2004–2018 ({{ s.n_entrenamiento|n }} filas, {{ (s.pct_alta_entrenamiento*100)|n(1) }} % «Alta»). Prueba: 2019–2024 ({{ s.n_prueba|n }} filas, {{ (s.pct_alta_prueba*100)|n(1) }} % «Alta»). Se entrena con el pasado y se evalúa con un futuro que el modelo no vio, como ocurriría al usarlo de verdad.</li>
+    <li><strong>Fuga de información evitada.</strong> Se excluyen las emisiones de CO₂ (se calculan a partir de la pérdida del mismo año, correlación 0,99) y el umbral de «Alta» se calcula solo con los años de entrenamiento.</li>
+  </ul>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Variable predictora</th><th>Tipo</th><th>Faltantes</th></tr></thead>
+    <tbody>{% for v in s.variables %}<tr><td><code>{{ v.nombre }}</code> · {{ v.etiqueta }}</td><td>{{ v.tipo }}</td><td>{{ (v.faltantes*100)|n(1) }} %</td></tr>{% endfor %}</tbody></table></div>
+  <p class="md-nota">Los focos de calor solo existen para 2012–2022; los faltantes se imputan con el promedio. Además hay variables de identificación (departamento, municipio, año, partición) que se dejan como <em>meta</em> y no entran al modelo.</p>
+
+  <h2>Desbalance de clases</h2>
+  <p>En la prueba, «No alta» es el {{ (s.baseline_mayoritaria*100)|n(1) }} % de los casos: un modelo que <em>siempre</em> responda «No alta» ya acertaría {{ (s.baseline_mayoritaria*100)|n(1) }} % sin aprender nada. Por eso la exactitud no basta; se mira también la precisión, el recall y el F1 <em>de la clase «Alta»</em>, el AUC y el coeficiente de Matthews (MCC), que castiga ignorar la clase minoritaria. No se rebalancea el entrenamiento: el desbalance es moderado (≈ 1 de cada 4) y se prefiere evaluar con la proporción real.</p>
+
+  <h2>Los tres modelos y su configuración</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Modelo</th><th>Widget de Orange</th><th>Parámetros</th></tr></thead>
+    <tbody>{% for nombre, m in s.modelos.items() %}<tr><td>{{ nombre }}</td><td>{{ m.orange }}</td><td>{{ m.params }}</td></tr>{% endfor %}</tbody></table></div>
+  <p>Los tres reciben la misma tabla de entrenamiento y se evalúan con la misma tabla de prueba (<em>Test and Score</em> con «Test on test data»).</p>
+
+  <h2>Resultados comparados (clase «Alta», datos de prueba 2019–2024)</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Modelo</th><th>Exactitud</th><th>AUC</th><th>F1</th><th>Precisión</th><th>Recall</th><th>MCC</th></tr></thead>
+    <tbody>
+      <tr class="oculto-base"><td>Predecir siempre «No alta»</td><td>{{ s.baseline_mayoritaria|n(3) }}</td><td>0,500</td><td>0,000</td><td>—</td><td>0,000</td><td>0,000</td></tr>
+      <tr class="oculto-base"><td>Regla de persistencia: {{ p.regla }}</td><td>{{ p.accuracy|n(3) }}</td><td>—</td><td>{{ p.f1|n(3) }}</td><td>{{ p.precision|n(3) }}</td><td>{{ p.recall|n(3) }}</td><td>{{ p.mcc|n(3) }}</td></tr>
+      {% for nombre, m in s.modelos.items() %}<tr{% if nombre == s.elegido %} class="oculto-elegido"{% endif %}><td>{{ nombre }}{% if nombre == s.elegido %} ★{% endif %}</td><td>{{ m.accuracy|n(3) }}</td><td>{{ m.auc|n(3) }}</td><td>{{ m.f1|n(3) }}</td><td>{{ m.precision|n(3) }}</td><td>{{ m.recall|n(3) }}</td><td>{{ m.mcc|n(3) }}</td></tr>{% endfor %}
+    </tbody></table></div>
+  <div class="md-graficas">
+    <figure class="md-grafica">{{ graf.f1|safe }}<figcaption>Gráfica 1. F1 de la clase «Alta».</figcaption></figure>
+    <figure class="md-grafica">{{ graf.roc|safe }}<figcaption>Gráfica 2. Curvas ROC (clase «Alta»).</figcaption></figure>
+  </div>
+  <p><strong>Cómo leer la tabla.</strong> Los tres modelos superan con holgura a la clase mayoritaria (exactitud ≈ {{ (e.accuracy*100)|n(0) }} % frente a {{ (s.baseline_mayoritaria*100)|n(0) }} %), tienen un AUC de {{ s.modelos.values()|map(attribute='auc')|min|n(2) }} a {{ s.modelos.values()|map(attribute='auc')|max|n(2) }} y quedan muy parejos entre sí (F1 de {{ s.modelos.values()|map(attribute='f1')|min|n(3) }} a {{ s.modelos.values()|map(attribute='f1')|max|n(3) }}). <strong>Pero la regla sin modelo («Alta si lo fue el año anterior») obtiene F1 {{ p.f1|n(3) }} y exactitud {{ p.accuracy|n(3) }}: iguala o supera a los tres.</strong> Lo que los modelos aprenden es, sobre todo, que la pérdida de bosque es persistente.</p>
+
+  {% set o = d.ora.supervisado if d.ora else None %}
+  {% if o %}
+  <h2>Resultados en Orange (Test and Score)</h2>
+  <p>{{ o.evaluacion }}. Son las cifras del informe técnico; la tabla anterior las reproduce en Python.</p>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Modelo</th><th>AUC</th><th>Exactitud (CA)</th><th>F1</th><th>Precisión</th><th>Recall</th><th>MCC</th></tr></thead>
+    <tbody>{% for nombre, m in o.modelos.items() %}<tr{% if nombre == o.elegido %} class="oculto-elegido"{% endif %}><td>{{ nombre }}{% if nombre == o.elegido %} ★{% endif %}</td><td>{{ m.auc|n(3) }}</td><td>{{ m.accuracy|n(3) }}</td><td>{{ m.f1|n(3) }}</td><td>{{ m.precision|n(3) }}</td><td>{{ m.recall|n(3) }}</td><td>{{ m.mcc|n(3) }}</td></tr>{% endfor %}</tbody></table></div>
+  <p class="md-nota">Orange confirma el orden de Python: los tres modelos quedan casi empatados (F1 entre 0,846 y 0,850) y se elige el {{ o.elegido }}. La diferencia está en el árbol: el de Orange ({{ o.arbol.nodos }} nodos, {{ o.arbol.hojas }} hojas, primera división en <code>{{ o.arbol.raiz }}</code>) tiene el mayor recall (0,914) a cambio de una precisión menor (0,788) y un AUC de 0,958. Matriz de confusión del {{ o.elegido }} en Orange: {{ o.matriz_elegido.vp|n }} municipio-años Alta bien detectados, {{ o.matriz_elegido.fn|n }} falsos negativos, {{ o.matriz_elegido.fp|n }} falsos positivos y {{ o.matriz_elegido.vn|n }} «No alta» bien clasificados.</p>
+  {% endif %}
+
+  <h2>Matrices de confusión (prueba 2019–2024)</h2>
+  <div class="tabla-scroll"><table class="oculto-matriz">
+    <thead><tr><th>Modelo</th><th>Verdaderos negativos</th><th>Falsos positivos</th><th>Falsos negativos</th><th>Verdaderos positivos</th></tr></thead>
+    <tbody>{% for nombre, m in s.modelos.items() %}<tr><th>{{ nombre }}</th><td>{{ m.matriz[0][0]|n }}</td><td>{{ m.matriz[0][1]|n }}</td><td>{{ m.matriz[1][0]|n }}</td><td class="diag">{{ m.matriz[1][1]|n }}</td></tr>{% endfor %}
+    <tr class="oculto-base"><th>Regla de persistencia</th><td>{{ p.matriz[0][0]|n }}</td><td>{{ p.matriz[0][1]|n }}</td><td>{{ p.matriz[1][0]|n }}</td><td>{{ p.matriz[1][1]|n }}</td></tr></tbody></table></div>
+  <p class="md-nota">«Positivo» es la clase «Alta». Un falso negativo es un municipio que pasó a pérdida alta sin que el modelo lo anticipara; un falso positivo, una alerta que no se cumplió.</p>
+
+  <h2>Modelo seleccionado: {{ s.elegido }}</h2>
+  <ul>
+    <li><strong>Criterio.</strong> {{ s.criterio_eleccion }}. El {{ s.elegido|lower }} obtiene F1 {{ e.f1|n(3) }}, recall {{ e.recall|n(3) }}, AUC {{ e.auc|n(3) }} y MCC {{ e.mcc|n(3) }}.</li>
+    <li><strong>Errores.</strong> Deja pasar {{ s.falsos_negativos|n }} casos de pérdida alta; en {{ (s.fn_pct_t1_bajo_umbral*100)|n(0) }} % de ellos el municipio venía de una pérdida por debajo del umbral (mediana de {{ s.fn_perdida_t1_mediana_ha|n(0) }} ha el año anterior): son <em>saltos bruscos</em> que el historial no anticipa.</li>
+    <li><strong>Interpretación.</strong> El árbol y el bosque dependen casi por completo del promedio de los tres años previos y de la pérdida de los dos años anteriores (gráfica 3). La ubicación, el área transformada y los focos de calor aportan poco.</li>
+    <li><strong>Alternativa interpretable.</strong> La regresión logística queda casi igual (F1 {{ s.modelos['Regresión logística'].f1|n(3) }}, precisión {{ s.modelos['Regresión logística'].precision|n(3) }}) y sus coeficientes se leen directamente; si se priorizara la explicación sobre unas décimas de recall, sería la opción.</li>
+    <li><strong>Utilidad.</strong> Sirve como señal de alerta temprana y de priorización (probabilidad de pasar a pérdida alta), pero <em>no mejora</em> la regla simple de persistencia en la clasificación en sí.</li>
+  </ul>
+  <figure class="md-grafica">{{ graf.imp|safe }}<figcaption>Gráfica 3. Importancia de las variables en el bosque aleatorio.</figcaption></figure>
+  <details class="md-definicion"><summary>Reglas del árbol (tres primeros niveles)</summary><pre>{{ s.arbol_reglas }}</pre><p class="md-nota">Árbol ilustrativo de profundidad 3 (clase 1 = «Alta»); muestra que la primera división ya es el promedio de los tres años previos.</p></details>
+
+  <h2>Estabilidad en el tiempo</h2>
+  <figure class="md-grafica">{{ graf.anio|safe }}<figcaption>Gráfica 4. Exactitud y recall de la clase «Alta» del modelo elegido en cada año de prueba.</figcaption></figure>
+  <p>El desempeño se mantiene entre 2019 y 2024, con la caída del recall en 2023 como el punto más bajo (gráfica 4).</p>
+
+  <h2>Comprobaciones</h2>
+  <ul>
+    <li><strong>Causa dominante.</strong> El flujo incluye <code>driver_dominante</code> del <em>mismo</em> año, información que solo existe cuando hubo pérdida (los {{ s.filas_sin_causa|n }} municipio-años sin causa nunca son «Alta»: {{ (s.filas_sin_causa_pct_alta*100)|n(0) }} %). Se comprobó que no cambia el resultado: F1 del bosque {{ s.sensibilidad_causa['con la causa del mismo año (flujo de Orange)'].f1|n(3) }} con ella, {{ s.sensibilidad_causa['sin la causa dominante'].f1|n(3) }} sin ella y {{ s.sensibilidad_causa['con la causa del año anterior'].f1|n(3) }} con la causa del año anterior (que sí sería información pasada). Su importancia es de {{ (s.importancia_variables['causa dominante']*100)|n(1) }} %.</li>
+    <li><strong>Latitud y longitud.</strong> En el dataset la coordenada de la mayoría de los registros es la del departamento (en los años con focos de calor FIRMS es la de los focos), así que no identifican al municipio. Quitarlas no cambia el resultado: F1 del bosque {{ s.sensibilidad_causa['sin latitud ni longitud'].f1|n(3) }}.</li>
+    <li><strong>Partición temporal frente a aleatoria.</strong> Con una validación cruzada aleatoria de {{ s.validacion_aleatoria_rf.pliegues }} pliegues (que mezcla años y repite municipios) el F1 del bosque es {{ s.validacion_aleatoria_rf.f1|n(3) }}; la temporal es la evaluación más exigente y más cercana al uso real.</li>
+  </ul>
+
+  <h2>Limitaciones</h2>
+  <ul class="lista-limitaciones">
+    <li><strong>No supera la persistencia.</strong> Los modelos no aportan más que la regla «lo que fue alto sigue alto»; el conocimiento que revelan es esa inercia, no un patrón nuevo.</li>
+    <li><strong>Umbral arbitrario.</strong> «Alta» = percentil 75 (129 ha); otro corte cambiaría el balance de clases y las métricas.</li>
+    <li><strong>Saltos bruscos.</strong> Los casos de pérdida que aparece de repente son los que se escapan.</li>
+    <li><strong>Correlación, no causa.</strong> La importancia de una variable describe la asociación en los datos; no explica por qué ocurre la pérdida.</li>
+  </ul>
+  {% include "conocimiento_oculto/_nota_cifras.html" %}
+  {% endif %}
+</div>
+{% endblock %}

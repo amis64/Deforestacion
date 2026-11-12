@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block titulo %}Clustering de municipios{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/oculto.css') }}">{% endblock %}
+{% block contenido %}
+{% include "conocimiento_oculto/_cabecera.html" %}
+{% set c = d.clu %}{% set s = d.sup %}
+<div class="panel">
+  <h1>Clustering: perfiles de municipios según su pérdida de bosque</h1>
+  {% if not c %}<p class="nota alerta">Aún no se han generado los resultados (ejecute <code>python conocimiento_oculto/referencia.py</code>).</p>{% else %}
+  <h2>Pregunta</h2>
+  <p class="md-pregunta-grande">¿Qué <strong>perfiles</strong> de municipios existen según cuánto pierden, con qué persistencia y evolución, y cuánto fuego y transformación del suelo los acompaña?</p>
+  <p>Se agrupan {{ c.n_municipios|n }} municipios (los que tienen al menos 10 años con dato de pérdida). No se usa la clase supervisada ni la causa dominante: la causa y la ubicación se consultan <strong>después</strong>, solo para describir los grupos.</p>
+
+  <h2>Variables y preparación</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Variable de agrupamiento</th><th>Qué mide</th><th>Faltantes</th></tr></thead>
+    <tbody>{% for v in c.variables %}<tr><td><code>{{ v.nombre }}</code></td><td>{{ v.etiqueta }}</td><td>{{ v.faltantes|n }}</td></tr>{% endfor %}</tbody></table></div>
+  <ul>
+    <li><strong>Por qué estas variables.</strong> Resumen de 2004–2024 por municipio: magnitud (pérdida media), persistencia y evolución (fracción reciente, pendiente, variabilidad), fuego (focos de calor) y presión agropecuaria (área transformada y su crecimiento). Describen <em>cómo</em> se pierde el bosque, no <em>quién</em> es el municipio.</li>
+    <li><strong>Transformaciones.</strong> Las magnitudes muy sesgadas (pérdida, focos, área) se llevan a logaritmo; la pendiente y la variabilidad se dividen por la pérdida media para compararlas entre municipios grandes y pequeños.</li>
+    <li><strong>Faltantes.</strong> {{ c.faltantes_total|n }} valores se imputan con el promedio de la variable (<em>Preprocess → Impute</em>), casi todos del área transformada y su crecimiento (80 municipios sin dato de MapBiomas).</li>
+    <li><strong>Normalización.</strong> Las variables tienen escalas muy distintas (porcentajes de crecimiento de −45 a 287, logaritmos de 0 a 10, fracciones de 0 a 1): sin estandarizar dominaría la de mayor rango. El widget <em>k-Means</em> normaliza las columnas (media 0, desviación 1).</li>
+    <li><strong>Algoritmo.</strong> k-Means con inicialización k-means++, 10 repeticiones y 300 iteraciones, probando k de 2 a 8.</li>
+  </ul>
+
+  <h2>Elección del número de grupos</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>k</th><th>Silueta</th><th>Davies-Bouldin (menor es mejor)</th><th>Calinski-Harabasz</th><th>Tamaño de los grupos</th></tr></thead>
+    <tbody>{% for x in c.comparacion %}<tr{% if x.k == c.k_elegido %} class="oculto-elegido"{% endif %}><td>{{ x.k }}{% if x.k == c.k_elegido %} ★{% endif %}</td><td>{{ x.silueta|n(3) }}</td><td>{{ x.davies_bouldin|n(2) }}</td><td>{{ x.calinski_harabasz|n(0) }}</td><td>{{ x.tamanos|join(' · ') }}</td></tr>{% endfor %}</tbody></table></div>
+  <figure class="md-grafica">{{ graf.sil|safe }}<figcaption>Gráfica 1. Silueta promedio según el número de grupos.</figcaption></figure>
+  <p><strong>Decisión: k = {{ c.k_elegido }}.</strong> La silueta más alta es la de k = {{ c.k_mejor_silueta }} ({{ c.comparacion[0].silueta|n(3) }}), pero con dos grupos solo se separa «mucha» de «poca» pérdida. Entre k ≥ 3, k = {{ c.k_elegido }} es el máximo (silueta {{ c.comparacion[2].silueta|n(3) }}), con menor Davies-Bouldin que k = 2 y 3, y ningún grupo con menos del 2 % de los municipios; además aísla un grupo pequeño de gran interés. La silueta general es baja (≈ {{ c.silueta_global|n(2) }}): los grupos tienen <strong>fronteras difusas</strong>, son un continuo más que islas separadas, y deben leerse como perfiles útiles para priorizar, no como categorías rígidas.</p>
+
+  {% set o = d.ora.clustering if d.ora else None %}
+  {% if o %}
+  <p><strong>En Orange</strong> (widget k-Means de 2 a 8 grupos con silueta): {% for k, v in o.silueta_por_k.items() %}k = {{ k }}: {{ v|n(3) }}{{ "; " if not loop.last else "." }}{% endfor %} Coincide con Python: la silueta más alta es la de k = 2 y entre k ≥ 3 la de k = {{ o.k_elegido }}. El Silhouette Plot da, por grupo, {% for k, v in o.silueta_por_grupo_orange.items() %}{{ k }} = {{ v|n(3) }}{{ ", " if not loop.last else "" }}{% endfor %}. Orange numera los grupos distinto: {% for k, v in o.equivalencia_grupos.items() %}{{ k }} = grupo {{ v }}{{ ", " if not loop.last else "" }}{% endfor %}; los tamaños coinciden con los de Python ({% for k, v in o.tamanos_orange.items() %}{{ k }}: {{ v|n }}{{ ", " if not loop.last else "" }}{% endfor %}).</p>
+  {% endif %}
+
+  <h2>Los grupos</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Grupo</th><th>Municipios</th><th>Pérdida anual típica (mediana, ha)</th><th>Fracción desde 2015</th><th>Pendiente relativa</th><th>Variabilidad (CV)</th><th>Focos (log)</th><th>Área transformada (log)</th><th>Crecimiento transformada (%)</th><th>Silueta</th></tr></thead>
+    <tbody>{% for p in c.perfil %}<tr><td>{{ p.grupo }} · {{ p.nombre }}</td><td>{{ p.municipios|n }} ({{ (p.pct*100)|n(0) }} %)</td><td>{{ p.perdida_media_ha_mediana|n(0) }}</td><td>{{ p.medias.proporcion_perdida_reciente|n(2) }}</td><td>{{ p.medias.pendiente_perdida_rel|n(2) }}</td><td>{{ p.medias.variabilidad_perdida_cv|n(2) }}</td><td>{{ p.medias.log_focos_medios|n(1) }}</td><td>{{ p.medias.log_area_transformada_media|n(1) }}</td><td>{{ p.medias.crecimiento_transformada_pct|n(0) }}</td><td>{{ p.silueta|n(2) }}</td></tr>{% endfor %}</tbody></table></div>
+  <p class="md-nota">Promedios del grupo para las variables de agrupamiento (como el widget <em>Group By</em> de Orange); la pérdida anual típica es la mediana de la pérdida media por municipio.</p>
+  <div class="md-graficas">
+    <figure class="md-grafica">{{ graf.tam|safe }}<figcaption>Gráfica 2. Municipios por grupo.</figcaption></figure>
+    <figure class="md-grafica">{{ graf.mapa|safe }}<figcaption>Gráfica 3. Municipios de cada grupo por ubicación. Cada círculo es un lugar del dataset y su tamaño, el número de municipios; en la mayoría de los registros la coordenada es la del <em>departamento</em>, por lo que no se puede dibujar cada municipio (en Orange, el <em>Scatter Plot</em> de latitud y longitud muestra el mismo apilamiento).</figcaption></figure>
+  </div>
+
+  <div class="oculto-grupos">
+  {% set g1, g2, g3, g4 = c.perfil[0], c.perfil[1], c.perfil[2], c.perfil[3] %}
+    <div class="oculto-grupo"><h3>1 · Frentes de mayor pérdida ({{ g1.municipios }} municipios)</h3><p>Pierden en mediana {{ g1.perdida_media_ha_mediana|n(0) }} ha al año, con el mayor fuego (focos de calor) y un área transformada que crece {{ g1.medias.crecimiento_transformada_pct|n(0) }} % en promedio. Reúne a los mayores frentes de la frontera amazónica ({% for m in g1.ejemplos %}{{ m[0] }} ({{ m[1] }}){{ ", " if not loop.last else "" }}{% endfor %}) y a otros de {% for dep in g1.departamentos[:3] %}{{ dep[0] }}{{ ", " if not loop.last else "" }}{% endfor %}. Son el {{ (g1.pct*100)|n(0) }} % de los municipios y suman el {{ (g1.pct_perdida_total*100)|n(0) }} % de la pérdida media anual.</p></div>
+    <div class="oculto-grupo"><h3>2 · Pérdida alta sostenida ({{ g2.municipios }})</h3><p>Pérdida típica de {{ g2.perdida_media_ha_mediana|n(0) }} ha al año, constante en el tiempo (pendiente ≈ 0), con fuego alto y mucha área transformada, pero sin el crecimiento explosivo del grupo 1. Incluye municipios de Antioquia, Cesar y Magdalena y otros de la Amazonía y la Orinoquía ({% for m in g2.ejemplos %}{{ m[0] }}{{ ", " if not loop.last else "" }}{% endfor %}).</p></div>
+    <div class="oculto-grupo"><h3>3 · Pérdida moderada ({{ g3.municipios }})</h3><p>Pérdida típica de {{ g3.perdida_media_ha_mediana|n(0) }} ha al año, con poco fuego y menos área transformada. Distribuidos entre Antioquia, Boyacá, Santander y Chocó ({% for m in g3.ejemplos %}{{ m[0] }}{{ ", " if not loop.last else "" }}{% endfor %}).</p></div>
+    <div class="oculto-grupo"><h3>4 · Pérdida baja y en descenso ({{ g4.municipios }})</h3><p>Pérdida típica de {{ g4.perdida_media_ha_mediana|n(0) }} ha al año, con solo {{ (g4.medias.proporcion_perdida_reciente*100)|n(0) }} % ocurrida desde 2015 y pendiente negativa: la pérdida viene bajando. Predominan Cundinamarca, Boyacá y Santander (zona andina).</p></div>
+  </div>
+
+  <h2>Causa dominante de cada grupo (a posteriori)</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Grupo</th><th>Departamentos con más municipios</th><th>Causa dominante más frecuente</th></tr></thead>
+    <tbody>{% for p in c.perfil %}<tr><td>{{ p.grupo }} · {{ p.nombre }}</td><td>{% for dep in p.departamentos %}{{ dep[0] }} ({{ dep[1] }}){{ ", " if not loop.last else "" }}{% endfor %}</td><td>{% for cz in p.causas[:2] %}{{ cz[0] }} ({{ (cz[1]*100)|n(0) }} %){{ "; " if not loop.last else "" }}{% endfor %}</td></tr>{% endfor %}</tbody></table></div>
+  <p>La causa se parece mucho entre grupos: en todos domina la agricultura permanente. Lo que diferencia a los grupos es <strong>cuánto, cuán persistente y con qué fuego</strong> se pierde bosque, no la causa que informa la fuente.</p>
+
+  {% if c.alta_por_grupo %}
+  <h2>Relación con el modelo supervisado</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Grupo</th><th>Municipio-años de prueba (2019–2024)</th><th>«Alta»</th><th>% «Alta»</th><th>Recall del modelo elegido</th></tr></thead>
+    <tbody>{% for p in c.perfil %}{% set a = c.alta_por_grupo[p.grupo|string] %}<tr><td>{{ p.grupo }} · {{ p.nombre }}</td><td>{{ a.filas|n }}</td><td>{{ a.alta|n }}</td><td>{{ (a.pct_alta*100)|n(1) }} %</td><td>{{ (a.recall*100)|n(0) }} %</td></tr>{% endfor %}</tbody></table></div>
+  <p>Los grupos están construidos <em>sin</em> la clase supervisada y, aun así, ordenan la probabilidad de pérdida alta: en el grupo 1, {{ (c.alta_por_grupo['1'].pct_alta*100)|n(0) }} % de los municipio-años de prueba son «Alta»; en el grupo 4, {{ (c.alta_por_grupo['4'].pct_alta*100)|n(1) }} %. Los grupos 1 y 2 reúnen el {{ (((c.alta_por_grupo['1'].alta + c.alta_por_grupo['2'].alta) / (c.alta_por_grupo.values()|sum(attribute='alta')))*100)|n(0) }} % de los casos de «Alta». El modelo acierta más donde la pérdida es persistente (grupos 1 y 2) y falla más en los grupos 3 y 4, donde la pérdida alta es esporádica.</p>
+  {% endif %}
+
+  <h2>Limitaciones</h2>
+  <ul class="lista-limitaciones">
+    <li><strong>Silueta baja.</strong> Los grupos no están bien separados; el grupo 1 tiene la silueta más baja ({{ c.perfil[0].silueta|n(2) }}) porque lo definen valores extremos de varias variables.</li>
+    <li><strong>Sensible a atípicos y a la imputación.</strong> El crecimiento del área transformada tiene valores extremos y faltantes que influyen en k-Means.</li>
+    <li><strong>Resumen estático 2004–2024.</strong> Un municipio puede cambiar de perfil en el tiempo; el agrupamiento lo ve como un solo punto.</li>
+    <li><strong>Descriptivo, no causal.</strong> Los grupos describen patrones; no explican por qué un municipio pertenece a uno u otro.</li>
+  </ul>
+  {% include "conocimiento_oculto/_nota_cifras.html" %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+{# Navegación interna de la sección Conocimiento Oculto #}
+<nav class="md-subnav" aria-label="Secciones de Conocimiento Oculto">
+  {% for ep, etq in secciones %}<a href="{{ url_for(ep) }}"{% if seccion == ep %} class="activa"{% endif %}>{{ etq }}</a>{% endfor %}
+</nav>
