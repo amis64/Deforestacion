@@ -9,3 +9,8 @@ venv/
 ~$*.pbix
 *.pbix.lock
 .pbi/
+
+# Etapa 6: claves y comentarios crudos de YouTube (no se publican)
+.env
+conocimiento_oculto/youtube/.env
+conocimiento_oculto/youtube/comentarios_crudos.csv
