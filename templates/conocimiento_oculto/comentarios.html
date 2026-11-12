@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block titulo %}Comentarios de YouTube{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/oculto.css') }}">{% endblock %}
+{% block contenido %}
+{% include "conocimiento_oculto/_cabecera.html" %}
+{% set y = d.com %}
+<div class="panel">
+  <h1>Comentarios de YouTube sobre la deforestación</h1>
+  <h2>Propósito del análisis</h2>
+  <p>Conocer cómo perciben y explican la deforestación en Colombia las personas que comentan videos sobre el tema —qué causas y responsables señalan, qué proponen— y contrastarlo con lo que muestran los datos. Los comentarios son opiniones de quienes comentaron los videos seleccionados; <strong>no representan a toda la población</strong>.</p>
+  {% if not y %}
+  <p class="nota alerta"><strong>Pendiente.</strong> Todavía no se han cargado los comentarios. Ejecute <code>python conocimiento_oculto/extraer_comentarios_youtube.py</code> (necesita la variable de entorno <code>YOUTUBE_API_KEY</code>) y luego <code>python conocimiento_oculto/referencia.py</code>. El procedimiento está en <code>conocimiento_oculto/youtube/LEEME_YOUTUBE.md</code>.</p>
+  {% else %}
+  {% set x = y.extraccion %}
+  <h2>Criterios de búsqueda y selección</h2>
+  <ul>
+    <li><strong>Búsquedas en la API (YouTube Data API v3):</strong> {% for b in x.busquedas %}«{{ b }}»{{ "; " if not loop.last else "." }}{% endfor %}</li>
+    <li><strong>Filtros:</strong> videos publicados desde 2018 (periodo comparable con los datos), relevancia en español, región Colombia, orden por relevancia, solo videos con al menos {{ x.filtros.min_comentarios_video }} comentarios, hasta {{ x.filtros.max_comentarios_por_video }} comentarios por video y solo comentarios principales (sin respuestas).</li>
+    <li><strong>Fecha de extracción:</strong> {{ x.fecha_utc[:10] }}. <strong>Cuota de la API usada:</strong> {{ x.cuota|n }} de 10 000 unidades diarias.</li>
+    <li><strong>Resultado:</strong> {{ x.videos_encontrados }} videos encontrados, {{ x.videos_usados }} cumplieron el filtro de actividad; {{ x.crudos|n }} comentarios extraídos y {{ x.limpios|n }} útiles después de la limpieza.</li>
+  </ul>
+
+  <h2>Videos consultados</h2>
+  <div class="tabla-scroll"><table><thead><tr><th>Código</th><th>Video</th><th>Canal</th><th>Publicado</th><th>Enlace</th><th>Comentarios en el video</th><th>Extraídos</th><th>Útiles</th></tr></thead>
+    <tbody>{% for v in y.videos %}<tr><td>{{ v.codigo }}</td><td>{{ v.titulo }}</td><td>{{ v.canal }}</td><td>{{ v.fecha_video }}</td><td><a href="{{ v.enlace }}" target="_blank" rel="noopener">{{ v.video_id }}</a></td><td>{{ v.comentarios_en_video|n }}</td><td>{{ v.extraidos|n }}</td><td>{{ v.utiles|n }}</td></tr>{% endfor %}</tbody></table></div>
+
+  <h2>Limpieza de los datos</h2>
+  <div class="tabla-scroll"><table><thead><tr><th>Decisión</th><th>Comentarios</th></tr></thead><tbody>
+    <tr><td>Comentarios extraídos</td><td>{{ x.crudos|n }}</td></tr>
+    <tr><td>Descartados por tener menos de 4 palabras con contenido</td><td>−{{ x.descartados.muy_corto|n }}</td></tr>
+    <tr><td>Descartados por ser solo emojis o símbolos</td><td>−{{ x.descartados.solo_emojis_o_simbolos|n }}</td></tr>
+    <tr><td>Descartados por duplicados (mismo texto, sin tildes ni signos)</td><td>−{{ x.descartados.duplicado|n }}</td></tr>
+    <tr><td>Vacíos, enlaces/publicidad o en otro idioma</td><td>−{{ (x.descartados.vacio + x.descartados.spam_enlace + x.descartados.otro_idioma)|n }}</td></tr>
+    <tr class="oculto-elegido"><td>Comentarios útiles</td><td>{{ x.limpios|n }}</td></tr></tbody></table></div>
+  <p>Además se quitan enlaces, menciones y marcas de tiempo del texto. <strong>No se guardan nombres, canales ni identificadores de los autores</strong>; cada comentario conserva solo un código anónimo (hash). El idioma se detecta con una heurística de palabras funcionales. Quedan en el corpus comentarios fuera de tema (por ejemplo, sobre fútbol o canciones) que un filtro automático no puede distinguir; se tienen presentes al interpretar.</p>
+  <p>Resumen del corpus: {{ y.resumen.n|n }} comentarios, mediana de {{ y.resumen.mediana_palabras|n(0) }} palabras, publicados entre {{ y.resumen.fecha_min }} y {{ y.resumen.fecha_max }}.</p>
+
+  <h2>Términos más frecuentes</h2>
+  <figure class="md-grafica">{{ graf.terminos|safe }}<figcaption>Gráfica 1. Comentarios que mencionan cada término (TF-IDF, sin palabras vacías).</figcaption></figure>
+  <p>Los términos más repetidos mezclan el uso escolar del video («tarea», «proyecto») con el reclamo político («gobierno», «gobiernos») y la preocupación ambiental («cuidar», «árboles», «bosques»).</p>
+
+  <h2>Temas identificados ({{ y.temas|length }})</h2>
+  {% set nombres = ["Uso escolar y agradecimientos", "Colombia, gobiernos y causas locales", "Responsabilidad del gobierno y los políticos", "Cuidar el medio ambiente", "El ser humano y la vida del bosque"] %}
+  <div class="tabla-scroll"><table><thead><tr><th>Tema</th><th>Términos principales</th><th>Comentarios</th><th>Ejemplos (recortados)</th></tr></thead>
+    <tbody>{% for t in y.temas %}<tr><td>{{ t.tema }} · {{ nombres[loop.index0] if loop.index0 < nombres|length else '' }}</td><td>{{ t.palabras|join(', ') }}</td><td>{{ t.comentarios|n }} ({{ (t.pct*100)|n(0) }} %)</td><td>{% for e in t.ejemplos %}<em>«{{ e }}»</em><br>{% endfor %}</td></tr>{% endfor %}</tbody></table></div>
+  <p class="md-nota">Los nombres de los temas se proponen al leer los términos y los ejemplos. Orange usa LDA y su propio preprocesamiento, así que sus temas pueden salir con otro orden y otros términos; este cuadro reproduce el análisis con factorización NMF.</p>
+
+  {% set o = d.ora.texto if d.ora else None %}
+  {% if o %}
+  <h2>Resultados en Orange</h2>
+  <p><strong>Preprocess Text:</strong> {{ o.preprocesamiento }}; quedan {{ o.tokens|n }} tokens y {{ o.terminos|n }} términos distintos en {{ o.comentarios|n }} comentarios. <strong>Topic Modelling (LDA, {{ o.lda.temas }} temas):</strong> coherencia {{ o.lda.coherencia|n(3) }}. Los términos de los temas salen dominados por verbos y palabras muy frecuentes (ser, tener, hacer, si) y por formas erróneas del lematizador (colombiar, arbolar, cocar); por eso los temas de este cuadro, obtenidos con NMF, son los que se interpretan. Aun así el LDA separa un tema de tarea y agradecimiento (tema 4), dos con «gobierno» (temas 2 y 5) y uno que junta deforestación, ambiente, coca y ganadería (tema 3).</p>
+  <p><strong>Hierarchical Clustering (Ward, 4 grupos):</strong> {% for k, v in o.jerarquico.grupos.items() %}{{ k }}: {{ v|n }} comentarios{{ "; " if not loop.last else "." }}{% endfor %} Un grupo grande y varios pequeños, como en Python. <strong>Word Enrichment</strong> del grupo C4: {{ o.jerarquico.enriquecimiento_c4 }}.</p>
+  {% endif %}
+
+  <h2>Qué causas y responsables mencionan</h2>
+  <figure class="md-grafica">{{ graf.familias|safe }}<figcaption>Gráfica 2. Comentarios que mencionan cada familia de términos (un comentario puede estar en varias).</figcaption></figure>
+  <div class="tabla-scroll"><table><thead><tr><th>Familia de términos</th><th>Comentarios</th><th>Evidencia (comentario más votado)</th></tr></thead>
+    <tbody>{% for f in y.familias %}{% if f.clave != 'escolar' and f.ejemplos %}<tr><td>{{ f.nombre }}</td><td>{{ f.comentarios|n }} ({{ (f.pct*100)|n(0) }} %)</td><td><em>«{{ f.ejemplos[0].texto }}»</em> <span class="md-nota">({{ f.ejemplos[0].video }}, {{ f.ejemplos[0].me_gusta }} me gusta)</span></td></tr>{% endif %}{% endfor %}</tbody></table></div>
+  <p><strong>Lo que se lee.</strong> El reclamo más frecuente es hacia el <em>gobierno y las autoridades</em> ({{ y.familias[0].comentarios }} comentarios): no actúan, no vigilan o hay corrupción. Entre las causas, quienes las nombran señalan la <em>ganadería</em> ({{ y.familias[1].comentarios }}, todos en el video de Noticias Caracol de 2021, uno desde el Caquetá), los <em>cultivos de coca y los grupos armados</em> ({{ y.familias[2].comentarios }}) y la <em>minería y los megaproyectos</em> ({{ y.familias[3].comentarios }}). Las causas concretas aparecen en pocos comentarios; otros expresan tristeza ({{ y.familias[8].comentarios }}), culpa colectiva de «los humanos» ({{ y.familias[7].comentarios }}) o hacen propuestas ({{ y.familias[6].comentarios }}): reforestar, crear una guardia o endurecer las sanciones.</p>
+  <p>Una voz contradice a otras: un comentario sostiene que la coca no es la causa principal sino los megaproyectos, los monocultivos y la ganadería; otro afirma que «hay 60 veces más deforestación por ganadería que por coca». Es evidencia de que el público no comparte una sola explicación.</p>
+
+  <h2>Agrupación de comentarios</h2>
+  <div class="tabla-scroll"><table><thead><tr><th>Grupo</th><th>Términos</th><th>Comentarios</th><th>Ejemplo</th></tr></thead>
+    <tbody>{% for g in y.agrupacion.grupos %}<tr><td>{{ g.grupo }}</td><td>{{ g.palabras|join(', ') }}</td><td>{{ g.comentarios|n }} ({{ (g.pct*100)|n(0) }} %)</td><td><em>«{{ g.ejemplo }}»</em></td></tr>{% endfor %}</tbody></table></div>
+  <p>Con {{ y.agrupacion.k_elegido }} grupos (agrupación jerárquica de Ward sobre TF-IDF y distancia coseno), la silueta es muy baja ({{ y.agrupacion.comparacion[y.agrupacion.k_elegido - 2].silueta|n(2) }}): los comentarios son cortos y su vocabulario se parece. La agrupación sirve sobre todo para aislar pequeños grupos —uno de reclamos al gobierno, otro de uso escolar— y no como una clasificación definitiva.</p>
+
+  <h2>Cuánto del corpus habla de causas</h2>
+  <p>Solo {{ y.uso.con_causa_o_actor|n }} de {{ y.resumen.n|n }} comentarios ({{ (y.uso.con_causa_o_actor_pct*100)|n(0) }} %) nombran un responsable o una causa (gobierno, ganadería, coca y grupos armados, minería, tala o quemas, pueblos rurales); {{ y.uso.escolar|n }} ({{ (y.uso.escolar_pct*100)|n(0) }} %) son uso escolar del video, concentrados en el video educativo. En los videos de noticias el porcentaje que nombra causas o responsables sube a {{ (y.uso.por_video['V1'].causa_pct*100)|n(0) }} % (V1) y {{ (y.uso.por_video['V2'].causa_pct*100)|n(0) }} % (V2), frente a {{ (y.uso.por_video['V3'].causa_pct*100)|n(0) }} % en el video educativo (V3). {{ y.territorios[2].comentarios }} comentarios hablan de otros países o escriben desde ellos (Guatemala, Perú, República Dominicana…), y solo {{ y.territorios[0].comentarios }} mencionan la Amazonía, el Caquetá o el Guaviare.</p>
+  <figure class="md-grafica">{{ graf.anio|safe }}<figcaption>Gráfica 3. Comentarios útiles por año de publicación.</figcaption></figure>
+
+  <h2>Límites de este análisis</h2>
+  <ul class="lista-limitaciones">{% for l in y.sesgos %}<li>{{ l }}</li>{% endfor %}
+    <li>El corpus es pequeño ({{ y.resumen.n }} comentarios): los conteos por tema o familia son indicios, no estimaciones. Ampliarlo (más búsquedas o un umbral de comentarios menor) es la mejora más directa.</li></ul>
+  <p class="nota"><strong>Privacidad.</strong> No se publican nombres ni identificadores de autores; los ejemplos se recortan y se citan sin datos personales. La clave de la API nunca se guarda en el repositorio.</p>
+  {% include "conocimiento_oculto/_nota_cifras.html" %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block titulo %}Conocimiento Oculto{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/oculto.css') }}">{% endblock %}
+{% block contenido %}
+{% include "conocimiento_oculto/_cabecera.html" %}
+{% set s = d.sup %}{% set c = d.clu %}{% set y = d.com %}
+<div class="panel">
+  <h1>Conocimiento Oculto</h1>
+  <p class="md-lead">Etapa 6 · Qué se puede descubrir, más allá de lo descriptivo y lo multidimensional, con modelos supervisados, agrupamiento y los comentarios de quienes opinan en YouTube sobre la deforestación en Colombia.</p>
+
+  <h2>Síntesis de los principales hallazgos</h2>
+  <ol class="md-resumen">
+    {% if s %}
+    <li><strong>Supervisado.</strong> Predecir si un municipio tendrá pérdida de bosque «alta» (≥ {{ s.umbral_alta_ha|n }} ha) con su historial: el modelo elegido ({{ s.elegido }}) logra exactitud {{ (s.modelos[s.elegido].accuracy*100)|n(1) }} %, F1 {{ s.modelos[s.elegido].f1|n(2) }} y AUC {{ s.modelos[s.elegido].auc|n(2) }} en 2019–2024. Pero una regla simple («Alta si lo fue el año anterior») rinde igual ({{ (s.baseline_persistencia.accuracy*100)|n(1) }} %): lo que se descubre es que la pérdida es muy persistente.</li>
+    {% endif %}
+    {% if c %}
+    <li><strong>Clustering.</strong> Los {{ c.n_municipios|n }} municipios se agrupan en {{ c.k_elegido }} perfiles; el de mayor pérdida ({{ c.perfil[0].municipios }} municipios, {{ (c.perfil[0].pct*100)|n(1) }} %) suma el {{ (c.perfil[0].pct_perdida_total*100)|n(0) }} % de la pérdida media anual y reúne a los frentes de la Amazonía (San Vicente del Caguán, La Macarena, Cartagena del Chairá…).</li>
+    {% endif %}
+    {% if y %}
+    <li><strong>Comentarios de YouTube.</strong> {{ y.resumen.n|n }} comentarios útiles de {{ y.videos|length }} videos: se culpa sobre todo al gobierno ({{ y.familias[0].comentarios }} comentarios), mientras que ganadería, coca y minería aparecen en pocos y se discuten entre sí; un {{ (y.uso.escolar_pct*100)|n(0) }} % es uso escolar del video. No representan a la población.</li>
+    {% else %}
+    <li><strong>Comentarios de YouTube.</strong> Sección en preparación (ver <a href="{{ url_for('oculto.comentarios') }}">Comentarios de YouTube</a>).</li>
+    {% endif %}
+  </ol>
+  <p><a class="md-boton" href="{{ url_for('oculto.conclusiones') }}">Ver conclusiones integradas</a></p>
+
+  <h2>Informe técnico</h2>
+  {% if informe_pdf %}
+  <p><a class="md-boton" href="{{ url_for('static', filename=informe_pdf) }}" target="_blank" rel="noopener">Abrir el informe técnico (PDF)</a> <a href="{{ url_for('static', filename=informe_pdf) }}" download>Descargar</a></p>
+  {% else %}
+  <p class="nota">El informe técnico en PDF aún no está publicado en el servidor (se agrega en <code>static/docs/</code>).</p>
+  {% endif %}
+
+  <h2>Video de sustentación</h2>
+  {% if video_embed %}
+  <div class="oculto-video"><iframe src="{{ video_embed }}" title="Video de sustentación" allowfullscreen loading="lazy"></iframe></div>
+  <p><a href="{{ video_url }}" target="_blank" rel="noopener">Abrir el video en una pestaña nueva</a></p>
+  {% elif video_url %}
+  <p><a class="md-boton" href="{{ video_url }}" target="_blank" rel="noopener">Ver el video de sustentación</a></p>
+  {% else %}
+  <p class="nota">El enlace al video de sustentación (máximo 10 minutos) se configura en <code>conocimiento_oculto/config.py</code> (<code>VIDEO_URL</code>).</p>
+  {% endif %}
+
+  <h2>Cómo reproducir el trabajo</h2>
+  <ul class="md-lista-enlaces">
+    <li>Datos para Orange: <code>conocimiento_oculto/datos/</code> (se regeneran con <code>python conocimiento_oculto/preparar_datos_orange.py deforestacion_limpio.csv</code>).</li>
+    <li>Flujo de Orange: <code>conocimiento_oculto/conocimiento_oculto.ows</code> (con los scripts de <code>orange_scripts/</code>) y guía paso a paso en <code>orange/GUIA_FLUJOS_ORANGE.md</code>.</li>
+    <li>Extracción de comentarios: <code>conocimiento_oculto/extraer_comentarios_youtube.py</code> y datos en <code>conocimiento_oculto/youtube/</code> (la clave de la API nunca se publica).</li>
+    <li>Verificación en Python: <code>python conocimiento_oculto/referencia.py</code>.</li>
+    {% if repo_url %}<li>Repositorio: <a href="{{ repo_url }}" target="_blank" rel="noopener">{{ repo_url }}</a></li>{% endif %}
+  </ul>
+
+  <h2>Las cuatro partes</h2>
+  <div class="md-tarjetas">
+    <a class="md-tarjeta" href="{{ url_for('oculto.supervisado') }}"><span class="md-chip">1</span><strong>Tres modelos supervisados</strong><span class="md-pregunta">¿Se puede anticipar que la pérdida de bosque de un municipio será alta este año a partir de su historial?</span><span class="ir">Ver análisis &rarr;</span></a>
+    <a class="md-tarjeta" href="{{ url_for('oculto.clustering') }}"><span class="md-chip">2</span><strong>Clustering de municipios</strong><span class="md-pregunta">¿Qué perfiles de pérdida de bosque existen entre los municipios (magnitud, persistencia, fuego y transformación)?</span><span class="ir">Ver análisis &rarr;</span></a>
+    <a class="md-tarjeta" href="{{ url_for('oculto.comentarios') }}"><span class="md-chip">3</span><strong>Comentarios de YouTube</strong><span class="md-pregunta">¿Cómo explican y perciben la deforestación quienes comentan videos sobre el tema?</span><span class="ir">Ver análisis &rarr;</span></a>
+    <a class="md-tarjeta" href="{{ url_for('oculto.conclusiones') }}"><span class="md-chip">4</span><strong>Conclusiones integradas</strong><span class="md-pregunta">¿Qué coincide, qué difiere y qué decisiones apoyan los tres análisis?</span><span class="ir">Ver conclusiones &rarr;</span></a>
+  </div>
+</div>
+{% endblock %}
