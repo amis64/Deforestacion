@@ -105,6 +105,45 @@ ver `docs/modelo_estrella/INTEGRACION_FLASK.md`.
 
 **Repositorio:** https://github.com/amis64/Deforestacion · **Aplicación publicada:** (URL del despliegue en Render, ver informe técnico de la Etapa 5).
 
+### Etapa 6: Conocimiento Oculto (aprendizaje supervisado, clustering y comentarios de YouTube)
+
+Sección **Conocimiento Oculto** de la aplicación (`/conocimiento-oculto`): síntesis de hallazgos, informe técnico
+en PDF, video de sustentación y las páginas de cada análisis. El trabajo se hizo en **Orange Data Mining** (un solo
+flujo de 38 widgets); el repositorio guarda el flujo, los scripts, los datos de entrada, la extracción de comentarios
+y una verificación en Python que alimenta las páginas.
+
+```
+orange/
+├── GUIA_FLUJOS_ORANGE.md        # guía del flujo: widgets, conexiones, parámetros y capturas
+└── capturas/                    # capturas de Orange que cita el informe
+conocimiento_oculto/
+├── conocimiento_oculto.ows      # flujo de Orange (4 bloques: preparación, supervisado, clustering, comentarios)
+├── orange_scripts/              # código de los widgets Python Script (script_supervisado.py, script_clustering.py)
+├── preparar_datos_orange.py     # arma los CSV de entrada desde deforestacion_limpio.csv
+├── datos/                       # datos_supervisado.csv, datos_clustering.csv, reporte_preparacion.json
+├── supervisado.py, clustering.py, analizar_comentarios.py, referencia.py   # verificación en Python
+├── resultados/                  # JSON que leen las páginas de Flask
+├── graficos_oculto.py, config.py, __init__.py                              # Blueprint de Flask
+├── extraer_comentarios_youtube.py   # YouTube Data API v3 (clave por variable de entorno)
+└── youtube/
+    ├── LEEME_YOUTUBE.md         # criterios, restricciones y cómo repetir la extracción
+    └── videos.csv, comentarios_limpios.csv, reporte_extraccion.json
+```
+
+```bash
+# 1. datos de entrada de Orange
+python conocimiento_oculto/preparar_datos_orange.py deforestacion_limpio.csv
+# 2. abrir conocimiento_oculto/conocimiento_oculto.ows en Orange (corregir las rutas de los widgets File; ver orange/GUIA_FLUJOS_ORANGE.md)
+# 3. verificación en Python (supervisado, clustering y comentarios) -> conocimiento_oculto/resultados/*.json
+python conocimiento_oculto/referencia.py
+# 4. (opcional) repetir la extracción de comentarios; requiere YOUTUBE_API_KEY (ver youtube/LEEME_YOUTUBE.md)
+python conocimiento_oculto/extraer_comentarios_youtube.py
+```
+
+**Seguridad y privacidad.** La clave de la API de YouTube nunca se versiona (se lee de `YOUTUBE_API_KEY`). No se guardan
+nombres ni identificadores de los autores de los comentarios, solo un código anónimo; los comentarios crudos no se
+publican (`.gitignore`).
+
 ## Estructura del repositorio
 
 ```

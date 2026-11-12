@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titulo %}Conclusiones integradas{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/oculto.css') }}">{% endblock %}
+{% block contenido %}
+{% include "conocimiento_oculto/_cabecera.html" %}
+{% set s = d.sup %}{% set c = d.clu %}{% set y = d.com %}
+<div class="panel">
+  <h1>Conclusiones integradas</h1>
+  <p class="md-lead">Qué dicen juntos el modelo supervisado, el clustering y los comentarios, qué está respaldado por los datos (evidencia) y qué sigue siendo una hipótesis por validar.</p>
+  {% if not (s and c) %}<p class="nota alerta">Faltan resultados: ejecute <code>python conocimiento_oculto/referencia.py</code>.</p>{% else %}
+  {% set e = s.modelos[s.elegido] %}{% set g1, g2 = c.perfil[0], c.perfil[1] %}
+
+  <h2>Hallazgos</h2>
+  <div class="tabla-scroll"><table>
+    <thead><tr><th>Hallazgo</th><th>De dónde sale</th><th>Estatus</th></tr></thead>
+    <tbody>
+      <tr><td><strong>La pérdida de bosque es persistente.</strong> Un municipio con pérdida alta tiende a seguir con pérdida alta: el promedio de los tres años previos explica casi la tercera parte de lo que aprende el bosque aleatorio y una regla sin modelo («Alta si lo fue el año anterior») logra F1 {{ s.baseline_persistencia.f1|n(3) }}, igual o mejor que los tres modelos (F1 de {{ s.modelos.values()|map(attribute='f1')|min|n(3) }} a {{ s.modelos.values()|map(attribute='f1')|max|n(3) }}).</td><td>Modelos supervisados (prueba temporal 2019–2024)</td><td><strong>Evidencia</strong></td></tr>
+      <tr><td><strong>Pocos municipios concentran la pérdida.</strong> El grupo «{{ g1.nombre }}» tiene {{ g1.municipios }} municipios ({{ (g1.pct*100)|n(1) }} %) y suma el {{ (g1.pct_perdida_total*100)|n(0) }} % de la pérdida media anual; junto con el grupo 2 reúne el {{ ((g1.pct_perdida_total + g2.pct_perdida_total)*100)|n(0) }} %.</td><td>Clustering (k = {{ c.k_elegido }})</td><td><strong>Evidencia</strong> (grupos de fronteras difusas: silueta {{ c.silueta_global|n(2) }})</td></tr>
+      <tr><td><strong>Los grupos de mayor pérdida coinciden con la pérdida alta del modelo.</strong> Los grupos 1 y 2 reúnen el {{ (((c.alta_por_grupo['1'].alta + c.alta_por_grupo['2'].alta) / (c.alta_por_grupo.values()|sum(attribute='alta')))*100)|n(0) }} % de los casos «Alta» de prueba, sin haber usado la clase para construirlos.</td><td>Clustering + supervisado</td><td><strong>Evidencia</strong></td></tr>
+      <tr><td><strong>El modelo falla en los saltos bruscos.</strong> {{ (s.fn_pct_t1_bajo_umbral*100)|n(0) }} % de los casos de pérdida alta que no anticipa venían de una pérdida por debajo del umbral; su recall es bajo donde la pérdida alta es esporádica (grupo 4: {{ (c.alta_por_grupo['4'].recall*100)|n(0) }} %).</td><td>Supervisado + clustering</td><td><strong>Evidencia</strong></td></tr>
+      <tr><td><strong>El perfil de mayor pérdida está en la frontera amazónica.</strong> El grupo 1 incluye {% for m in g1.ejemplos %}{{ m[0] }}{{ ", " if not loop.last else "" }}{% endfor %}. Los comentarios que mencionan la Amazonía, el Caquetá o el Guaviare ({{ y.territorios[0].comentarios if y else '—' }}) apuntan al mismo lugar, y uno de ellos lo cuenta desde el Caquetá.</td><td>Clustering + comentarios</td><td><strong>Coincidencia</strong> (en los datos es evidencia; en los comentarios son pocos)</td></tr>
+      <tr><td><strong>Los datos no distinguen ganadería, coca o palma.</strong> En todos los grupos domina la «agricultura permanente» ({% for p in c.perfil %}{{ (p.causas[0][1]*100)|n(0) }} %{{ ", " if not loop.last else "" }}{% endfor %}): la clasificación de causas del dataset no separa la ganadería de los cultivos. Los comentarios, en cambio, discuten justamente esa diferencia{% if y %} (ganadería en {{ y.familias[1].comentarios }}, coca y grupos armados en {{ y.familias[2].comentarios }}, megaproyectos y monocultivos en {{ y.familias[3].comentarios }}){% endif %}.</td><td>Clustering + comentarios</td><td><strong>Hipótesis</strong>: no se puede probar ni refutar con estos datos</td></tr>
+      <tr><td><strong>La minería pesa más en la percepción que en el registro.</strong> {% if y %}Se menciona en {{ y.familias[3].comentarios }} comentarios, mientras que «minería y otras materias primas» es una fracción muy pequeña de los municipio-años con causa informada.{% endif %}</td><td>Comentarios + datos de causa</td><td><strong>Hipótesis</strong> (puede reflejar minería ilegal poco detectada o simple notoriedad)</td></tr>
+      <tr><td><strong>Se culpa sobre todo al gobierno y a las autoridades.</strong> {% if y %}{{ y.familias[0].comentarios }} comentarios ({{ (y.familias[0].pct*100)|n(0) }} %) reclaman acción o denuncian corrupción.{% endif %} Los datos de este proyecto no miden presencia institucional ni cumplimiento de la ley.</td><td>Comentarios</td><td><strong>Opinión</strong>: no verificable con los datos del proyecto</td></tr>
+      <tr><td><strong>La causa que informa la fuente no mejora la predicción.</strong> Con o sin la causa dominante el resultado es el mismo (F1 del bosque {{ s.sensibilidad_causa['sin la causa dominante'].f1|n(3) }} sin ella).</td><td>Supervisado</td><td><strong>Evidencia</strong></td></tr>
+    </tbody></table></div>
+
+  <h2>Qué decisiones apoyan</h2>
+  <ul>
+    <li><strong>Priorizar</strong> la vigilancia en los {{ g1.municipios }} municipios del grupo 1 y los {{ g2.municipios }} del grupo 2, que concentran la mayor parte de la pérdida y de los casos de pérdida alta.</li>
+    <li><strong>Alerta temprana:</strong> la probabilidad que entrega el modelo (AUC {{ e.auc|n(2) }}) permite ordenar municipios, pero no sustituye una regla simple: la pérdida del año anterior ya es una señal fuerte. El valor está en vigilar los municipios que <em>saltan</em> de nivel.</li>
+    <li><strong>Medir mejor las causas:</strong> para discutir ganadería, coca o minería hace falta una fuente que las separe; con las 7 categorías actuales no es posible.</li>
+    <li><strong>Escuchar el contexto:</strong> los comentarios aportan explicaciones y reclamos que los datos no registran, pero deben contrastarse con otras fuentes antes de convertirse en decisiones.</li>
+  </ul>
+
+  <h2>Qué no se puede afirmar</h2>
+  <ul class="lista-limitaciones">
+    <li>Que los modelos <em>expliquen</em> por qué ocurre la pérdida: describen asociaciones y persistencia.</li>
+    <li>Que los grupos sean categorías nítidas: la silueta es baja y los municipios pueden cambiar de grupo en el tiempo.</li>
+    <li>Que los comentarios representen a la población: son {{ y.resumen.n if y else '—' }} comentarios de {{ y.videos|length if y else '—' }} videos y una parte importante es uso escolar o de otros países.</li>
+    <li>Que el umbral de «pérdida alta» ({{ s.umbral_alta_ha|n }} ha) sea el único razonable.</li>
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

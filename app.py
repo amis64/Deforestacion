@@ -17,9 +17,11 @@ from flask import Flask, render_template
 
 import contenido as c
 from multidimensional import bp as multidimensional_bp  # Etapa 5 · Análisis multidimensional
+from conocimiento_oculto import bp as oculto_bp  # Etapa 6 · Conocimiento Oculto
 
 app = Flask(__name__)
 app.register_blueprint(multidimensional_bp)
+app.register_blueprint(oculto_bp)
 
 # Estructura del submenú, reutilizada en la plantilla base para construir
 # la barra de navegación y resaltar la sección activa.

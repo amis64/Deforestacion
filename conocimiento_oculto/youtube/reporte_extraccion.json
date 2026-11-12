@@ -1,0 +1,33 @@
+{
+  "fecha_extraccion_utc": "2026-11-12T15:20:51+00:00",
+  "busquedas": [
+    "deforestación Colombia Amazonía",
+    "deforestación Caquetá Guaviare ganadería",
+    "deforestación Colombia coca minería",
+    "acaparamiento de tierras Amazonía colombiana",
+    "incendios forestales Colombia deforestación"
+  ],
+  "filtros": {
+    "publicado_despues": "2018-01-01T00:00:00Z",
+    "idioma_relevancia": "es",
+    "region": "CO",
+    "orden": "relevance",
+    "min_comentarios_video": 30,
+    "max_comentarios_por_video": 500,
+    "solo_comentarios_principales": true
+  },
+  "videos_encontrados": 25,
+  "videos_usados": 3,
+  "comentarios_crudos": 170,
+  "comentarios_limpios": 117,
+  "descartados_por_motivo": {
+    "vacio": 0,
+    "muy_corto": 31,
+    "solo_emojis_o_simbolos": 21,
+    "duplicado": 1,
+    "otro_idioma": 0,
+    "spam_enlace": 0
+  },
+  "cuota_api_usada_unidades": 504,
+  "privacidad": "No se guardan nombres, canales ni IDs originales de autores; id_comentario es un hash."
+}

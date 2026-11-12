@@ -1,0 +1,19 @@
+{
+  "filas_regionales_originales": 77245,
+  "filas_municipio_anio": 28800,
+  "supervisado": {
+    "filas": 23499,
+    "umbral_alta_ha_p75_2004_2018": 129.0,
+    "distribucion_clase": {
+      "No alta": 17794,
+      "Alta": 5705
+    },
+    "filas_por_particion": {
+      "Entrenamiento": 16785,
+      "Prueba": 6714
+    }
+  },
+  "clustering": {
+    "municipios": 1119
+  }
+}

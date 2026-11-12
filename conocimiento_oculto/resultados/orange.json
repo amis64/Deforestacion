@@ -1,0 +1,102 @@
+{
+ "fuente": "Cifras transcritas de las capturas de Orange del informe técnico final (Test and Score, k-Means, Silhouette Plot, Topic Modelling, Hierarchical Clustering, Word Enrichment).",
+ "supervisado": {
+  "evaluacion": "Test and Score · Test on test data · clase Alta · 6.714 municipio-años (2019–2024)",
+  "modelos": {
+   "Regresión logística": {
+    "auc": 0.98,
+    "accuracy": 0.934,
+    "f1": 0.849,
+    "precision": 0.863,
+    "recall": 0.836,
+    "mcc": 0.807
+   },
+   "Árbol de decisión": {
+    "auc": 0.958,
+    "accuracy": 0.927,
+    "f1": 0.846,
+    "precision": 0.788,
+    "recall": 0.914,
+    "mcc": 0.802
+   },
+   "Random Forest": {
+    "auc": 0.981,
+    "accuracy": 0.932,
+    "f1": 0.85,
+    "precision": 0.833,
+    "recall": 0.867,
+    "mcc": 0.806
+   }
+  },
+  "elegido": "Random Forest",
+  "matriz_elegido": {
+   "vp": 1284,
+   "fn": 197,
+   "fp": 257,
+   "vn": 4976
+  },
+  "arbol": {
+   "nodos": 25,
+   "hojas": 13,
+   "raiz": "perdida_media_3a ≤ 100,667"
+  }
+ },
+ "clustering": {
+  "silueta_por_k": {
+   "2": 0.297,
+   "3": 0.255,
+   "4": 0.264,
+   "5": 0.223,
+   "6": 0.23,
+   "7": 0.225,
+   "8": 0.203
+  },
+  "k_elegido": 4,
+  "silueta_por_grupo_orange": {
+   "C1": 0.242,
+   "C2": 0.319,
+   "C3": 0.215,
+   "C4": 0.156
+  },
+  "equivalencia_grupos": {
+   "C4": 1,
+   "C1": 2,
+   "C3": 3,
+   "C2": 4
+  },
+  "tamanos_orange": {
+   "C1": 285,
+   "C2": 475,
+   "C3": 320,
+   "C4": 39
+  }
+ },
+ "texto": {
+  "preprocesamiento": "minúsculas, sin acentos, sin URL; tokenización \\w+; lematizador en español; palabras vacías en español; sin números; frecuencia de documento absoluta de 3 a 100 (en ese orden)",
+  "tokens": 516,
+  "terminos": 78,
+  "comentarios": 117,
+  "lda": {
+   "temas": 5,
+   "coherencia": 0.394,
+   "perplejidad_log": 25.5,
+   "terminos_por_tema": [
+    "más, video, ser, arbolar, colombiar, tener, querer, hacer, sembrar, poner",
+    "ser, si, dar, hacer, decir, gobierno, q, diar, daño, selva",
+    "haber, gente, deforestación, ambiente, cocar, ser, medio, cuidar, ver, ganadería",
+    "ser, gracia, ayudar, video, éste, ir, bueno, tener, así, tarea",
+    "ser, gobierno, mejor, llevar, recurso, sino, si, tarea, tierra, preguntar"
+   ]
+  },
+  "jerarquico": {
+   "enlace": "Ward",
+   "grupos": {
+    "C1": 6,
+    "C2": 9,
+    "C3": 80,
+    "C4": 22
+   },
+   "enriquecimiento_c4": "humano, medio, tierra, ambiente (FDR ≤ 0,2)"
+  }
+ }
+}

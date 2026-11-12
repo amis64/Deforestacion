@@ -1,0 +1,961 @@
+{
+ "problema": "¿La pérdida de bosque de un municipio será alta este año?",
+ "umbral_alta_ha": 129.0,
+ "anio_corte": 2018,
+ "n_total": 23499,
+ "n_entrenamiento": 16785,
+ "n_prueba": 6714,
+ "alta_entrenamiento": 4224,
+ "alta_prueba": 1481,
+ "pct_alta_entrenamiento": 0.2517,
+ "pct_alta_prueba": 0.2206,
+ "municipios": 1119,
+ "variables": [
+  {
+   "nombre": "perdida_t1",
+   "etiqueta": "pérdida del año anterior",
+   "tipo": "numérica",
+   "faltantes": 0.0
+  },
+  {
+   "nombre": "perdida_t2",
+   "etiqueta": "pérdida de hace 2 años",
+   "tipo": "numérica",
+   "faltantes": 0.0
+  },
+  {
+   "nombre": "perdida_media_3a",
+   "etiqueta": "promedio de los 3 años previos",
+   "tipo": "numérica",
+   "faltantes": 0.0
+  },
+  {
+   "nombre": "tendencia_perdida_t1",
+   "etiqueta": "tendencia (t-1 menos t-2)",
+   "tipo": "numérica",
+   "faltantes": 0.0
+  },
+  {
+   "nombre": "area_transformada_t1",
+   "etiqueta": "área transformada (t-1)",
+   "tipo": "numérica",
+   "faltantes": 0.0715
+  },
+  {
+   "nombre": "var_transformada_t1",
+   "etiqueta": "cambio del área transformada",
+   "tipo": "numérica",
+   "faltantes": 0.0715
+  },
+  {
+   "nombre": "focos_t1",
+   "etiqueta": "focos de calor (t-1)",
+   "tipo": "numérica",
+   "faltantes": 0.6125
+  },
+  {
+   "nombre": "latitud",
+   "etiqueta": "latitud",
+   "tipo": "numérica",
+   "faltantes": 0.0009
+  },
+  {
+   "nombre": "longitud",
+   "etiqueta": "longitud",
+   "tipo": "numérica",
+   "faltantes": 0.0009
+  },
+  {
+   "nombre": "driver_dominante",
+   "etiqueta": "causa dominante",
+   "tipo": "categórica",
+   "faltantes": 0.0429
+  }
+ ],
+ "baseline_mayoritaria": 0.7794,
+ "baseline_persistencia": {
+  "regla": "Alta si la pérdida del año anterior ya fue de 129 ha o más",
+  "accuracy": 0.9361,
+  "f1": 0.8578,
+  "precision": 0.8424,
+  "recall": 0.8737,
+  "mcc": 0.8168,
+  "matriz": [
+   [
+    4991,
+    242
+   ],
+   [
+    187,
+    1294
+   ]
+  ]
+ },
+ "modelos": {
+  "Regresión logística": {
+   "accuracy": 0.9351,
+   "auc": 0.9807,
+   "f1": 0.8492,
+   "precision": 0.8703,
+   "recall": 0.8292,
+   "mcc": 0.8083,
+   "f1_pond": 0.9345,
+   "precision_pond": 0.9342,
+   "recall_pond": 0.9351,
+   "matriz": [
+    [
+     5050,
+     183
+    ],
+    [
+     253,
+     1228
+    ]
+   ],
+   "roc": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0006,
+     0.339
+    ],
+    [
+     0.0017,
+     0.4409
+    ],
+    [
+     0.0027,
+     0.549
+    ],
+    [
+     0.0038,
+     0.5807
+    ],
+    [
+     0.0054,
+     0.5982
+    ],
+    [
+     0.0065,
+     0.609
+    ],
+    [
+     0.0075,
+     0.6158
+    ],
+    [
+     0.0088,
+     0.63
+    ],
+    [
+     0.0099,
+     0.6448
+    ],
+    [
+     0.0109,
+     0.659
+    ],
+    [
+     0.0118,
+     0.6739
+    ],
+    [
+     0.0128,
+     0.682
+    ],
+    [
+     0.0139,
+     0.7036
+    ],
+    [
+     0.0151,
+     0.7225
+    ],
+    [
+     0.0162,
+     0.736
+    ],
+    [
+     0.0176,
+     0.7434
+    ],
+    [
+     0.0199,
+     0.7556
+    ],
+    [
+     0.0212,
+     0.7657
+    ],
+    [
+     0.0229,
+     0.7738
+    ],
+    [
+     0.0248,
+     0.7819
+    ],
+    [
+     0.0268,
+     0.7974
+    ],
+    [
+     0.0285,
+     0.8069
+    ],
+    [
+     0.0298,
+     0.8136
+    ],
+    [
+     0.0315,
+     0.8197
+    ],
+    [
+     0.0342,
+     0.8271
+    ],
+    [
+     0.0367,
+     0.8352
+    ],
+    [
+     0.0394,
+     0.8393
+    ],
+    [
+     0.0418,
+     0.8433
+    ],
+    [
+     0.0453,
+     0.8521
+    ],
+    [
+     0.0474,
+     0.8569
+    ],
+    [
+     0.0499,
+     0.8663
+    ],
+    [
+     0.0516,
+     0.8731
+    ],
+    [
+     0.0539,
+     0.8771
+    ],
+    [
+     0.0558,
+     0.8805
+    ],
+    [
+     0.0575,
+     0.8859
+    ],
+    [
+     0.0592,
+     0.8906
+    ],
+    [
+     0.0613,
+     0.8974
+    ],
+    [
+     0.0652,
+     0.9014
+    ],
+    [
+     0.068,
+     0.9068
+    ],
+    [
+     0.072,
+     0.9136
+    ],
+    [
+     0.0766,
+     0.9196
+    ],
+    [
+     0.0812,
+     0.9251
+    ],
+    [
+     0.0833,
+     0.9345
+    ],
+    [
+     0.0856,
+     0.9392
+    ],
+    [
+     0.0946,
+     0.9446
+    ],
+    [
+     0.0967,
+     0.9487
+    ],
+    [
+     0.1003,
+     0.9527
+    ],
+    [
+     0.1099,
+     0.9561
+    ],
+    [
+     0.1156,
+     0.9622
+    ],
+    [
+     0.1208,
+     0.9683
+    ],
+    [
+     0.1284,
+     0.9723
+    ],
+    [
+     0.1384,
+     0.9757
+    ],
+    [
+     0.1452,
+     0.9791
+    ],
+    [
+     0.1609,
+     0.9831
+    ],
+    [
+     0.1668,
+     0.9872
+    ],
+    [
+     0.1747,
+     0.9912
+    ],
+    [
+     0.2112,
+     0.9953
+    ],
+    [
+     0.2901,
+     0.9993
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ],
+   "orange": "Logistic Regression",
+   "params": "regularización Ridge (L2), C = 1; variables estandarizadas e imputadas con el promedio",
+   "por_anio": {
+    "2019": {
+     "accuracy": 0.933,
+     "recall": 0.9,
+     "n": 1119
+    },
+    "2020": {
+     "accuracy": 0.9312,
+     "recall": 0.8462,
+     "n": 1119
+    },
+    "2021": {
+     "accuracy": 0.9455,
+     "recall": 0.8376,
+     "n": 1119
+    },
+    "2022": {
+     "accuracy": 0.9428,
+     "recall": 0.8255,
+     "n": 1119
+    },
+    "2023": {
+     "accuracy": 0.924,
+     "recall": 0.7481,
+     "n": 1119
+    },
+    "2024": {
+     "accuracy": 0.9339,
+     "recall": 0.8186,
+     "n": 1119
+    }
+   }
+  },
+  "Árbol de decisión": {
+   "accuracy": 0.9298,
+   "auc": 0.9778,
+   "f1": 0.845,
+   "precision": 0.8241,
+   "recall": 0.867,
+   "mcc": 0.8001,
+   "f1_pond": 0.9305,
+   "precision_pond": 0.9314,
+   "recall_pond": 0.9298,
+   "matriz": [
+    [
+     4959,
+     274
+    ],
+    [
+     197,
+     1284
+    ]
+   ],
+   "roc": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0006,
+     0.3133
+    ],
+    [
+     0.0013,
+     0.393
+    ],
+    [
+     0.0052,
+     0.5773
+    ],
+    [
+     0.0054,
+     0.5881
+    ],
+    [
+     0.0061,
+     0.5955
+    ],
+    [
+     0.0229,
+     0.7779
+    ],
+    [
+     0.0333,
+     0.8197
+    ],
+    [
+     0.0432,
+     0.8447
+    ],
+    [
+     0.0524,
+     0.867
+    ],
+    [
+     0.0527,
+     0.8683
+    ],
+    [
+     0.0707,
+     0.8967
+    ],
+    [
+     0.0839,
+     0.9109
+    ],
+    [
+     0.0866,
+     0.9115
+    ],
+    [
+     0.1034,
+     0.9284
+    ],
+    [
+     0.1129,
+     0.9588
+    ],
+    [
+     0.1542,
+     0.9784
+    ],
+    [
+     0.1607,
+     0.9818
+    ],
+    [
+     0.1741,
+     0.9845
+    ],
+    [
+     0.18,
+     0.9885
+    ],
+    [
+     0.1857,
+     0.9899
+    ],
+    [
+     0.1924,
+     0.9899
+    ],
+    [
+     0.1984,
+     0.9899
+    ],
+    [
+     0.2282,
+     0.9932
+    ],
+    [
+     0.2962,
+     0.9953
+    ],
+    [
+     0.3017,
+     0.9953
+    ],
+    [
+     0.3105,
+     0.9959
+    ],
+    [
+     0.3153,
+     0.9959
+    ],
+    [
+     0.4174,
+     0.9993
+    ],
+    [
+     0.5532,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ],
+   "orange": "Tree",
+   "params": "árbol binario; hojas con al menos 50 casos; no dividir subconjuntos de menos de 100; profundidad máxima 5; detener con mayoría del 95 %",
+   "por_anio": {
+    "2019": {
+     "accuracy": 0.9214,
+     "recall": 0.8846,
+     "n": 1119
+    },
+    "2020": {
+     "accuracy": 0.9169,
+     "recall": 0.8808,
+     "n": 1119
+    },
+    "2021": {
+     "accuracy": 0.941,
+     "recall": 0.8889,
+     "n": 1119
+    },
+    "2022": {
+     "accuracy": 0.9482,
+     "recall": 0.8681,
+     "n": 1119
+    },
+    "2023": {
+     "accuracy": 0.9258,
+     "recall": 0.7707,
+     "n": 1119
+    },
+    "2024": {
+     "accuracy": 0.9258,
+     "recall": 0.9204,
+     "n": 1119
+    }
+   }
+  },
+  "Random Forest": {
+   "accuracy": 0.933,
+   "auc": 0.9815,
+   "f1": 0.8518,
+   "precision": 0.8315,
+   "recall": 0.8731,
+   "mcc": 0.8089,
+   "f1_pond": 0.9336,
+   "precision_pond": 0.9344,
+   "recall_pond": 0.933,
+   "matriz": [
+    [
+     4971,
+     262
+    ],
+    [
+     188,
+     1293
+    ]
+   ],
+   "roc": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0972
+    ],
+    [
+     0.0,
+     0.1215
+    ],
+    [
+     0.0,
+     0.1634
+    ],
+    [
+     0.0,
+     0.2593
+    ],
+    [
+     0.001,
+     0.4531
+    ],
+    [
+     0.0023,
+     0.5584
+    ],
+    [
+     0.0036,
+     0.6111
+    ],
+    [
+     0.005,
+     0.6428
+    ],
+    [
+     0.0075,
+     0.6624
+    ],
+    [
+     0.009,
+     0.6968
+    ],
+    [
+     0.0109,
+     0.711
+    ],
+    [
+     0.012,
+     0.7205
+    ],
+    [
+     0.0136,
+     0.7313
+    ],
+    [
+     0.0155,
+     0.7454
+    ],
+    [
+     0.0174,
+     0.7569
+    ],
+    [
+     0.0193,
+     0.7664
+    ],
+    [
+     0.0214,
+     0.7792
+    ],
+    [
+     0.0233,
+     0.7866
+    ],
+    [
+     0.0266,
+     0.8035
+    ],
+    [
+     0.0298,
+     0.8116
+    ],
+    [
+     0.0323,
+     0.8251
+    ],
+    [
+     0.0359,
+     0.8339
+    ],
+    [
+     0.0386,
+     0.842
+    ],
+    [
+     0.0417,
+     0.8488
+    ],
+    [
+     0.0447,
+     0.8569
+    ],
+    [
+     0.0482,
+     0.8683
+    ],
+    [
+     0.051,
+     0.8744
+    ],
+    [
+     0.0539,
+     0.8812
+    ],
+    [
+     0.0564,
+     0.8886
+    ],
+    [
+     0.0623,
+     0.8974
+    ],
+    [
+     0.0663,
+     0.9055
+    ],
+    [
+     0.0697,
+     0.9109
+    ],
+    [
+     0.0749,
+     0.9183
+    ],
+    [
+     0.0797,
+     0.9251
+    ],
+    [
+     0.0843,
+     0.9311
+    ],
+    [
+     0.0875,
+     0.9372
+    ],
+    [
+     0.0908,
+     0.944
+    ],
+    [
+     0.0973,
+     0.9487
+    ],
+    [
+     0.1053,
+     0.9561
+    ],
+    [
+     0.111,
+     0.9622
+    ],
+    [
+     0.12,
+     0.9669
+    ],
+    [
+     0.1347,
+     0.9723
+    ],
+    [
+     0.1429,
+     0.9791
+    ],
+    [
+     0.1592,
+     0.9838
+    ],
+    [
+     0.1852,
+     0.9885
+    ],
+    [
+     0.2073,
+     0.9939
+    ],
+    [
+     0.2826,
+     0.9986
+    ],
+    [
+     0.4038,
+     1.0
+    ],
+    [
+     0.4288,
+     1.0
+    ],
+    [
+     0.447,
+     1.0
+    ],
+    [
+     0.4768,
+     1.0
+    ],
+    [
+     0.4844,
+     1.0
+    ],
+    [
+     0.4932,
+     1.0
+    ],
+    [
+     0.5056,
+     1.0
+    ],
+    [
+     0.5188,
+     1.0
+    ],
+    [
+     0.5316,
+     1.0
+    ],
+    [
+     0.541,
+     1.0
+    ],
+    [
+     0.5547,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ],
+   "orange": "Random Forest",
+   "params": "200 árboles; no dividir subconjuntos de menos de 10; semilla fija; sin límite de profundidad",
+   "por_anio": {
+    "2019": {
+     "accuracy": 0.9196,
+     "recall": 0.8923,
+     "n": 1119
+    },
+    "2020": {
+     "accuracy": 0.9294,
+     "recall": 0.8769,
+     "n": 1119
+    },
+    "2021": {
+     "accuracy": 0.9321,
+     "recall": 0.8932,
+     "n": 1119
+    },
+    "2022": {
+     "accuracy": 0.9526,
+     "recall": 0.8936,
+     "n": 1119
+    },
+    "2023": {
+     "accuracy": 0.9366,
+     "recall": 0.797,
+     "n": 1119
+    },
+    "2024": {
+     "accuracy": 0.9276,
+     "recall": 0.8938,
+     "n": 1119
+    }
+   }
+  }
+ },
+ "elegido": "Random Forest",
+ "criterio_eleccion": "mayor F1 de la clase Alta (equilibra precisión y recall); a igualdad, mayor AUC",
+ "importancia_variables": {
+  "promedio de los 3 años previos": 0.3056,
+  "pérdida del año anterior": 0.2002,
+  "pérdida de hace 2 años": 0.1806,
+  "área transformada (t-1)": 0.1076,
+  "tendencia (t-1 menos t-2)": 0.0578,
+  "cambio del área transformada": 0.0497,
+  "latitud": 0.0313,
+  "longitud": 0.0298,
+  "focos de calor (t-1)": 0.0294,
+  "causa dominante": 0.0081
+ },
+ "coeficientes_logistica": [
+  [
+   "perdida_media_3a",
+   8.0895
+  ],
+  [
+   "perdida_t2",
+   2.7158
+  ],
+  [
+   "perdida_t1",
+   2.5689
+  ],
+  [
+   "driver_dominante_(sin dato)",
+   -0.7796
+  ],
+  [
+   "area_transformada_t1",
+   0.4744
+  ],
+  [
+   "driver_dominante_Urbanizacion e infraestructura",
+   -0.3756
+  ],
+  [
+   "driver_dominante_Agricultura migratoria",
+   0.2552
+  ],
+  [
+   "driver_dominante_Agricultura permanente",
+   0.1969
+  ],
+  [
+   "tendencia_perdida_t1",
+   0.1748
+  ],
+  [
+   "driver_dominante_Silvicultura",
+   0.1637
+  ]
+ ],
+ "arbol_reglas": "|--- perdida_media_3a <= 100.83\n|   |--- perdida_media_3a <= 49.50\n|   |   |--- perdida_media_3a <= 20.50\n|   |   |   |--- class: 0\n|   |   |--- perdida_media_3a >  20.50\n|   |   |   |--- class: 0\n|   |--- perdida_media_3a >  49.50\n|   |   |--- perdida_media_3a <= 65.83\n|   |   |   |--- class: 0\n|   |   |--- perdida_media_3a >  65.83\n|   |   |   |--- class: 0\n|--- perdida_media_3a >  100.83\n|   |--- perdida_media_3a <= 195.83\n|   |   |--- perdida_media_3a <= 141.17\n|   |   |   |--- class: 0\n|   |   |--- perdida_media_3a >  141.17\n|   |   |   |--- class: 1\n|   |--- perdida_media_3a >  195.83\n|   |   |--- perdida_media_3a <= 531.00\n|   |   |   |--- class: 1\n|   |   |--- perdida_media_3a >  531.00\n|   |   |   |--- class: 1\n",
+ "sensibilidad_causa": {
+  "con la causa del mismo año (flujo de Orange)": {
+   "f1": 0.8518,
+   "auc": 0.9815,
+   "accuracy": 0.933
+  },
+  "sin la causa dominante": {
+   "f1": 0.8491,
+   "auc": 0.9809,
+   "accuracy": 0.9318
+  },
+  "con la causa del año anterior": {
+   "f1": 0.8528,
+   "auc": 0.9813,
+   "accuracy": 0.9339
+  },
+  "sin latitud ni longitud": {
+   "f1": 0.851,
+   "auc": 0.9806,
+   "accuracy": 0.9325
+  }
+ },
+ "filas_sin_causa_pct_alta": 0.0,
+ "filas_sin_causa": 1008,
+ "validacion_aleatoria_rf": {
+  "f1": 0.8166,
+  "accuracy": 0.9137,
+  "pliegues": 5
+ },
+ "falsos_negativos": 188,
+ "fn_muestra_perdida_mediana_ha": 170.5,
+ "fn_perdida_t1_mediana_ha": 102.5,
+ "fn_pct_t1_bajo_umbral": 0.7074
+}

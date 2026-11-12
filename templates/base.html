@@ -41,6 +41,7 @@
       <li{% if activo == 'etapa3' %} class="activo"{% endif %}><a href="{{ url_for('etapa3') }}">Etapa 3</a></li>
       <li{% if activo == 'etapa4' %} class="activo"{% endif %}><a href="{{ url_for('etapa4') }}">Etapa 4</a></li>
       <li{% if activo == 'multidimensional' %} class="activo"{% endif %}><a href="{{ url_for('multidim.indice') }}">Análisis multidimensional</a></li>
+      <li{% if activo == 'oculto' %} class="activo"{% endif %}><a href="{{ url_for('oculto.indice') }}">Conocimiento Oculto</a></li>
     </ul>
   </div>
 </nav>
