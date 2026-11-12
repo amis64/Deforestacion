@@ -1,0 +1,682 @@
+{
+ "extraccion": {
+  "fecha_utc": "2026-11-12T15:20:51+00:00",
+  "busquedas": [
+   "deforestación Colombia Amazonía",
+   "deforestación Caquetá Guaviare ganadería",
+   "deforestación Colombia coca minería",
+   "acaparamiento de tierras Amazonía colombiana",
+   "incendios forestales Colombia deforestación"
+  ],
+  "filtros": {
+   "publicado_despues": "2018-01-01T00:00:00Z",
+   "idioma_relevancia": "es",
+   "region": "CO",
+   "orden": "relevance",
+   "min_comentarios_video": 30,
+   "max_comentarios_por_video": 500,
+   "solo_comentarios_principales": true
+  },
+  "videos_encontrados": 25,
+  "videos_usados": 3,
+  "crudos": 170,
+  "limpios": 117,
+  "descartados": {
+   "vacio": 0,
+   "muy_corto": 31,
+   "solo_emojis_o_simbolos": 21,
+   "duplicado": 1,
+   "otro_idioma": 0,
+   "spam_enlace": 0
+  },
+  "cuota": 504
+ },
+ "videos": [
+  {
+   "codigo": "V1",
+   "video_id": "eXCOqULKEBo",
+   "titulo": "Así se ve la tragedia ambiental originada por la deforestación en el Amazonas",
+   "canal": "Noticias Caracol",
+   "fecha_video": "2023-12-26",
+   "enlace": "https://www.youtube.com/watch?v=eXCOqULKEBo",
+   "comentarios_en_video": 49,
+   "extraidos": 29,
+   "utiles": 28
+  },
+  {
+   "codigo": "V2",
+   "video_id": "dzoEvoKNZQA",
+   "titulo": "La deforestación es “el problema ambiental más grave de Colombia”, según expertos",
+   "canal": "Noticias Caracol",
+   "fecha_video": "2021-02-15",
+   "enlace": "https://www.youtube.com/watch?v=dzoEvoKNZQA",
+   "comentarios_en_video": 105,
+   "extraidos": 61,
+   "utiles": 49
+  },
+  {
+   "codigo": "V3",
+   "video_id": "z4XzCA75JLs",
+   "titulo": "¿Qué es la DEFORESTACIÓN? Causas, consecuencias y posibles soluciones",
+   "canal": "Astraway",
+   "fecha_video": "2021-11-07",
+   "enlace": "https://www.youtube.com/watch?v=z4XzCA75JLs",
+   "comentarios_en_video": 102,
+   "extraidos": 80,
+   "utiles": 40
+  }
+ ],
+ "resumen": {
+  "n": 117,
+  "mediana_palabras": 13.0,
+  "me_gusta_total": 299,
+  "fecha_min": "2021-02-15",
+  "fecha_max": "2026-10-20",
+  "por_anio": {
+   "2021": 20,
+   "2022": 12,
+   "2023": 38,
+   "2024": 25,
+   "2025": 16,
+   "2026": 6
+  }
+ },
+ "terminos": [
+  {
+   "termino": "tarea",
+   "comentarios": 8
+  },
+  {
+   "termino": "colombia",
+   "comentarios": 9
+  },
+  {
+   "termino": "gobierno",
+   "comentarios": 8
+  },
+  {
+   "termino": "deforestacion",
+   "comentarios": 9
+  },
+  {
+   "termino": "arboles",
+   "comentarios": 5
+  },
+  {
+   "termino": "gente",
+   "comentarios": 6
+  },
+  {
+   "termino": "humano",
+   "comentarios": 4
+  },
+  {
+   "termino": "cuidar",
+   "comentarios": 7
+  },
+  {
+   "termino": "bosques",
+   "comentarios": 7
+  },
+  {
+   "termino": "proyecto",
+   "comentarios": 4
+  },
+  {
+   "termino": "amazonas",
+   "comentarios": 4
+  },
+  {
+   "termino": "selva",
+   "comentarios": 4
+  },
+  {
+   "termino": "buen",
+   "comentarios": 4
+  },
+  {
+   "termino": "mejor",
+   "comentarios": 4
+  },
+  {
+   "termino": "gobiernos",
+   "comentarios": 4
+  },
+  {
+   "termino": "ambiente",
+   "comentarios": 5
+  },
+  {
+   "termino": "somos",
+   "comentarios": 3
+  },
+  {
+   "termino": "bueno",
+   "comentarios": 4
+  },
+  {
+   "termino": "estoy",
+   "comentarios": 4
+  },
+  {
+   "termino": "quiero",
+   "comentarios": 3
+  }
+ ],
+ "temas": [
+  {
+   "tema": 1,
+   "palabras": [
+    "tarea",
+    "bueno",
+    "ayuda",
+    "muchas",
+    "proyecto",
+    "estoy",
+    "amazonas"
+   ],
+   "comentarios": 44,
+   "pct": 0.3761,
+   "ejemplos": [
+    "Gracias por tu vídeo me sirve para mi tarea.",
+    "Gracias lo ocupo para mi tarea ❤🎉"
+   ]
+  },
+  {
+   "tema": 2,
+   "palabras": [
+    "colombia",
+    "deforestacion",
+    "gobiernos",
+    "pais",
+    "bueno",
+    "arboles",
+    "coca"
+   ],
+   "comentarios": 23,
+   "pct": 0.1966,
+   "ejemplos": [
+    "Los anteriores gobiernos de Brasil, Colombia y Perú no hicieron casi nada para frenar la deforestacion de la Amazonia.",
+    "Donde esta el presidente de Colombia que no se ve por ningún lado, supuestamente el logo de su campaña era atacar la deforestación, minería que está matando el país"
+   ]
+  },
+  {
+   "tema": 3,
+   "palabras": [
+    "gobierno",
+    "mejor",
+    "sino",
+    "politicos",
+    "tenemos",
+    "recursos",
+    "pais"
+   ],
+   "comentarios": 11,
+   "pct": 0.094,
+   "ejemplos": [
+    "Q HACE EL GOBIERNO Q NO PONE LEY A ESE PERJUICIO",
+    "A este gobierno todo se le va en bla bla bla y no toma accion en nada"
+   ]
+  },
+  {
+   "tema": 4,
+   "palabras": [
+    "ambiente",
+    "cuidar",
+    "medio",
+    "noticia",
+    "recursos",
+    "gente",
+    "buen"
+   ],
+   "comentarios": 13,
+   "pct": 0.1111,
+   "ejemplos": [
+    "Hay qu cuidar el medio ambiente",
+    "Hay que cuidar el medio ambiente"
+   ]
+  },
+  {
+   "tema": 5,
+   "palabras": [
+    "humano",
+    "gente",
+    "bosques",
+    "vida",
+    "arboles",
+    "importa",
+    "selva"
+   ],
+   "comentarios": 26,
+   "pct": 0.2222,
+   "ejemplos": [
+    "Siento dolor al ver estas imágenes. No puedo creer que haya gente tan estúpida que se dedique a dañar tan inigualable belleza. Sin bosques, no hay agua; y sin agua, no hay vida para el humano y el…",
+    "La gente quiere seguir teniendo lluvia aún tras cargarse los bosques 🏜️"
+   ]
+  }
+ ],
+ "agrupacion": {
+  "comparacion": [
+   {
+    "k": 2,
+    "silueta": 0.0537,
+    "minimo": 6
+   },
+   {
+    "k": 3,
+    "silueta": 0.0673,
+    "minimo": 6
+   },
+   {
+    "k": 4,
+    "silueta": 0.0853,
+    "minimo": 6
+   },
+   {
+    "k": 5,
+    "silueta": 0.1022,
+    "minimo": 4
+   },
+   {
+    "k": 6,
+    "silueta": 0.1231,
+    "minimo": 3
+   },
+   {
+    "k": 7,
+    "silueta": 0.1312,
+    "minimo": 3
+   },
+   {
+    "k": 8,
+    "silueta": 0.1487,
+    "minimo": 3
+   }
+  ],
+  "k_elegido": 4,
+  "grupos": [
+   {
+    "grupo": 1,
+    "comentarios": 87,
+    "pct": 0.7436,
+    "palabras": [
+     "gente",
+     "humano",
+     "arboles",
+     "proyecto",
+     "amazonas",
+     "selva"
+    ],
+    "ejemplo": "Siento dolor al ver estas imágenes. No puedo creer que haya gente tan estúpida que se dedique a dañar tan inigualable belleza. Sin bosques, no hay agua; y sin agua, no hay vida para el humano y el…"
+   },
+   {
+    "grupo": 2,
+    "comentarios": 16,
+    "pct": 0.1368,
+    "palabras": [
+     "colombia",
+     "deforestacion",
+     "buen",
+     "buena",
+     "mejor",
+     "cuidar"
+    ],
+    "ejemplo": "Los anteriores gobiernos de Brasil, Colombia y Perú no hicieron casi nada para frenar la deforestacion de la Amazonia."
+   },
+   {
+    "grupo": 3,
+    "comentarios": 8,
+    "pct": 0.0684,
+    "palabras": [
+     "gobierno",
+     "sino",
+     "mejor",
+     "politicos",
+     "tenemos",
+     "arbol"
+    ],
+    "ejemplo": "Las. Entidades. Del. Gobierno. Son. Sino. Fachadas. De. Corucion. Uno. Reporta. No. Asen. Caso. Ni ponen. Atención."
+   },
+   {
+    "grupo": 4,
+    "comentarios": 6,
+    "pct": 0.0513,
+    "palabras": [
+     "tarea",
+     "muchas",
+     "ambiente",
+     "acabar",
+     "arbol",
+     "arboles"
+    ],
+    "ejemplo": "vine de una tarea de un codigo QR :v"
+   }
+  ]
+ },
+ "familias": [
+  {
+   "clave": "gobierno",
+   "nombre": "Gobierno, autoridades y corrupción",
+   "comentarios": 21,
+   "pct": 0.1795,
+   "por_video": {
+    "V1": 8,
+    "V2": 8,
+    "V3": 5
+   },
+   "ejemplos": [
+    {
+     "video": "V1",
+     "me_gusta": 9,
+     "texto": "Los anteriores gobiernos de Brasil, Colombia y Perú no hicieron casi nada para frenar la deforestacion de la Amazonia."
+    },
+    {
+     "video": "V1",
+     "me_gusta": 8,
+     "texto": "Pero aqui en Colombia no quieren al presidente que propende por proteger estos ecosistemas... En fin..."
+    },
+    {
+     "video": "V2",
+     "me_gusta": 7,
+     "texto": "La misma historia de toda la vida, los mayores ladrones y desforestadores de los bosques y selvas son los \"ganaderos\", además la protección de las reservas naturales es muy poca, casi nula, cualquier hampón se adueña de las tierras del estado y no pasa nada."
+    }
+   ]
+  },
+  {
+   "clave": "ganaderia",
+   "nombre": "Ganadería y pastos",
+   "comentarios": 6,
+   "pct": 0.0513,
+   "por_video": {
+    "V1": 0,
+    "V2": 6,
+    "V3": 0
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 12,
+     "texto": "Soy del CAQUETA y es muy sierto la de forestación es muy evidente más que todo lo acen para senbrar pastos para el ganado"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 7,
+     "texto": "La misma historia de toda la vida, los mayores ladrones y desforestadores de los bosques y selvas son los \"ganaderos\", además la protección de las reservas naturales es muy poca, casi nula, cualquier hampón se adueña de las tierras del estado y no pasa nada."
+    },
+    {
+     "video": "V2",
+     "me_gusta": 5,
+     "texto": "La ganadería está desangrando el mundo"
+    }
+   ]
+  },
+  {
+   "clave": "coca_conflicto",
+   "nombre": "Coca, grupos armados y actividades ilegales",
+   "comentarios": 8,
+   "pct": 0.0684,
+   "por_video": {
+    "V1": 1,
+    "V2": 7,
+    "V3": 0
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 4,
+     "texto": "Pero no es por causa de las actividades ilegales, si bien causan sus daños ambientales, son los mega proyectos de extracción de minerales y los monocultivos (de Palma en el Amazonas) y los suelos con uso para ganadería. Desplazando a los campesinos para poder…"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 2,
+     "texto": "La guerrilla lo hizo bastante bien durante muchas décadas, sin tantos recursos. Por que no dejamos la hipocresía a un lado y admitimos que muchos políticos y gente poderosa del país esta metida en este sucio negocio."
+    },
+    {
+     "video": "V2",
+     "me_gusta": 2,
+     "texto": "Que les pregunten también a los señores de la \"paz\" que cuatruplicaron sus cultivos de coca en los últimos 6 años."
+    }
+   ]
+  },
+  {
+   "clave": "extractivas",
+   "nombre": "Minería, megaproyectos y monocultivos",
+   "comentarios": 5,
+   "pct": 0.0427,
+   "por_video": {
+    "V1": 2,
+    "V2": 3,
+    "V3": 0
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 4,
+     "texto": "Pero no es por causa de las actividades ilegales, si bien causan sus daños ambientales, son los mega proyectos de extracción de minerales y los monocultivos (de Palma en el Amazonas) y los suelos con uso para ganadería. Desplazando a los campesinos para poder…"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 1,
+     "texto": "El gobierno da permiso a las grandes empresas extranjeras para la exploración de las riquezas que tenemos , los nativos y la guerrilla también colaboran con la desforestación."
+    },
+    {
+     "video": "V1",
+     "me_gusta": 0,
+     "texto": "Donde esta el presidente de Colombia que no se ve por ningún lado, supuestamente el logo de su campaña era atacar la deforestación, minería que está matando el país"
+    }
+   ]
+  },
+  {
+   "clave": "tala_fuego",
+   "nombre": "Tala, quemas e incendios",
+   "comentarios": 4,
+   "pct": 0.0342,
+   "por_video": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 1
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 2,
+     "texto": "Cada tienen proyectos campestres de vivienda, o rural, se ve siempre la quema, el gobierno no debería acceder a licencias de construcción de x vida en los sitios afectados, esa es otra forma de ser delincuentes al hacer las quemas, no piensan en un daño…"
+    },
+    {
+     "video": "V1",
+     "me_gusta": 2,
+     "texto": "Hablemos del daño ambiental en el Darién, como la caza, la tala, las quemas, la apertura de caminos y los desechos generados por los inmigrantes que transitan a diario por ahí."
+    },
+    {
+     "video": "V2",
+     "me_gusta": 0,
+     "texto": "Menos. Ganado. ,, y más. Árboles. ,, más. Conciencia. , más. Amor. ,, por. El. Futuro. ,,de. Colombia. ,, y por el futuro. , de. Nuestr , generación, ,, es normal ,, que , Colombia,, produzca,, madera ,, si robamos,, un. Árbol. ,, sembremos ,, dos. O. Más,…"
+    }
+   ]
+  },
+  {
+   "clave": "pueblos",
+   "nombre": "Pueblos indígenas y comunidades rurales",
+   "comentarios": 3,
+   "pct": 0.0256,
+   "por_video": {
+    "V1": 1,
+    "V2": 2,
+    "V3": 0
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 4,
+     "texto": "Pero no es por causa de las actividades ilegales, si bien causan sus daños ambientales, son los mega proyectos de extracción de minerales y los monocultivos (de Palma en el Amazonas) y los suelos con uso para ganadería. Desplazando a los campesinos para poder…"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 1,
+     "texto": "El gobierno da permiso a las grandes empresas extranjeras para la exploración de las riquezas que tenemos , los nativos y la guerrilla también colaboran con la desforestación."
+    },
+    {
+     "video": "V1",
+     "me_gusta": 0,
+     "texto": "Pero los indígenas,sus líderes los están tralledo alas ciudades 😮y ya no retornan,ya no les interesa sus tierras, sino las zapatillas y como se visten en la ciudad ya no son autóctono,y se avergüenza de su lengua 😢,comversen con sus líderes ellos son los…"
+    }
+   ]
+  },
+  {
+   "clave": "propuestas",
+   "nombre": "Propuestas: reforestar, vigilar o sancionar",
+   "comentarios": 13,
+   "pct": 0.1111,
+   "por_video": {
+    "V1": 4,
+    "V2": 6,
+    "V3": 3
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 6,
+     "texto": "Estamos condenados a cadenas y cadenas de pandemias , los árboles son importantes no solo por el oxígeno , ayudan a la biosfera a equilibrar las emisiones de gases que calientan nuestro planeta"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 4,
+     "texto": "Voy a presentar mi proyecto de reforestación"
+    },
+    {
+     "video": "V1",
+     "me_gusta": 2,
+     "texto": "Detenga eso ya. Se debe crear una guardia estatal que proteja el Amazonas, con ayuda tecnológica."
+    }
+   ]
+  },
+  {
+   "clave": "humanidad",
+   "nombre": "La culpa es del ser humano en general",
+   "comentarios": 9,
+   "pct": 0.0769,
+   "por_video": {
+    "V1": 7,
+    "V2": 2,
+    "V3": 0
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 9,
+     "texto": "que naturaleza le vamos a dejar a futuras generaciones que lastima el ser humano pensando primero en el dinero y no en la naturaleza"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 5,
+     "texto": "Y así es como la raza humana labró y creó su propio destino , múltipliquen ésto a nivel mundial"
+    },
+    {
+     "video": "V1",
+     "me_gusta": 3,
+     "texto": "Que tragedia,somos una plaga para la tierra."
+    }
+   ]
+  },
+  {
+   "clave": "emocion",
+   "nombre": "Tristeza o indignación",
+   "comentarios": 11,
+   "pct": 0.094,
+   "por_video": {
+    "V1": 4,
+    "V2": 5,
+    "V3": 2
+   },
+   "ejemplos": [
+    {
+     "video": "V2",
+     "me_gusta": 9,
+     "texto": "que naturaleza le vamos a dejar a futuras generaciones que lastima el ser humano pensando primero en el dinero y no en la naturaleza"
+    },
+    {
+     "video": "V2",
+     "me_gusta": 3,
+     "texto": "Es triste ver esta triste noticia, la gente no toma conciencia de que debemos cuidar el medio ambiente nuestra riqueza que es nuestra biodiversidad 😔"
+    },
+    {
+     "video": "V1",
+     "me_gusta": 3,
+     "texto": "Que tragedia,somos una plaga para la tierra."
+    }
+   ]
+  },
+  {
+   "clave": "escolar",
+   "nombre": "Uso escolar del video (tarea, exposición, proyecto)",
+   "comentarios": 26,
+   "pct": 0.2222,
+   "por_video": {
+    "V1": 0,
+    "V2": 8,
+    "V3": 18
+   },
+   "ejemplos": [
+    {
+     "video": "V3",
+     "me_gusta": 25,
+     "texto": "Me fue de gran ayuda tu video hermano, mañana podre presentar mi proyecto, se necesita mas información bien estructurada como esta misma, felicidades."
+    },
+    {
+     "video": "V3",
+     "me_gusta": 12,
+     "texto": "Me hacen un resumen del vídeo por favor"
+    },
+    {
+     "video": "V3",
+     "me_gusta": 9,
+     "texto": "Yo también tengo un proyecto. Es muy bueno este video."
+    }
+   ]
+  }
+ ],
+ "uso": {
+  "escolar": 26,
+  "escolar_pct": 0.2222,
+  "con_causa_o_actor": 34,
+  "con_causa_o_actor_pct": 0.2906,
+  "sin_causa_ni_escolar": 60,
+  "por_video": {
+   "V1": {
+    "causa_pct": 0.4286,
+    "escolar_pct": 0.0,
+    "n": 28
+   },
+   "V2": {
+    "causa_pct": 0.3265,
+    "escolar_pct": 0.1633,
+    "n": 49
+   },
+   "V3": {
+    "causa_pct": 0.15,
+    "escolar_pct": 0.45,
+    "n": 40
+   }
+  }
+ },
+ "territorios": [
+  {
+   "nombre": "Amazonía / Caquetá / Guaviare",
+   "comentarios": 7
+  },
+  {
+   "nombre": "Otras regiones de Colombia",
+   "comentarios": 10
+  },
+  {
+   "nombre": "Otros países",
+   "comentarios": 5
+  }
+ ],
+ "sesgos": [
+  "Solo se leyeron 117 comentarios principales de 3 videos (los más relevantes según YouTube, no una muestra aleatoria).",
+  "Quien comenta no representa a la población: hay estudiantes que usan el video para una tarea y personas de otros países.",
+  "Las respuestas a los comentarios no se extrajeron; el orden «relevancia» favorece los comentarios con más interacción.",
+  "El idioma se detectó con una heurística de palabras funcionales; quedan comentarios fuera de tema que el filtro automático no detecta."
+ ]
+}
